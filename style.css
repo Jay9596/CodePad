@@ -1,17 +1,16 @@
-.textarea{
-    
+.textarea {
     display: inline-block;
-    border:1px solid grey;
-    width:32%;
+    border: 1px solid grey;
+    width: 32%;
     min-height: 280px;
     overflow: auto;
     overflow-wrap: normal;
     resize: both;
-    font-size:14px;
+    font-size: 14px;
     background: #F4F4F9;
 }
 
-iframe{
+iframe {
     bottom: 0px;
     position: relative;
     width: 100%;

@@ -1,4 +1,5 @@
-var html,css,js;
+var html, css, js;
+
 function compile() {
     html = document.getElementById("html");
     css = document.getElementById("css");
@@ -9,8 +10,8 @@ function compile() {
     const PostStyle = "\n</style>\n</head>\n<body>";
     const Posthtml = "\n</body>\n</html>";
     code.srcdoc = Prehtml + css.textContent + PostStyle + html.textContent + "\n<script>" + js.textContent + "</script>" + Posthtml;
-}  
+}
 
-document.addEventListener("keyup",function(e){
+document.addEventListener("keyup", function (e) {
     compile();
 });
