@@ -1,10 +1,8 @@
-var html, css, js;
+var html = document.getElementById("html-code");
+var css = document.getElementById("css-code");
+var js = document.getElementById("js-code");
 
 function compile() {
-    html = document.getElementById("html");
-    css = document.getElementById("css");
-    js = document.getElementById("js");
-    //console.log(html+css+js);
     var code = document.getElementById("output");
     const Prehtml = "<!DOCTYPE html>\n<html>\n<head>\n<title>Try</title>\n<style>";
     const PostStyle = "\n</style>\n</head>\n<body>";
