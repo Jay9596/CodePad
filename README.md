@@ -9,5 +9,5 @@ by following these steps:
  - Install npm
  - Install Electron
  - Clone this repository
- - Switch to ab-develop: <code>git checkout ab-develop<code>
- - <code>electron .</code>
+ - Switch to ab-develop: `git checkout ab-develop`
+ - `electron .`
