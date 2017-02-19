@@ -1,0 +1,23 @@
+{
+  "name": "codeplay",
+  "version": "0.0.1",
+  "description": "An development playground for HTML/CSS/JS",
+  "productName": "Codeplay",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build-mac": "export NODE_ENV=production && node build.js mac",
+    "build-win": "export NODE_ENV=production && node build.js win",
+    "build-linux": "export NODE_ENV=production && node build.js linux"
+  },
+  "repository": "https://github.com/jay9596/Codeplay",
+  "keywords": [
+    "electron",
+    "front-end",
+    "editor"
+  ],
+  "devDependencies": {
+    "electron": "^1.4.15",
+    "electron-packager": "^8.5.1"
+  }
+}

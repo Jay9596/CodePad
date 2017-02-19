@@ -150,7 +150,7 @@ table {
 	border-bottom: 1em solid #000;
 }
 
-.editor {
+#editor {
 	height: 320px;
 	min-height: 160px;
 	width: 33.33%;
@@ -168,7 +168,7 @@ table {
 	outline: none;
 }
 
-.editor:hover {
+#editor:hover {
 	cursor: text;
 }
 
