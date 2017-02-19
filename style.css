@@ -1,17 +1,21 @@
 body {
   margin: 0;
   padding: 0;
-  margin-top: 5px;
   overflow: hidden;
+  font-size: 14px;
+  font-family: 'Roboto';
 }
 
 button {
   margin: 0;
+  padding: 0;
 }
 
 .CodeMirror {
+  font-size: 1em;
   margin: 0;
   padding: 0;
+  font-family: 'Source Code Pro', 'Consolas', 'Courier New', 'Courier', monospace;
 }
 
 .CodeMirror-scroll {
@@ -19,20 +23,6 @@ button {
   overflow-y: hidden;
   overflow-x: auto;
 }
-
-
-/*#editor {
-  position: absolute;
-  top: 37px;
-  bottom: 24px;
-  left: 0;
-  right: 0;
-  background: #262626;
-}
-
-#editor:hover {
-  cursor: text;
-}*/
 
 .editor-box {
   display: flex;

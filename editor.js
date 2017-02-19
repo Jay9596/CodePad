@@ -105,7 +105,7 @@ onload = function () {
         json: true
       },
       lineNumbers: true,
-      theme: "xq-dark"
+      theme: "night"
     });
 
   editor[1] = CodeMirror(
@@ -115,7 +115,7 @@ onload = function () {
         json: true
       },
       lineNumbers: true,
-      theme: "xq-dark"
+      theme: "night"
     });
 
   editor[2] = CodeMirror(
@@ -125,7 +125,7 @@ onload = function () {
         json: true
       },
       lineNumbers: true,
-      theme: "xq-dark"
+      theme: "night"
     });
 
   newFile();
