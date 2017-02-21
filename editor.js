@@ -63,6 +63,19 @@ function handleNewButton(i) {
   }
 }
 
+//Handling jQuery
+/*
+* Check for button press and insert this jQStr into plugin div
+*/
+function jQButton()
+{
+  const jQStr = "<script src='./cm/lib/jquery-3.1.1.min.js'></script>";
+  var head_style = $('#output').contents().find('head').find('style');
+  $(jQStr).insertAfter(head_style);
+  console.log("jQuery Added"); 
+}
+
+
 function initContextMenu(i) {
   menu = new Menu();
   menu.append(new MenuItem({
@@ -97,7 +110,10 @@ onload = function () {
 
   newButton = document.getElementById("new");
   newButton.addEventListener("click", handleNewButton);
-
+  //Testing jQuery
+  jQ = document.getElementById("add-js");
+  jQ.addEventListener("click",jQButton);
+  //Remove when over
   editor[0] = CodeMirror(
     document.getElementById("html-editor"), {
       mode: {
