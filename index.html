@@ -17,10 +17,28 @@
 </head>
 
 <body>
-	<div class="buttons" style="height: 50px; padding: 0;">
-		<button id="new">New</button>
-		<button id="add-css">Add CSS</button>
-		<button id="add-js">Add JS</button>
+	<div class="button-container" style="height: 32px; padding: 0;">
+		<nav id="button-list">
+			<ul>
+				<li>
+					<a href="#" id="new">New</a>
+				</li>
+				<li><a href="#">+ Js</a>
+					<ul>
+						<li><a href="#">+ Bootstrap</a></li>
+						<li><a href="#">+ jQuery</a></li>
+						<li><a href="#">+ Three</a></li>
+					</ul>
+				</li>
+				<li><a href="#">+ CSS</a>
+					<ul>
+						<li><a href="#">+ Bootstrap</a></li>
+						<li><a href="#">+ Materialize</a></li>
+						<li><a href="#">+ Animate</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
 	</div>
 	<div class="editor-box">
 		<div id="html-editor" class="editor"></div>
@@ -29,10 +47,6 @@
 	</div>
 	<div class="result-viewport">
 		<iframe id="output"></iframe>
-	</div>
-	<div class="info">
-		<label>Filename: </label><span id="title"></span>
-		<label>Mode: </label><span id="mode"></span>
 	</div>
 </body>
 
