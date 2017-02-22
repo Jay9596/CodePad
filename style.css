@@ -99,10 +99,6 @@ button {
   padding: 0
 }
 
-#button-list ul li.current-menu-item {
-  background: #ddd
-}
-
 #button-list ul li:hover {
   background: #f6f6f6
 }
