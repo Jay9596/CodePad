@@ -2,7 +2,7 @@ var newButton;
 var editor = [];
 var menu;
 var fileEntry;
-var hasWriteAcces, output;
+var hasWriteAcces, output, html, css, js;
 
 const {
 	remote,
@@ -102,29 +102,29 @@ onload = function () {
 		});
 
 	output = document.getElementById("output");
+
+	html = editor[0];
+	css = editor[1];
+	js = editor[2];
+
 	newFile();
 	onresize();
 };
 
 onresize = function () {
-	for (var i = 0; i < 3; i++)
+	for (i = 0; i < 3; i++)
 		editor[i].refresh();
 }
 
-
-function compile() {
-	var html = editor[0].getValue();
-	var css = editor[1].getValue();
-	var js = editor[2].getValue();
-
-	outputSource = '<html>' + '<head>' + '<style>' + css + '</style>' + '<script>' + js + '</script>' + '</head>' + '<body>' + html + '</body>' + '</html>';
+function paint() {
+	outputSource = '<html>' + '<head>' + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>';
 	console.log(outputSource);
 	output.srcdoc = outputSource;
 }
 
 // TODO: Use CodeMirror.change instead
 document.addEventListener("keyup", function (e) {
-	compile();
+	paint();
 });
 
 
