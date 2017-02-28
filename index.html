@@ -1,28 +1,18 @@
-<!--
-	TODO:
-	- Prevent Ctrl + R from cleaning the editors
-	- Ability to resize the windows
-	- Figure out a way to display linked libraries
-	- Instead of listening to keyups, use 'change' 
--->
-
-
 <!DOCTYPE html>
 <html>
 
 <head>
 	<title>Codeplay</title>
-	<!-- Not sure what depends on zepto -->
-	<script src="zepto.min.js"></script>
 	<script src="editor.js"></script>
 	<script src="cm/lib/codemirror.js"></script>
 	<script src="cm/mode/css/css.js"></script>
 	<script src="cm/mode/xml/xml.js"></script>
 	<script src="cm/mode/javascript/javascript.js"></script>
 	<script src="cm/mode/htmlmixed/htmlmixed.js"></script>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/fonts.css">
 	<link rel="stylesheet" href="cm/lib/codemirror.css">
-	<link rel="stylesheet" href="cm/theme/night.css">
+	<link rel="stylesheet" href="cm/theme/material.css">
 </head>
 
 <body>
@@ -50,9 +40,15 @@
 		</nav>
 	</div>
 	<div class="editor-box">
-		<div id="html-editor" class="editor"></div>
-		<div id="css-editor" class="editor"></div>
-		<div id="js-editor" class="editor"></div>
+		<div id="html-editor" class="editor">
+			<div class="editor-label">HTML</div>
+		</div>
+		<div id="css-editor" class="editor">
+			<div class="editor-label">CSS</div>
+		</div>
+		<div id="js-editor" class="editor">
+			<div class="editor-label">JS</div>
+		</div>
 	</div>
 	<div class="result-viewport">
 		<iframe id="output"></iframe>

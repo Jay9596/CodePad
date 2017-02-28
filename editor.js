@@ -77,7 +77,9 @@ onload = function () {
 			},
 			lineNumbers: true,
 			lineWrapping: true,
-			theme: "night"
+			autofocus: true,
+			indentWithTabs: true,
+			theme: "material"
 		});
 
 	editor[1] = CodeMirror(
@@ -87,7 +89,10 @@ onload = function () {
 			},
 			lineNumbers: true,
 			lineWrapping: true,
-			theme: "night"
+			indentWithTabs: true,
+			//Having issues with smartIndent. Therfore, turned off.
+			smartIndent: false,
+			theme: "material"
 		});
 
 	editor[2] = CodeMirror(
@@ -98,7 +103,9 @@ onload = function () {
 			},
 			lineNumbers: true,
 			lineWrapping: true,
-			theme: "night"
+			indentWithTabs: true,
+
+			theme: "material"
 		});
 
 	output = document.getElementById("output");
