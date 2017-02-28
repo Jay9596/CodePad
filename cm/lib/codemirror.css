@@ -308,6 +308,13 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 	position: relative;
 }
 
+
+/*.CodeMirror-scroll {
+	height: auto;
+	overflow-y: hidden;
+	overflow-x: auto;
+}*/
+
 .CodeMirror-sizer {
 	position: relative;
 	border-right: 30px solid transparent;

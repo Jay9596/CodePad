@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Codeplay</title>
+	<title>Codepad</title>
 	<script src="editor.js"></script>
 	<script src="cm/lib/codemirror.js"></script>
 	<script src="cm/mode/css/css.js"></script>
@@ -16,37 +16,38 @@
 </head>
 
 <body>
-	<div class="button-container" style="height: 32px; padding: 0;">
-		<nav id="button-list">
+	<div class="menu-bar">
+		<nav id="menu-items">
 			<ul>
 				<li>
 					<a href="#" id="new">New</a>
 				</li>
-				<li><a href="#">+ Js</a>
+				<li><a href="#">+ CSS</a>
+					<ul>
+						<li><a href="#">+ Animate</a></li>
+						<li><a href="#">+ Bootstrap</a></li>
+						<li><a href="#">+ Font Awesome</a></li>
+						<li><a href="#">+ Materialize</a></li>
+					</ul>
+				</li>
+				<li><a href="#">+ JS</a>
 					<ul>
 						<li><a href="#">+ Bootstrap</a></li>
 						<li><a href="#">+ jQuery</a></li>
 						<li><a href="#">+ Three</a></li>
 					</ul>
 				</li>
-				<li><a href="#">+ CSS</a>
-					<ul>
-						<li><a href="#">+ Bootstrap</a></li>
-						<li><a href="#">+ Materialize</a></li>
-						<li><a href="#">+ Animate</a></li>
-					</ul>
-				</li>
 			</ul>
 		</nav>
 	</div>
-	<div class="editor-box">
-		<div id="html-editor" class="editor">
+	<div class="editor">
+		<div id="html-editor" class="editor-item">
 			<div class="editor-label">HTML</div>
 		</div>
-		<div id="css-editor" class="editor">
+		<div id="css-editor" class="editor-item">
 			<div class="editor-label">CSS</div>
 		</div>
-		<div id="js-editor" class="editor">
+		<div id="js-editor" class="editor-item">
 			<div class="editor-label">JS</div>
 		</div>
 	</div>
