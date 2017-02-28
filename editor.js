@@ -67,8 +67,26 @@ function initContextMenu(i) {
 onload = function () {
 	initContextMenu();
 
-	newButton = document.getElementById("new");
-	newButton.addEventListener("click", handleNewButton);
+	document.getElementById("min-button").addEventListener("click", function (e) {
+		const window = remote.getCurrentWindow();
+		window.minimize();
+	});
+
+	document.getElementById("max-button").addEventListener("click", function (e) {
+		const window = remote.getCurrentWindow();
+		if (!window.isMaximized()) {
+			window.maximize();
+		} else {
+			window.unmaximize();
+		}
+	});
+
+	document.getElementById("close-button").addEventListener("click", function (e) {
+		const window = remote.getCurrentWindow();
+		window.close();
+	});
+
+	document.getElementById("new").addEventListener("click", handleNewButton);
 
 	editor[0] = CodeMirror(
 		document.getElementById("html-editor"), {
