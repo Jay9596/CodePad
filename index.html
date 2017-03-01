@@ -3,38 +3,58 @@
 
 <head>
 	<title>Codeplay</title>
-	<!-- Not sure what depends on zepto -->
-	<script src="zepto.min.js"></script>
+	<script src="./lib/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+	<script src="lib/jquery-3.1.1.min.js"></script>
 	<script src="editor.js"></script>
 	<script src="cm/lib/codemirror.js"></script>
 	<script src="cm/mode/css/css.js"></script>
 	<script src="cm/mode/xml/xml.js"></script>
 	<script src="cm/mode/javascript/javascript.js"></script>
 	<script src="cm/mode/htmlmixed/htmlmixed.js"></script>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/fonts.css">
 	<link rel="stylesheet" href="cm/lib/codemirror.css">
-	<link rel="stylesheet" href="cm/theme/night.css">
+	<link rel="stylesheet" href="cm/theme/material.css">
 </head>
 
 <body>
-	<div class="buttons" style="height: 50px; padding: 0;">
-		<button id="new">New</button>
-		<button id="add-css">Add CSS</button>
-		<button id="add-js">Add JS</button>
+	<div class="button-container" style="height: 32px; padding: 0;">
+		<nav id="button-list">
+			<ul>
+				<li>
+					<a href="#" id="new">New</a>
+				</li>
+				<li><a href="#">+ Js</a>
+					<ul id="JSMenu">
+						<li><a href="#">+ Bootstrap</a></li>
+						<li><a href="#">+ jQuery</a></li>
+						<li><a href="#">+ Three</a></li>
+					</ul>
+				</li>
+				<li><a href="#">+ CSS</a>
+					<ul id="CSSMenu">
+						<li><a href="#">+ Bootstrap</a></li>
+						<li><a href="#">+ Materialize</a></li>
+						<li><a href="#">+ Animate</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
 	</div>
 	<div class="editor-box">
-		<div id="html-editor" class="editor"></div>
-		<div id="css-editor" class="editor"></div>
-		<div id="js-editor" class="editor"></div>
+		<div id="html-editor" class="editor">
+			<div class="editor-label">HTML</div>
+		</div>
+		<div id="css-editor" class="editor">
+			<div class="editor-label">CSS</div>
+		</div>
+		<div id="js-editor" class="editor">
+			<div class="editor-label">JS</div>
+		</div>
 	</div>
 	<div class="result-viewport">
 		<iframe id="output"></iframe>
 	</div>
-	<div class="info">
-		<label>Filename: </label><span id="title"></span>
-		<label>Mode: </label><span id="mode"></span>
-	</div>
-	<script>window.$ = window.jQuery = require('./cm/lib/jquery-3.1.1.min.js');</script>
 </body>
 
 </html>
