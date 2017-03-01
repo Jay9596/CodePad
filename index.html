@@ -2,9 +2,8 @@
 <html>
 
 <head>
-	<title>Codeplay</title>
+	<title>Codepad</title>
 	<script src="./lib/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
-	<script src="lib/jquery-3.1.1.min.js"></script>
 	<script src="editor.js"></script>
 	<script src="cm/lib/codemirror.js"></script>
 	<script src="cm/mode/css/css.js"></script>
@@ -14,16 +13,24 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/fonts.css">
 	<link rel="stylesheet" href="cm/lib/codemirror.css">
-	<link rel="stylesheet" href="cm/theme/material.css">
+	<link rel="stylesheet" href="cm/theme/base16-ocean-dark.css">
 </head>
 
 <body>
-	<div class="button-container" style="height: 32px; padding: 0;">
-		<nav id="button-list">
+	<div class="menu-bar">
+		<nav id="menu-items">
 			<ul>
-				<li>
-					<a href="#" id="new">New</a>
+				<li><a href="#">File</a>
+					<ul>
+						<li><a href="#" id="new">New Window</a></li>
+						<li><a href="#" id="save">Save</a></li>
+						<li><a href="#" id="run">Run in Browser</a></li>
+						<li><a href="#" id="prefs">Preferences</a></li>
+						<li><a href="#" id="close-window">Close Window</a></li>
+						<li><a href="#" id="quit">Quit</a></li>
+					</ul>
 				</li>
+<<<<<<< HEAD
 				<li><a href="#">+ Js</a>
 					<ul id="JSMenu">
 						<li><a href="#">+ Bootstrap</a></li>
@@ -33,22 +40,57 @@
 				</li>
 				<li><a href="#">+ CSS</a>
 					<ul id="CSSMenu">
-						<li><a href="#">+ Bootstrap</a></li>
-						<li><a href="#">+ Materialize</a></li>
+=======
+				<li><a href="#">Edit</a>
+					<ul>
+						<li><a href="#" id="undo">Undo</a></li>
+						<li><a href="#" id="redo">Redo</a></li>
+						<li><a href="#" id="cut">Cut</a></li>
+						<li><a href="#" id="copy">Copy</a></li>
+						<li><a href="#" id="paste">Paste</a></li>
+
+					</ul>
+				</li>
+				<li><a href="#">Help</a>
+					<ul>
+						<li><a href="#" id="documentation">Documentation</a></li>
+						<li><a href="#" id="check-updates">Check for updates..</a></li>
+						<li><a href="#" id="contribute">Contribute</a></li>
+						<li><a href="#" id="about">About</a></li>
+					</ul>
+				</li>
+				<li><a href="#">+ CSS</a>
+					<ul>
 						<li><a href="#">+ Animate</a></li>
+>>>>>>> ab-develop
+						<li><a href="#">+ Bootstrap</a></li>
+						<li><a href="#">+ Font Awesome</a></li>
+						<li><a href="#">+ Materialize</a></li>
+					</ul>
+				</li>
+				<li><a href="#">+ JS</a>
+					<ul>
+						<li><a href="#">+ Bootstrap</a></li>
+						<li><a href="#">+ jQuery</a></li>
+						<li><a href="#">+ Three</a></li>
 					</ul>
 				</li>
 			</ul>
+			<div id="window-control">
+				<div id="min-button" class="buttons"></div>
+				<div id="max-button" class="buttons"></div>
+				<div id="close-button" class="buttons"></div>
+			</div>
 		</nav>
 	</div>
-	<div class="editor-box">
-		<div id="html-editor" class="editor">
+	<div class="editor">
+		<div id="html-editor" class="editor-item">
 			<div class="editor-label">HTML</div>
 		</div>
-		<div id="css-editor" class="editor">
+		<div id="css-editor" class="editor-item">
 			<div class="editor-label">CSS</div>
 		</div>
-		<div id="js-editor" class="editor">
+		<div id="js-editor" class="editor-item">
 			<div class="editor-label">JS</div>
 		</div>
 	</div>

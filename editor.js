@@ -95,8 +95,29 @@ function initContextMenu(i) {
 onload = function () {
 	initContextMenu();
 
-	newButton = document.getElementById("new");
-	newButton.addEventListener("click", handleNewButton);
+	document.getElementById("min-button").addEventListener("click", function (e) {
+		const window = remote.getCurrentWindow();
+		window.minimize();
+		console.log('Minimize Triggered!');
+	});
+
+	document.getElementById("max-button").addEventListener("click", function (e) {
+		const window = remote.getCurrentWindow();
+		if (!window.isMaximized()) {
+			window.maximize();
+		} else {
+			window.unmaximize();
+		}
+		console.log('Maximize Triggered!');
+		console.log(document.getElementById('close-button'));
+	});
+
+	document.getElementById("close-button").addEventListener("click", function (e) {
+		const window = remote.getCurrentWindow();
+		window.close();
+	});
+
+	document.getElementById("new").addEventListener("click", handleNewButton);
 
 	editor[0] = CodeMirror(
 		document.getElementById("html-editor"), {
@@ -107,7 +128,7 @@ onload = function () {
 			lineWrapping: true,
 			autofocus: true,
 			indentWithTabs: true,
-			theme: "material"
+			theme: "base16-ocean-dark"
 		});
 
 	editor[1] = CodeMirror(
@@ -120,7 +141,7 @@ onload = function () {
 			indentWithTabs: true,
 			//Having issues with smartIndent. Therfore, turned off.
 			smartIndent: false,
-			theme: "material"
+			theme: "base16-ocean-dark"
 		});
 
 	editor[2] = CodeMirror(
@@ -133,7 +154,7 @@ onload = function () {
 			lineWrapping: true,
 			indentWithTabs: true,
 
-			theme: "material"
+			theme: "base16-ocean-dark"
 		});
 
 	output = document.getElementById("output");

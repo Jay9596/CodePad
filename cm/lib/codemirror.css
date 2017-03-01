@@ -2,12 +2,12 @@
 
 .CodeMirror {
 	/* Set height, width, borders, and global font properties here */
-	height: 300px;
+	height: 320px;
 	color: black;
 	font-size: 14px;
 	line-height: 20px;
 	font-family: 'Source Code Pro';
-	font-weight: 500;
+	font-weight: 600;
 }
 
 
@@ -307,6 +307,13 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 	/* Prevent dragging from highlighting the element */
 	position: relative;
 }
+
+
+/*.CodeMirror-scroll {
+	height: auto;
+	overflow-y: hidden;
+	overflow-x: auto;
+}*/
 
 .CodeMirror-sizer {
 	position: relative;
