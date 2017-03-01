@@ -20,6 +20,17 @@ const fs = require("fs");
 var scripts = "";
 var styles = "";
 
+//Functions for AddIns
+function getScr ()  {
+	return scripts;
+}
+
+function getSty()
+{
+	return styles;
+}
+
+
 function newFile() {
 	fileEntry = null;
 	hasWriteAccess = false;
@@ -65,25 +76,6 @@ function initContextMenu(i) {
 		ev.preventDefault();
 		menu.popup(remote.getCurrentWindow(), ev.x, ev.y);
 	}, false);
-}
-
-//Functions for AddIns
-function getScr ()  {
-	return scripts;
-}
-
-function getSty()
-{
-	return styles;
-}
-
-function addBootCSS()
-{
-	const headFrame = $("#output").contents().find('head');
-	console.log("clicked Boot CSS");
-	var lk = document.createElement('link');
-	lk.href = "lib/bootstrap.min.css";
-	headFrame.append(lk);
 }
 
 //Main Functions for Electron
@@ -169,21 +161,27 @@ document.addEventListener("keyup", function (e) {
 });
 
 
-// TODO: Limit execution to 1
-// TODO: Append all Js libraries to inUse[] and refresh outputSource
+// TODO: Limit execution to 1 ❌
+// DONE: All JS and CSS can be added at once ✔
+// TODO: Append all Js libraries to inUse[] and refresh outputSource ❌
+// TODO: Scripts added in order they are clicked no way to change order later on
 function addScript() {
 var JSMemu = document.getElementById("JSMenu");
 var JSbuttons = JSMemu.getElementsByTagName('a');
 JSbuttons[0].addEventListener("click", function(e){
-	console.log("JS 0");
+	//console.log("JS 0");
+	var jQStr = "<script src='lib/bootstrap.min.js'></script>"
+	scripts += jQStr;
 });
 JSbuttons[1].addEventListener("click",function (e) {
-	console.log("JS 1");
+	//console.log("JS 1");
 	var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script>"
 	scripts += jQStr;
 });
 JSbuttons[2].addEventListener("click", function(e){
-	console.log("JS 2");
+	//console.log("JS 2");
+	var jQStr = "<script src='lib/three.min.js'></script>"
+	scripts += jQStr;
 });
 };
 
@@ -192,20 +190,19 @@ function addStyle() {
  var CSSMenu = document.getElementById("CSSMenu");
  var CSSbuttons = CSSMenu.getElementsByTagName('a');
  CSSbuttons[0].addEventListener("click", function(e){
-	console.log("CSS 0");
+	//console.log("CSS 0");
 	var bootStr = "<link href='lib/bootstrap.min.css'>"
 	styles += bootStr;
-	console.log("clicked Boot CSS");
 });
 CSSbuttons[1].addEventListener("click", function(e){
-	console.log("CSS 1");
-	
+	//console.log("CSS 1");
 	var matStr = "<link href='lib/materialize.min.css'/>";
 	styles += matStr;
-	console.log("clicked Materialize CSS");
 });
 CSSbuttons[2].addEventListener("click", function(e){
-	console.log("CSS 2");
+	//console.log("CSS 2");
+	var bootStr = "<link href='lib/animate.css'>"
+	styles += bootStr;
 });
 
 };
