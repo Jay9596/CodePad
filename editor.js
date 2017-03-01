@@ -70,6 +70,7 @@ onload = function () {
 	document.getElementById("min-button").addEventListener("click", function (e) {
 		const window = remote.getCurrentWindow();
 		window.minimize();
+		console.log('Minimize Triggered!');
 	});
 
 	document.getElementById("max-button").addEventListener("click", function (e) {
@@ -79,6 +80,8 @@ onload = function () {
 		} else {
 			window.unmaximize();
 		}
+		console.log('Maximize Triggered!');
+		console.log(document.getElementById('close-button'));
 	});
 
 	document.getElementById("close-button").addEventListener("click", function (e) {
