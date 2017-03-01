@@ -3,6 +3,8 @@
 
 <head>
 	<title>Codeplay</title>
+	<script src="./lib/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+	<script src="lib/jquery-3.1.1.min.js"></script>
 	<script src="editor.js"></script>
 	<script src="cm/lib/codemirror.js"></script>
 	<script src="cm/mode/css/css.js"></script>
@@ -23,14 +25,14 @@
 					<a href="#" id="new">New</a>
 				</li>
 				<li><a href="#">+ Js</a>
-					<ul>
+					<ul id="JSMenu">
 						<li><a href="#">+ Bootstrap</a></li>
 						<li><a href="#">+ jQuery</a></li>
 						<li><a href="#">+ Three</a></li>
 					</ul>
 				</li>
 				<li><a href="#">+ CSS</a>
-					<ul>
+					<ul id="CSSMenu">
 						<li><a href="#">+ Bootstrap</a></li>
 						<li><a href="#">+ Materialize</a></li>
 						<li><a href="#">+ Animate</a></li>

@@ -16,6 +16,10 @@ const {
 } = remote;
 const fs = require("fs");
 
+//Global variables
+var scripts = "";
+var styles = "";
+
 function newFile() {
 	fileEntry = null;
 	hasWriteAccess = false;
@@ -63,7 +67,26 @@ function initContextMenu(i) {
 	}, false);
 }
 
+//Functions for AddIns
+function getScr ()  {
+	return scripts;
+}
 
+function getSty()
+{
+	return styles;
+}
+
+function addBootCSS()
+{
+	const headFrame = $("#output").contents().find('head');
+	console.log("clicked Boot CSS");
+	var lk = document.createElement('link');
+	lk.href = "lib/bootstrap.min.css";
+	headFrame.append(lk);
+}
+
+//Main Functions for Electron
 onload = function () {
 	initContextMenu();
 
@@ -114,8 +137,11 @@ onload = function () {
 	css = editor[1];
 	js = editor[2];
 
+	addScript();
+	addStyle();
 	newFile();
 	onresize();
+	
 };
 
 onresize = function () {
@@ -129,14 +155,57 @@ function paint() {
 	output.srcdoc = outputSource;
 }
 
+function paint(script,style) {
+	outputSource = '<html>' + '<head>'+ style + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + script +  '<script>' + js.getValue() + '</script>' + '</body>' + '</html>';
+	console.log(outputSource);
+	output.srcdoc = outputSource;
+}
+
 // TODO: Use CodeMirror.change instead
 document.addEventListener("keyup", function (e) {
-	paint();
+	scr = getScr();
+	sty = getSty();
+	paint(scr,sty);
 });
 
 
 // TODO: Limit execution to 1
 // TODO: Append all Js libraries to inUse[] and refresh outputSource
-function addScript() {};
+function addScript() {
+var JSMemu = document.getElementById("JSMenu");
+var JSbuttons = JSMemu.getElementsByTagName('a');
+JSbuttons[0].addEventListener("click", function(e){
+	console.log("JS 0");
+});
+JSbuttons[1].addEventListener("click",function (e) {
+	console.log("JS 1");
+	var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script>"
+	scripts += jQStr;
+});
+JSbuttons[2].addEventListener("click", function(e){
+	console.log("JS 2");
+});
+};
 
-function addStyle() {};
+function addStyle() {
+
+ var CSSMenu = document.getElementById("CSSMenu");
+ var CSSbuttons = CSSMenu.getElementsByTagName('a');
+ CSSbuttons[0].addEventListener("click", function(e){
+	console.log("CSS 0");
+	var bootStr = "<link href='lib/bootstrap.min.css'>"
+	styles += bootStr;
+	console.log("clicked Boot CSS");
+});
+CSSbuttons[1].addEventListener("click", function(e){
+	console.log("CSS 1");
+	
+	var matStr = "<link href='lib/materialize.min.css'/>";
+	styles += matStr;
+	console.log("clicked Materialize CSS");
+});
+CSSbuttons[2].addEventListener("click", function(e){
+	console.log("CSS 2");
+});
+
+};
