@@ -202,19 +202,22 @@ function addScript() {
 var JSMemu = document.getElementById("JSMenu");
 var JSbuttons = JSMemu.getElementsByTagName('a');
 JSbuttons[0].addEventListener("click", function(e){
-	//console.log("JS 0");
-	var jQStr = "<script src='lib/bootstrap.min.js'></script>"
+	console.log("JS 0");
+	var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script><script src='lib/bootstrap.min.js'></script>"
 	scripts += jQStr;
+	console.log("bootstrap added");
 });
 JSbuttons[1].addEventListener("click",function (e) {
-	//console.log("JS 1");
+	console.log("JS 1");
 	var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script>"
 	scripts += jQStr;
+	console.log("jquery added");
 });
 JSbuttons[2].addEventListener("click", function(e){
-	//console.log("JS 2");
+	console.log("JS 2");
 	var jQStr = "<script src='lib/three.min.js'></script>"
 	scripts += jQStr;
+	console.log("three.js added");
 });
 };
 
@@ -223,19 +226,28 @@ function addStyle() {
  var CSSMenu = document.getElementById("CSSMenu");
  var CSSbuttons = CSSMenu.getElementsByTagName('a');
  CSSbuttons[0].addEventListener("click", function(e){
-	//console.log("CSS 0");
-	var bootStr = "<link href='lib/bootstrap.min.css'>"
-	styles += bootStr;
-});
-CSSbuttons[1].addEventListener("click", function(e){
-	//console.log("CSS 1");
-	var matStr = "<link href='lib/materialize.min.css'/>";
-	styles += matStr;
-});
-CSSbuttons[2].addEventListener("click", function(e){
-	//console.log("CSS 2");
+	console.log("CSS 0");
 	var bootStr = "<link href='lib/animate.css'>"
 	styles += bootStr;
+	console.log("animate added");
+});
+CSSbuttons[1].addEventListener("click", function(e){
+	console.log("CSS 1");
+	var matStr = "<link href='lib/bootstrap.min.css'/>";
+	styles += matStr;
+	console.log("bootstrap added");
+});
+CSSbuttons[2].addEventListener("click", function(e){
+	console.log("CSS 2");
+	var bootStr = "<link href='lib/font-awesome.min.css'>"
+	styles += bootStr;
+	console.log("font awesome added");
+});
+CSSbuttons[3].addEventListener("click", function(e){
+	console.log("CSS 3");
+	var bootStr = "<link href='lib/materialize.min.css'>"
+	styles += bootStr;
+	console.log("materialize added");
 });
 
 };
