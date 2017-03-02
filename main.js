@@ -19,7 +19,9 @@ app.on('ready', function () {
 	mainWindow = new BrowserWindow({
 		width: 1024,
 		height: 720,
-		frame: false
+		frame: false,
+		minHeight: 600,
+		minWidth: 400
 	});
 
 	// and load the index.html of the app.

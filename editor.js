@@ -16,6 +16,20 @@ const {
 } = remote;
 const fs = require("fs");
 
+//Global variables
+var scripts = "";
+var styles = "";
+
+//Functions for AddIns
+function getScr() {
+	return scripts;
+}
+
+function getSty() {
+	return styles;
+}
+
+
 function newFile() {
 	fileEntry = null;
 	hasWriteAccess = false;
@@ -34,6 +48,18 @@ function handleNewButton(i) {
 		window.open('file://' + __dirname + '/index.html');
 	}
 }
+
+//Handling jQuery
+/*
+ * Check for button press and insert this jQStr into plugin div
+ */
+function jQButton() {
+	const jQStr = "<script src='./cm/lib/jquery-3.1.1.min.js'></script>";
+	var head_style = $('#output').contents().find('head').find('style');
+	$(jQStr).insertAfter(head_style);
+	console.log("jQuery Added");
+}
+
 
 function initContextMenu(i) {
 	menu = new Menu();
@@ -63,7 +89,7 @@ function initContextMenu(i) {
 	}, false);
 }
 
-
+//Main Functions for Electron
 onload = function () {
 	initContextMenu();
 
@@ -100,6 +126,7 @@ onload = function () {
 			lineWrapping: true,
 			autofocus: true,
 			indentWithTabs: true,
+			scrollbarStyle: "overlay",
 			theme: "base16-ocean-dark"
 		});
 
@@ -113,6 +140,7 @@ onload = function () {
 			indentWithTabs: true,
 			//Having issues with smartIndent. Therfore, turned off.
 			smartIndent: false,
+			scrollbarStyle: "overlay",
 			theme: "base16-ocean-dark"
 		});
 
@@ -125,7 +153,7 @@ onload = function () {
 			lineNumbers: true,
 			lineWrapping: true,
 			indentWithTabs: true,
-
+			scrollbarStyle: "overlay",
 			theme: "base16-ocean-dark"
 		});
 
@@ -135,6 +163,8 @@ onload = function () {
 	css = editor[1];
 	js = editor[2];
 
+	addScript();
+	addStyle();
 	newFile();
 	onresize();
 };
@@ -144,20 +174,72 @@ onresize = function () {
 		editor[i].refresh();
 }
 
-function paint() {
-	outputSource = '<html>' + '<head>' + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>';
+function paint(script, style) {
+	outputSource = '<html>' + '<head>' + style + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + script + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>';
 	console.log(outputSource);
 	output.srcdoc = outputSource;
 }
 
 // TODO: Use CodeMirror.change instead
 document.addEventListener("keyup", function (e) {
-	paint();
+	scr = getScr();
+	sty = getSty();
+	paint(scr, sty);
 });
 
 
-// TODO: Limit execution to 1
-// TODO: Append all Js libraries to inUse[] and refresh outputSource
-function addScript() {};
+// TODO: Limit execution to 1 ❌
+// DONE: All JS and CSS can be added at once ✔
+// TODO: Append all Js libraries to inUse[] and refresh outputSource ❌
+// TODO: Scripts added in order they are clicked no way to change order later on
+function addScript() {
+	var JSMemu = document.getElementById("JSMenu");
+	var JSbuttons = JSMemu.getElementsByTagName('a');
+	JSbuttons[0].addEventListener("click", function (e) {
+		console.log("JS 0");
+		var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script><script src='lib/bootstrap.min.js'></script>"
+		scripts += jQStr;
+		console.log("Bootstrap added!");
+	});
+	JSbuttons[1].addEventListener("click", function (e) {
+		console.log("JS 1");
+		var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script>"
+		scripts += jQStr;
+		console.log("jQuery added!");
+	});
+	JSbuttons[2].addEventListener("click", function (e) {
+		console.log("JS 2");
+		var jQStr = "<script src='lib/three.min.js'></script>"
+		scripts += jQStr;
+		console.log("Three.js added!");
+	});
+};
 
-function addStyle() {};
+function addStyle() {
+	var CSSMenu = document.getElementById("CSSMenu");
+	var CSSbuttons = CSSMenu.getElementsByTagName('a');
+	CSSbuttons[0].addEventListener("click", function (e) {
+		console.log("CSS 0");
+		var bootStr = "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"
+		styles += bootStr;
+		console.log("Animate added!");
+	});
+	CSSbuttons[1].addEventListener("click", function (e) {
+		console.log("CSS 1");
+		var matStr = "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>";
+		styles += matStr;
+		console.log("Bootstrap added!");
+	});
+	CSSbuttons[2].addEventListener("click", function (e) {
+		console.log("CSS 2");
+		var bootStr = "<link rel='stylesheet' type='text/css' href='lib/font-awesome.min.css'>"
+		styles += bootStr;
+		console.log("Font Awesome added!");
+	});
+	CSSbuttons[3].addEventListener("click", function (e) {
+		console.log("CSS 3");
+		var bootStr = "<link href='lib/materialize.min.css'>"
+		styles += bootStr;
+		console.log("Materialize added!");
+	});
+};
