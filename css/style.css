@@ -3,7 +3,7 @@ body {
 	font-size: 14px;
 	height: 100vh;
 	margin: 0;
-	overflow-x: hidden;
+	overflow: hidden;
 	padding: 0;
 }
 
@@ -31,7 +31,7 @@ body {
 }
 
 #menu-items ul a {
-	color: #606266;
+	color: #808286;
 	display: block;
 	font-family: 'Segoe UI Semibold', Tahoma, Geneva, Verdana, sans-serif;
 	font-size: 12px;
@@ -52,8 +52,13 @@ body {
 	background: #F4F4F4;
 }
 
+.disabled {
+	opacity: 0.4;
+}
+
 #menu-items ul ul {
 	background: #fff;
+	border-radius: 0 0 2px 2px;
 	display: none;
 	left: 0;
 	padding: 0;
@@ -141,13 +146,13 @@ body {
 	left: 0;
 	top: 0;
 	width: 100%;
+	border-bottom: 4px solid #121418;
 }
 
 .editor-item {
 	border-right: 2px solid #121418;
 	height: 50%;
-	min-height: 160px;
-	min-width: 33.33%;
+	min-width: 33.28%;
 	width: auto;
 }
 
@@ -155,7 +160,7 @@ body {
 /* No border-right for JS editor*/
 
 .editor-item:last-child {
-	border: 0;
+	border-right: 0;
 }
 
 .editor-label {
@@ -164,7 +169,8 @@ body {
 	font-family: 'Segoe UI Semibold', Tahoma, Geneva, Verdana, sans-serif;
 	height: 32px;
 	line-height: 32px;
-	padding-left: 45px;
+	text-align: center;
+	/*padding-right: 5px;*/
 }
 
 .editor-label:hover {
@@ -183,10 +189,20 @@ body {
 /* result-viewport: The container holding iframe element */
 
 .result-viewport {
-	background: #FFFFFF;
+	height: calc(100% - 384px);
 	border: 0;
-	height: auto;
+	margin: 0;
+	background: white;
 	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.result-viewport body {
+	margin: 0;
+	border: 0;
+	padding: 0;
 }
 
 

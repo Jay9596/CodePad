@@ -115,6 +115,10 @@ onload = function () {
 		window.close();
 	});
 
+	document.getElementById("close-window").addEventListener("click", function (e) {
+		const window = remote.getCurrentWindow();
+		window.close();
+	});
 	document.getElementById("new").addEventListener("click", handleNewButton);
 
 	editor[0] = CodeMirror(
