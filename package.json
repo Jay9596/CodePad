@@ -1,8 +1,8 @@
 {
-  "name": "codeplay",
+  "name": "codepad",
   "version": "0.0.1",
   "description": "An development playground for HTML/CSS/JS",
-  "productName": "Codeplay",
+  "productName": "Codepad",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -10,7 +10,7 @@
     "build-win": "export NODE_ENV=production && node build.js win",
     "build-linux": "export NODE_ENV=production && node build.js linux"
   },
-  "repository": "https://github.com/apollonian11/Codeplay",
+  "repository": "https://github.com/jay9695/codepad",
   "keywords": [
     "electron",
     "front-end",

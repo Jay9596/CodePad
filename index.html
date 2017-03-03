@@ -3,16 +3,18 @@
 
 <head>
 	<title>Codepad</title>
-	<script src="./lib/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+	<script src="lib/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
 	<script src="editor.js"></script>
 	<script src="cm/lib/codemirror.js"></script>
 	<script src="cm/mode/css/css.js"></script>
 	<script src="cm/mode/xml/xml.js"></script>
 	<script src="cm/mode/javascript/javascript.js"></script>
 	<script src="cm/mode/htmlmixed/htmlmixed.js"></script>
+	<script src="cm/addon/simplescrollbars.js"></script>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/fonts.css">
 	<link rel="stylesheet" href="cm/lib/codemirror.css">
+	<link rel="stylesheet" href="cm/addon/simplescrollbars.css">
 	<link rel="stylesheet" href="cm/theme/base16-ocean-dark.css">
 </head>
 
@@ -64,6 +66,7 @@
 					</ul>
 				</li>
 			</ul>
+			<span id="codepad-center">Codepad &beta;</span>
 			<div id="window-control">
 				<div id="min-button" class="buttons"></div>
 				<div id="max-button" class="buttons"></div>
