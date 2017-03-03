@@ -15,5 +15,8 @@
     "electron",
     "front-end",
     "editor"
-  ]
+  ],
+  "devDependencies": {
+    "standard": "^9.0.0"
+  }
 }
