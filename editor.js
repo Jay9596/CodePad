@@ -183,10 +183,10 @@ document.addEventListener("keyup", function (e) {
 });
 
 
-// TODO: Limit execution to 1 ❌
+// TODO: Limit execution to 1 ✔
 // DONE: All JS and CSS can be added at once ✔
 // TODO: Append all Js libraries to inUse[] and refresh outputSource ❌
-// TODO: Scripts added in order they are clicked no way to change order later on
+// DONE: Scripts added once wouldn't be added again
 function addScript() {
 	var JSMemu = document.getElementById("JSMenu");
 	var JSbuttons = JSMemu.getElementsByTagName('a');
@@ -259,7 +259,7 @@ function addStyle() {
 		if(StyFlags[2] === 0)
 		{
 			var faStr = "<link rel='stylesheet' type='text/css' href='lib/font-awesome.min.css'>"
-			styles += fsStr;
+			styles += faStr;
 			StyFlags[2] = 1;
 			console.log("Font Awesome added!");
 		}
