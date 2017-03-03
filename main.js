@@ -12,6 +12,11 @@ app.on('window-all-closed', function () {
 		app.quit();
 });
 
+function appQuit() {
+	if (process.platform != 'darwin')
+		app.quit();
+}
+
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', function () {
@@ -21,7 +26,7 @@ app.on('ready', function () {
 		height: 720,
 		frame: false,
 		minHeight: 600,
-		minWidth: 400
+		minWidth: 600
 	});
 
 	// and load the index.html of the app.
