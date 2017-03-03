@@ -21,13 +21,9 @@ var scripts = "";
 var styles = "";
 
 //Functions for AddIns
-function getScr() {
-	return scripts;
-}
+const getScr = () => scripts;
 
-function getSty() {
-	return styles;
-}
+const getSty = () => styles;
 
 
 function newFile() {
@@ -49,18 +45,7 @@ function handleNewButton(i) {
 	}
 }
 
-//Handling jQuery
-/*
- * Check for button press and insert this jQStr into plugin div
- */
-function jQButton() {
-	const jQStr = "<script src='./cm/lib/jquery-3.1.1.min.js'></script>";
-	var head_style = $('#output').contents().find('head').find('style');
-	$(jQStr).insertAfter(head_style);
-	console.log("jQuery Added");
-}
-
-
+//Context menu init()
 function initContextMenu(i) {
 	menu = new Menu();
 	menu.append(new MenuItem({
@@ -184,66 +169,109 @@ function paint(script, style) {
 	output.srcdoc = outputSource;
 }
 
+function paint(script,style) {
+	outputSource = '<html>' + '<head>'+ style + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + script +  '<script>' + js.getValue() + '</script>' + '</body>' + '</html>';
+	console.log(outputSource);
+	output.srcdoc = outputSource;
+}
+
 // TODO: Use CodeMirror.change instead
 document.addEventListener("keyup", function (e) {
 	scr = getScr();
 	sty = getSty();
-	paint(scr, sty);
+	paint(scr,sty);
 });
 
 
-// TODO: Limit execution to 1 ❌
+// TODO: Limit execution to 1 ✔
 // DONE: All JS and CSS can be added at once ✔
 // TODO: Append all Js libraries to inUse[] and refresh outputSource ❌
-// TODO: Scripts added in order they are clicked no way to change order later on
+// DONE: Scripts added once wouldn't be added again
 function addScript() {
 	var JSMemu = document.getElementById("JSMenu");
 	var JSbuttons = JSMemu.getElementsByTagName('a');
+	var ScrFlags = [0,0,0];
 	JSbuttons[0].addEventListener("click", function (e) {
 		console.log("JS 0");
-		var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script><script src='lib/bootstrap.min.js'></script>"
-		scripts += jQStr;
-		console.log("Bootstrap added!");
+		if(ScrFlags[1] === 0)
+		{
+			var jQStr = "<script src='lib/jquery-3.1.1.min.js'>"
+			scripts += jQStr;
+			ScrFlags[1] = 1;
+			console.log("jQuery added!");
+		}
+		if(ScrFlags[0] === 0)
+		{
+			var bootjsStr = "</script><script src='lib/bootstrap.min.js'></script>"
+			scripts += bootjsStr;
+			ScrFlags[0] = 1;
+			console.log("Bootstrap added!");
+		}
 	});
 	JSbuttons[1].addEventListener("click", function (e) {
 		console.log("JS 1");
-		var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script>"
-		scripts += jQStr;
-		console.log("jQuery added!");
+		if(ScrFlags[1] === 0)
+		{
+			var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script>"
+			scripts += jQStr;
+			ScrFlags[1] = 1;
+			console.log("jQuery added!");
+		}
 	});
 	JSbuttons[2].addEventListener("click", function (e) {
 		console.log("JS 2");
-		var jQStr = "<script src='lib/three.min.js'></script>"
-		scripts += jQStr;
-		console.log("Three.js added!");
+		if(ScrFlags[2] === 0)
+		{
+			var js3Str = "<script src='lib/three.min.js'></script>"
+			scripts += js3Str;
+			ScrFlags[2] = 1;
+			console.log("Three.js added!");
+		}
 	});
 };
 
 function addStyle() {
 	var CSSMenu = document.getElementById("CSSMenu");
 	var CSSbuttons = CSSMenu.getElementsByTagName('a');
+	var StyFlags = [0,0,0,0];
 	CSSbuttons[0].addEventListener("click", function (e) {
 		console.log("CSS 0");
-		var bootStr = "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"
-		styles += bootStr;
-		console.log("Animate added!");
+		if(StyFlags[0] === 0)
+		{
+			var aniStr = "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"
+			styles += aniStr;
+			StyFlags[0] = 1;
+			console.log("Animate added!");
+		}	
 	});
 	CSSbuttons[1].addEventListener("click", function (e) {
 		console.log("CSS 1");
-		var matStr = "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>";
-		styles += matStr;
-		console.log("Bootstrap added!");
+		if(StyFlags[1] === 1)
+		{
+			var bootStr = "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>";
+			styles += bootStr;
+			StyFlags[1] = 1;
+			console.log("Bootstrap added!");
+		}
 	});
 	CSSbuttons[2].addEventListener("click", function (e) {
 		console.log("CSS 2");
-		var bootStr = "<link rel='stylesheet' type='text/css' href='lib/font-awesome.min.css'>"
-		styles += bootStr;
-		console.log("Font Awesome added!");
+		if(StyFlags[2] === 0)
+		{
+			var faStr = "<link rel='stylesheet' type='text/css' href='lib/font-awesome.min.css'>"
+			styles += faStr;
+			StyFlags[2] = 1;
+			console.log("Font Awesome added!");
+		}
 	});
 	CSSbuttons[3].addEventListener("click", function (e) {
 		console.log("CSS 3");
-		var bootStr = "<link href='lib/materialize.min.css'>"
-		styles += bootStr;
-		console.log("Materialize added!");
+		if(StyFlags[3] === 0)
+		{
+			var matStr = "<link href='lib/materialize.min.css'>"
+			styles += matStr;
+			StyFlags[3] = 1;
+			console.log("Materialize added!");
+		}	
 	});
 };
