@@ -170,29 +170,29 @@ onload = function () {
   css = editor[1]
   js = editor[2]
 
-  html.on('change', function (css, change) {
+  html.on('change', function (change) {
     paint()
   })
 
-  css.on('change', function (css, change) {
+  css.on('change', function (change) {
     paint()
   })
 
-  js.on('change', function (css, change) {
+  js.on('change', function (change) {
     paint()
   })
 
-  html.on('focus', function (css, change) {
+  html.on('focus', function (change) {
     removeFocus(editorLabels)
     editorLabels[0].classList.add('editor-focus')
   })
 
-  css.on('focus', function (css, change) {
+  css.on('focus', function (change) {
     removeFocus(editorLabels)
     editorLabels[1].classList.add('editor-focus')
   })
 
-  js.on('focus', function (css, change) {
+  js.on('focus', function (change) {
     removeFocus(editorLabels)
     editorLabels[2].classList.add('editor-focus')
   })
@@ -231,37 +231,56 @@ function addScript () {
   var jsMenu = document.getElementById('js-menu')
   var jsButtons = jsMenu.getElementsByTagName('a')
   let jsSpan = jsMenu.querySelectorAll('span')
-  var ScrFlags = [0, 0, 0]
+  var ScrFlags = [0, 0, 0, 0, 0]
   jsButtons[0].addEventListener('click', function (e) {
     toggleStatus(0, jsSpan)
-    if (ScrFlags[1] === 0) {
-      var jQStr = "<script src='lib/jquery-3.1.1.min.js'>"
-      scripts += jQStr
-      ScrFlags[1] = 1
-      console.log('jQuery added!')
-    }
     if (ScrFlags[0] === 0) {
-      var bootjsStr = "</script><script src='lib/bootstrap.min.js'></script>"
+      var bootjsStr = "<script src='lib/anime.min.js'></script>"
       scripts += bootjsStr
       ScrFlags[0] = 1
-      console.log('Bootstrap added!')
+      console.log('Anime added!')
     }
   })
   jsButtons[1].addEventListener('click', function (e) {
     toggleStatus(1, jsSpan)
-    if (ScrFlags[1] === 0) {
-      var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script>"
+    toggleStatus(2, jsSpan)
+    if (ScrFlags[2] === 0) {
+      var jQStr = "<script src='lib/jquery-3.1.1.min.js'>"
       scripts += jQStr
-      ScrFlags[1] = 1
+      ScrFlags[2] = 1
       console.log('jQuery added!')
+    }
+    if (ScrFlags[1] === 1) {
+      var bootjsStr = "</script><script src='lib/bootstrap.min.js'></script>"
+      scripts += bootjsStr
+      ScrFlags[1] = 1
+      console.log('Bootstrap added!')
     }
   })
   jsButtons[2].addEventListener('click', function (e) {
     toggleStatus(2, jsSpan)
     if (ScrFlags[2] === 0) {
+      var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script>"
+      scripts += jQStr
+      ScrFlags[2] = 1
+      console.log('jQuery added!')
+    }
+  })
+  jsButtons[3].addEventListener('click', function (e) {
+    toggleStatus(3, jsSpan)
+    if (ScrFlags[3] === 0) {
+      var js3Str = "<script src='lib/materialize.js'></script>"
+      scripts += js3Str
+      ScrFlags[3] = 1
+      console.log('Materialize.js added!')
+    }
+  })
+  jsButtons[4].addEventListener('click', function (e) {
+    toggleStatus(4, jsSpan)
+    if (ScrFlags[4] === 0) {
       var js3Str = "<script src='lib/three.min.js'></script>"
       scripts += js3Str
-      ScrFlags[2] = 1
+      ScrFlags[4] = 1
       console.log('Three.js added!')
     }
   })
