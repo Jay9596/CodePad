@@ -15,11 +15,31 @@ const {
 // Global variables
 var scripts = ''
 var styles = ''
+var currentEditor = ''
 
 // Functions for AddIns
 const getScr = () => scripts
-
 const getSty = () => styles
+const getCurEditor = () => {getEditor(); return currentEditor}
+
+function getEditor()
+{
+  if(html.hasFocus())
+  {
+     currentEditor = html;
+     console.warn('html');
+  }
+  if(css.hasFocus())
+  {
+     currentEditor = css;
+     console.warn('css');
+  }
+  if(js.hasFocus())
+  {
+     currentEditor = js;
+     console.warn('js');
+  }
+}
 
 function newFile () {
   fileEntry = null
@@ -36,25 +56,33 @@ function handleNewButton (i) {
 }
 
 // Context menu init()
-function initContextMenu (i) {
+function initContextMenu () {
   menu = new Menu()
   menu.append(new MenuItem({
     label: 'Copy',
     click: function () {
-      clipboard.writeText(editor[i].getSelection(), 'copy')
+      var editor = getCurEditor();
+      console.info(editor);
+      var text = editor.getSelection();
+      clipboard.writeText(text)
     }
   }))
   menu.append(new MenuItem({
     label: 'Cut',
     click: function () {
-      clipboard.writeText(editor[i].getSelection(), 'copy')
-      editor[i].replaceSelection('')
+      var editor = getCurEditor();
+      console.info(editor);
+      var text = editor.getSelection();
+      clipboard.writeText(text);
+      editor.replaceSelection('')
     }
   }))
   menu.append(new MenuItem({
     label: 'Paste',
     click: function () {
-      editor[i].replaceSelection(clipboard.readText('copy'))
+      var editor = getCurEditor();
+      console.info(editor);
+      editor.replaceSelection(clipboard.readText())
     }
   }))
 
@@ -186,7 +214,7 @@ onresize = function () {
   }
 }
 
-function paint () {
+function paint () {  
   output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
   console.log(output.srcdoc)
 }
