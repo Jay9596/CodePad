@@ -1,6 +1,6 @@
 var editor = []
 var menu
-var output, html, css, js, outputSource, scr, sty
+var output, html, css, js
 
 const {
   remote,
@@ -142,6 +142,18 @@ onload = function () {
   css = editor[1]
   js = editor[2]
 
+  html.on('change', function (css, change) {
+    paint()
+  })
+
+  css.on('change', function (css, change) {
+    paint()
+  })
+
+  js.on('change', function (css, change) {
+    paint()
+  })
+
   addScript()
   addStyle()
   newFile()
@@ -154,25 +166,26 @@ onresize = function () {
   }
 }
 
-function paint (script, style) {
-  outputSource = '<html>' + '<head>' + style + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + script + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
-  console.log(outputSource)
-  output.srcdoc = outputSource
+function paint () {
+  output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
+  console.log(output.srcdoc)
 }
 
-// TODO: Use CodeMirror.change instead
-document.addEventListener('keyup', function (e) {
-  scr = getScr()
-  sty = getSty()
-  paint(scr, sty)
-})
+function toggleStatus (i, span) {
+  if (span[i].classList.contains('status-active')) {
+    span[i].classList.remove('status-active')
+  } else {
+    span[i].classList.add('status-active')
+  }
+}
 
 function addScript () {
-  var JSMemu = document.getElementById('JSMenu')
-  var JSbuttons = JSMemu.getElementsByTagName('a')
+  var jsMenu = document.getElementById('js-menu')
+  var jsButtons = jsMenu.getElementsByTagName('a')
+  let jsSpan = jsMenu.querySelectorAll('span')
   var ScrFlags = [0, 0, 0]
-  JSbuttons[0].addEventListener('click', function (e) {
-    console.log('JS 0')
+  jsButtons[0].addEventListener('click', function (e) {
+    toggleStatus(0, jsSpan)
     if (ScrFlags[1] === 0) {
       var jQStr = "<script src='lib/jquery-3.1.1.min.js'>"
       scripts += jQStr
@@ -186,8 +199,8 @@ function addScript () {
       console.log('Bootstrap added!')
     }
   })
-  JSbuttons[1].addEventListener('click', function (e) {
-    console.log('JS 1')
+  jsButtons[1].addEventListener('click', function (e) {
+    toggleStatus(1, jsSpan)
     if (ScrFlags[1] === 0) {
       var jQStr = "<script src='lib/jquery-3.1.1.min.js'></script>"
       scripts += jQStr
@@ -195,8 +208,8 @@ function addScript () {
       console.log('jQuery added!')
     }
   })
-  JSbuttons[2].addEventListener('click', function (e) {
-    console.log('JS 2')
+  jsButtons[2].addEventListener('click', function (e) {
+    toggleStatus(2, jsSpan)
     if (ScrFlags[2] === 0) {
       var js3Str = "<script src='lib/three.min.js'></script>"
       scripts += js3Str
@@ -207,11 +220,12 @@ function addScript () {
 };
 
 function addStyle () {
-  var CSSMenu = document.getElementById('CSSMenu')
-  var CSSbuttons = CSSMenu.getElementsByTagName('a')
+  var cssMenu = document.getElementById('css-menu')
+  var cssButtons = cssMenu.getElementsByTagName('a')
+  let cssSpan = cssMenu.querySelectorAll('span')
   var StyFlags = [0, 0, 0, 0]
-  CSSbuttons[0].addEventListener('click', function (e) {
-    console.log('CSS 0')
+  cssButtons[0].addEventListener('click', function (e) {
+    toggleStatus(0, cssSpan)
     if (StyFlags[0] === 0) {
       var aniStr = "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"
       styles += aniStr
@@ -219,17 +233,17 @@ function addStyle () {
       console.log('Animate added!')
     }
   })
-  CSSbuttons[1].addEventListener('click', function (e) {
-    console.log('CSS 1')
-    if (StyFlags[1] === 1) {
+  cssButtons[1].addEventListener('click', function (e) {
+    toggleStatus(1, cssSpan)
+    if (StyFlags[1] === 0) {
       var bootStr = "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>"
       styles += bootStr
       StyFlags[1] = 1
       console.log('Bootstrap added!')
     }
   })
-  CSSbuttons[2].addEventListener('click', function (e) {
-    console.log('CSS 2')
+  cssButtons[2].addEventListener('click', function (e) {
+    toggleStatus(2, cssSpan)
     if (StyFlags[2] === 0) {
       var faStr = "<link rel='stylesheet' type='text/css' href='lib/font-awesome.min.css'>"
       styles += faStr
@@ -237,8 +251,8 @@ function addStyle () {
       console.log('Font Awesome added!')
     }
   })
-  CSSbuttons[3].addEventListener('click', function (e) {
-    console.log('CSS 3')
+  cssButtons[3].addEventListener('click', function (e) {
+    toggleStatus(3, cssSpan)
     if (StyFlags[3] === 0) {
       var matStr = "<link href='lib/materialize.min.css'>"
       styles += matStr

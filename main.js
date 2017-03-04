@@ -22,7 +22,8 @@ app.on('ready', function () {
     height: 720,
     frame: false,
     minHeight: 600,
-    minWidth: 600
+    minWidth: 600,
+    icon: __dirname + '/assets/CB.ico'
   })
 
   // and load the index.html of the app.

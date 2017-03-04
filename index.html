@@ -2,91 +2,95 @@
 <html>
 
 <head>
-	<title>Codepad</title>
-	<script src="lib/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
-	<script src="editor.js"></script>
-	<script src="cm/lib/codemirror.js"></script>
-	<script src="cm/mode/css/css.js"></script>
-	<script src="cm/mode/xml/xml.js"></script>
-	<script src="cm/mode/javascript/javascript.js"></script>
-	<script src="cm/mode/htmlmixed/htmlmixed.js"></script>
-	<script src="cm/addon/simplescrollbars.js"></script>
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/fonts.css">
-	<link rel="stylesheet" href="cm/lib/codemirror.css">
-	<link rel="stylesheet" href="cm/addon/simplescrollbars.css">
-	<link rel="stylesheet" href="cm/theme/base16-ocean-dark.css">
+  <title>Codepad</title>
+  <script src="lib/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+  <script src="editor.js"></script>
+  <script src="cm/lib/codemirror.js"></script>
+  <script src="cm/mode/css/css.js"></script>
+  <script src="cm/mode/xml/xml.js"></script>
+  <script src="cm/mode/javascript/javascript.js"></script>
+  <script src="cm/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="cm/addon/simplescrollbars.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="cm/lib/codemirror.css">
+  <link rel="stylesheet" href="cm/addon/simplescrollbars.css">
+  <link rel="stylesheet" href="cm/theme/base16-ocean-dark.css">
 </head>
 
 <body>
-	<div class="menu-bar">
-		<nav id="menu-items">
-			<ul>
-				<li><a href="#" class="menu-item">File</a>
-					<ul>
-						<li><a href="#" id="new" class="submenu-item">New Window</a></li>
-						<li><a href="#" id="save" class="submenu-item disabled">Save</a></li>
-						<li><a href="#" id="run" class="submenu-item disabled">Run in Browser</a></li>
-						<li><a href="#" id="prefs" class="submenu-item disabled">Preferences</a></li>
-						<li><a href="#" id="close-window" class="submenu-item">Close Window</a></li>
-						<!--<li><a href="#" id="quit" class="submenu-item">Quit</a></li>-->
-					</ul>
-				</li>
-				<li><a href="#" class="menu-item">Edit</a>
-					<ul>
-						<li><a href="#" id="undo" class="submenu-item">Undo</a></li>
-						<li><a href="#" id="redo" class="submenu-item">Redo</a></li>
-						<li><a href="#" id="cut" class="submenu-item">Cut</a></li>
-						<li><a href="#" id="copy" class="submenu-item">Copy</a></li>
-						<li><a href="#" id="paste" class="submenu-item">Paste</a></li>
+  <div class="menu-bar">
+    <nav id="menu-items">
+      <ul>
+        <li class="dropdown">
+          <a href="#" class="menu-item">File</a>
+          <ul class="dropdown-content">
+            <li><a href="#" id="new" class="submenu-item">New Window<span class="shortcut">Ctrl+N</span></a></li>
+            <li><a href="#" id="save" class="submenu-item disabled">Save<span class="shortcut">Ctrl+S</span></a></li>
+            <li><a href="#" id="run" class="submenu-item disabled">Run in Browser<span class="shortcut">F5</span></a></li>
+            <li><a href="#" id="prefs" class="submenu-item disabled">Preferences<span class="shortcut">Ctrl+P</span></a></li>
+            <li><a href="#" id="close-window" class="submenu-item">Close Window<span class="shortcut">Ctrl+W</span></a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="menu-item">Edit</a>
+          <ul class="dropdown-content">
+            <li><a href="#" id="undo" class="submenu-item">Undo<span class="shortcut">Ctrl+Z</span></a></li>
+            <li><a href="#" id="redo" class="submenu-item">Redo<span class="shortcut">Ctrl+Y</span></a></li>
+            <li><a href="#" id="cut" class="submenu-item">Cut<span class="shortcut">Ctrl+X</span></a></li>
+            <li><a href="#" id="copy" class="submenu-item">Copy<span class="shortcut">Ctrl+C</span></a></li>
+            <li><a href="#" id="paste" class="submenu-item">Paste<span class="shortcut">Ctrl+V</span></a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="menu-item">Help</a>
+          <ul class="dropdown-content">
+            <li><a href="#" id="check-updates" class="submenu-item">Check for updates..</a></li>
+            <li><a href="#" id="contribute" class="submenu-item">Contribute</a></li>
+            <li><a href="#" id="about" class="submenu-item">About</a></li>
+          </ul>
 
-					</ul>
-				</li>
-				<li><a href="#" class="menu-item">Help</a>
-					<ul>
-						<!--<li><a href="#" id="check-updates" class="submenu-item">Check for updates..</a></li>-->
-						<li><a href="#" id="contribute" class="submenu-item">Contribute</a></li>
-						<li><a href="#" id="about" class="submenu-item">About</a></li>
-					</ul>
-				</li>
-				<li><a href="#" class="menu-item" style="color: #F2672E;">+CSS</a>
-					<ul id="CSSMenu">
-						<li><a href="#" class="submenu-item">+Animate</a></li>
-						<li><a href="#" class="submenu-item">+Bootstrap</a></li>
-						<li><a href="#" class="submenu-item">+Font Awesome</a></li>
-						<li><a href="#" class="submenu-item">+Materialize</a></li>
-					</ul>
-				</li>
-				<li><a href="#" class="menu-item" style="color: #F1BE24;">+JS</a>
-					<ul id="JSMenu">
-						<li><a href="#" class="submenu-item">+Bootstrap</a></li>
-						<li><a href="#" class="submenu-item">+jQuery</a></li>
-						<li><a href="#" class="submenu-item">+Three</a></li>
-					</ul>
-				</li>
-			</ul>
-			<span id="codepad-center">Codepad &beta;</span>
-			<div id="window-control">
-				<div id="min-button" class="buttons"></div>
-				<div id="max-button" class="buttons"></div>
-				<div id="close-button" class="buttons"></div>
-			</div>
-		</nav>
-	</div>
-	<div class="editor">
-		<div id="html-editor" class="editor-item">
-			<div class="editor-label">HTML</div>
-		</div>
-		<div id="css-editor" class="editor-item">
-			<div class="editor-label">CSS</div>
-		</div>
-		<div id="js-editor" class="editor-item">
-			<div class="editor-label">JS</div>
-		</div>
-	</div>
-	<div class="result-viewport">
-		<iframe id="output"></iframe>
-	</div>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="menu-item" style="color: #F2672E;">+CSS</a>
+          <ul id="css-menu" class="dropdown-content">
+            <li><a href="#" class="submenu-item">+Animate<span class="status"></span></a></li>
+            <li><a href="#" class="submenu-item">+Bootstrap<span class="status"></span></a></li>
+            <li><a href="#" class="submenu-item">+Font Awesome<span class="status"></span></a></li>
+            <li><a href="#" class="submenu-item">+Materialize<span class="status"></span></a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="menu-item" style="color: #F1BE24;">+JS</a>
+          <ul id="js-menu" class="dropdown-content">
+            <li><a href="#" class="submenu-item">+Bootstrap<span class="status"></span></a></li>
+            <li><a href="#" class="submenu-item">+jQuery<span class="status"></span></a></li>
+            <li><a href="#" class="submenu-item">+Three<span class="status"></span></a></li>
+          </ul>
+        </li>
+      </ul>
+      <span id="codepad-center">Codepad &beta;</span>
+      <div id="window-control">
+        <div id="min-button" class="buttons"></div>
+        <div id="max-button" class="buttons"></div>
+        <div id="close-button" class="buttons"></div>
+      </div>
+    </nav>
+  </div>
+  <div class="editor">
+    <div id="html-editor" class="editor-item">
+      <div class="editor-label">HTML</div>
+    </div>
+    <div id="css-editor" class="editor-item">
+      <div class="editor-label">CSS</div>
+    </div>
+    <div id="js-editor" class="editor-item">
+      <div class="editor-label">JS</div>
+    </div>
+  </div>
+  <div class="result-viewport">
+    <iframe id="output"></iframe>
+  </div>
 </body>
 
 </html>
