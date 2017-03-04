@@ -20,24 +20,23 @@ var currentEditor = ''
 // Functions for AddIns
 const getScr = () => scripts
 const getSty = () => styles
-const getCurEditor = () => {getEditor(); return currentEditor}
+const getCurEditor = () => {
+  getEditor()
+  return currentEditor
+}
 
-function getEditor()
-{
-  if(html.hasFocus())
-  {
-     currentEditor = html;
-     console.warn('html');
+function getEditor () {
+  if (html.hasFocus()) {
+    currentEditor = html
+    console.warn('html')
   }
-  if(css.hasFocus())
-  {
-     currentEditor = css;
-     console.warn('css');
+  if (css.hasFocus()) {
+    currentEditor = css
+    console.warn('css')
   }
-  if(js.hasFocus())
-  {
-     currentEditor = js;
-     console.warn('js');
+  if (js.hasFocus()) {
+    currentEditor = js
+    console.warn('js')
   }
 }
 
@@ -61,27 +60,27 @@ function initContextMenu () {
   menu.append(new MenuItem({
     label: 'Copy',
     click: function () {
-      var editor = getCurEditor();
-      console.info(editor);
-      var text = editor.getSelection();
+      var editor = getCurEditor()
+      console.info(editor)
+      var text = editor.getSelection()
       clipboard.writeText(text)
     }
   }))
   menu.append(new MenuItem({
     label: 'Cut',
     click: function () {
-      var editor = getCurEditor();
-      console.info(editor);
-      var text = editor.getSelection();
-      clipboard.writeText(text);
+      var editor = getCurEditor()
+      console.info(editor)
+      var text = editor.getSelection()
+      clipboard.writeText(text)
       editor.replaceSelection('')
     }
   }))
   menu.append(new MenuItem({
     label: 'Paste',
     click: function () {
-      var editor = getCurEditor();
-      console.info(editor);
+      var editor = getCurEditor()
+      console.info(editor)
       editor.replaceSelection(clipboard.readText())
     }
   }))
@@ -214,7 +213,7 @@ onresize = function () {
   }
 }
 
-function paint () {  
+function paint () {
   output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
   console.log(output.srcdoc)
 }
