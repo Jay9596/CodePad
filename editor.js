@@ -137,7 +137,7 @@ onload = function () {
     })
 
   output = document.getElementById('output')
-
+  editorLabels = document.getElementsByClassName('editor-label')
   html = editor[0]
   css = editor[1]
   js = editor[2]
@@ -154,12 +154,32 @@ onload = function () {
     paint()
   })
 
+  html.on('focus', function (css, change) {
+    removeFocus(editorLabels)
+    editorLabels[0].classList.add('editor-focus')
+  })
+
+  css.on('focus', function (css, change) {
+    removeFocus(editorLabels)
+    editorLabels[1].classList.add('editor-focus')
+  })
+
+  js.on('focus', function (css, change) {
+    removeFocus(editorLabels)
+    editorLabels[2].classList.add('editor-focus')
+  })
+
   addScript()
   addStyle()
   newFile()
   onresize()
 }
 
+function removeFocus (editor) {
+  for (var i = 0; i < editor.length; i++) {
+    editor[i].classList.remove('editor-focus')
+  }
+}
 onresize = function () {
   for (var i = 0; i < 3; i++) {
     editor[i].refresh()
