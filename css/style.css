@@ -253,12 +253,6 @@ li.dropdown {
   z-index: 1;
 }
 
-.result-viewport body {
-  margin: 0;
-  border: 0;
-  padding: 0;
-}
-
 
 /* output: iframe element*/
 

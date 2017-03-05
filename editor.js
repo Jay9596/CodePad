@@ -131,7 +131,9 @@ onload = function () {
       lineNumbers: true,
       lineWrapping: true,
       autofocus: true,
-      indentWithTabs: true,
+      indentWithTabs: false,
+      indentUnit: 2,
+      smartIndent: true,
       scrollbarStyle: 'overlay',
       theme: 'base16-ocean-dark'
     })
@@ -143,9 +145,9 @@ onload = function () {
       },
       lineNumbers: true,
       lineWrapping: true,
-      indentWithTabs: true,
-      // Having issues with smartIndent. Therfore, turned off.
-      smartIndent: false,
+      indentWithTabs: false,
+      indentUnit: 2,
+      smartIndent: true,
       scrollbarStyle: 'overlay',
       theme: 'base16-ocean-dark'
     })
@@ -158,7 +160,9 @@ onload = function () {
       },
       lineNumbers: true,
       lineWrapping: true,
-      indentWithTabs: true,
+      indentWithTabs: false,
+      indentUnit: 2,
+      smartIndent: true,
       scrollbarStyle: 'overlay',
       theme: 'base16-ocean-dark'
     })
@@ -214,7 +218,7 @@ onresize = function () {
 }
 
 function paint () {
-  output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
+  output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{margin:0;border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
   console.log(output.srcdoc)
 }
 
@@ -230,7 +234,7 @@ function addScript () {
   var jsMenu = document.getElementById('js-menu')
   var jsButtons = jsMenu.getElementsByTagName('a')
   let jsSpan = jsMenu.querySelectorAll('span')
-  var ScrFlags = [0, 0, 0, 0, 0]
+  var ScrFlags = [0, 0, 0, 0]
   jsButtons[0].addEventListener('click', function (e) {
     toggleStatus(0, jsSpan)
     if (ScrFlags[0] === 0) {
@@ -249,7 +253,7 @@ function addScript () {
       ScrFlags[2] = 1
       console.log('jQuery added!')
     }
-    if (ScrFlags[1] === 1) {
+    if (ScrFlags[2] === 1) {
       var bootjsStr = "</script><script src='lib/bootstrap.min.js'></script>"
       scripts += bootjsStr
       ScrFlags[1] = 1
@@ -268,18 +272,9 @@ function addScript () {
   jsButtons[3].addEventListener('click', function (e) {
     toggleStatus(3, jsSpan)
     if (ScrFlags[3] === 0) {
-      var js3Str = "<script src='lib/materialize.js'></script>"
-      scripts += js3Str
-      ScrFlags[3] = 1
-      console.log('Materialize.js added!')
-    }
-  })
-  jsButtons[4].addEventListener('click', function (e) {
-    toggleStatus(4, jsSpan)
-    if (ScrFlags[4] === 0) {
       var js3Str = "<script src='lib/three.min.js'></script>"
       scripts += js3Str
-      ScrFlags[4] = 1
+      ScrFlags[3] = 1
       console.log('Three.js added!')
     }
   })
@@ -289,7 +284,7 @@ function addStyle () {
   var cssMenu = document.getElementById('css-menu')
   var cssButtons = cssMenu.getElementsByTagName('a')
   let cssSpan = cssMenu.querySelectorAll('span')
-  var StyFlags = [0, 0, 0, 0]
+  var StyFlags = [0, 0, 0]
   cssButtons[0].addEventListener('click', function (e) {
     toggleStatus(0, cssSpan)
     if (StyFlags[0] === 0) {
@@ -315,15 +310,6 @@ function addStyle () {
       styles += faStr
       StyFlags[2] = 1
       console.log('Font Awesome added!')
-    }
-  })
-  cssButtons[3].addEventListener('click', function (e) {
-    toggleStatus(3, cssSpan)
-    if (StyFlags[3] === 0) {
-      var matStr = "<link href='lib/materialize.min.css'>"
-      styles += matStr
-      StyFlags[3] = 1
-      console.log('Materialize added!')
     }
   })
 };

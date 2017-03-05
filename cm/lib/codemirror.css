@@ -5,9 +5,9 @@
 	height: 320px;
 	color: black;
 	font-size: 14px;
-	line-height: 20px;
-	font-family: 'Source Code Pro';
-	font-weight: 600;
+	line-height: 24px;
+	font-family: 'Source Code Pro', 'Roboto Mono', 'Courier New', 'Courier', monospace;
+	font-weight: 400;
 }
 
 
