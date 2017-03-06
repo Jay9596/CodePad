@@ -2,10 +2,9 @@ var editor = []
 var menu
 var output, html, css, js
 
-const {
-  remote,
-  clipboard
-} = require('electron')
+const electron = require('electron')
+const remote = electron.remote
+const clipboard = electron.clipboard
 
 const {
   Menu,
@@ -25,7 +24,7 @@ const getCurEditor = () => {
   return currentEditor
 }
 
-function getEditor () {
+function getEditor() {
   if (html.hasFocus()) {
     currentEditor = html
     console.warn('html')
@@ -40,12 +39,12 @@ function getEditor () {
   }
 }
 
-function newFile () {
+function newFile() {
   fileEntry = null
   hasWriteAccess = false
 }
 
-function handleNewButton (i) {
+function handleNewButton(i) {
   if (false) {
     newFile()
     editor[i].setValue('')
@@ -55,7 +54,7 @@ function handleNewButton (i) {
 }
 
 // Context menu init()
-function initContextMenu () {
+function initContextMenu() {
   menu = new Menu()
   menu.append(new MenuItem({
     label: 'Copy',
@@ -206,7 +205,7 @@ onload = function () {
   onresize()
 }
 
-function removeFocus (editor) {
+function removeFocus(editor) {
   for (var i = 0; i < editor.length; i++) {
     editor[i].classList.remove('editor-focus')
   }
@@ -217,12 +216,12 @@ onresize = function () {
   }
 }
 
-function paint () {
+function paint() {
   output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{margin:0;border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
   console.log(output.srcdoc)
 }
 
-function toggleStatus (i, span) {
+function toggleStatus(i, span) {
   if (span[i].classList.contains('status-active')) {
     span[i].classList.remove('status-active')
   } else {
@@ -230,7 +229,7 @@ function toggleStatus (i, span) {
   }
 }
 
-function addScript () {
+function addScript() {
   var jsMenu = document.getElementById('js-menu')
   var jsButtons = jsMenu.getElementsByTagName('a')
   let jsSpan = jsMenu.querySelectorAll('span')
@@ -308,7 +307,7 @@ function addScript () {
   })
 };
 
-function addStyle () {
+function addStyle() {
   var cssMenu = document.getElementById('css-menu')
   var cssButtons = cssMenu.getElementsByTagName('a')
   let cssSpan = cssMenu.querySelectorAll('span')
