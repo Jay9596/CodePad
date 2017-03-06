@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "codepad",
   "version": "0.1.1",
   "description": "An offline front-end development playground",
@@ -22,29 +22,11 @@
     "appId": "org.electron.codepad",
     "asar": "true",
     "files": [
-      "**/*",
-      "!node_modules/@paulcbetts/cld/deps/cld${/*}"
+      "**/*"
     ],
     "copyright": "©2017 Abhishek Warokar, Jay Shah",
     "mac": {
       "category": "public.app-category.productivity"
-    },
-    "dmg": {
-      "background": "build/icons/512x512.png",
-      "icon": "build/icon.icns",
-      "iconSize": 128,
-      "contents": [{
-          "x": 380,
-          "y": 240,
-          "type": "link",
-          "path": "/Applications"
-        },
-        {
-          "x": 122,
-          "y": 240,
-          "type": "file"
-        }
-      ]
     },
     "win": {
       "target": "nsis",
@@ -53,7 +35,7 @@
     },
     "nsis": {
       "perMachine": true,
-      "oneClick": false
+      "oneClick": true
     }
   },
   "license": "MIT",
