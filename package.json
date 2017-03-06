@@ -49,7 +49,7 @@
     "win": {
       "target": "nsis",
       "icon": "build/icon.ico",
-      "iconUrl": "https://raw.githubusercontent.com/thecodepad/codepad/master/build/icon.ico"
+      "iconUrl": "https://raw.githubusercontent.com/jay9596/codepad/ab-develop/build/icon.ico"
     },
     "nsis": {
       "perMachine": true,

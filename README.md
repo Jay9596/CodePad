@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/Codepad Blue.png" />
+  <img src="build/icons/128x128.png" />
   <br>
   <b>CodePad</b><br>
   <i>An Offline Front-End Development Playground</i><br><br>
