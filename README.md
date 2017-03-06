@@ -16,11 +16,11 @@ Download CodePad for Windows [here](https://github.com/Jay9596/CodePad/releases/
 ### Run From Source 🎩
 
 You can run the unpackaged app via command line by following these steps:
- 1. Install nodejs
- 2. Install Electron
- 3. Clone this repository
- 4. `cd codepad`
- 5. `electron .` or `npm start`
+ 1. Install nodejs & npm
+ 2. Clone this repository
+ 3. `cd codepad`
+ 4. `npm install`
+ 5. `npm start`
 
 ### Dev To-Do List 🌈
 
