@@ -18,31 +18,11 @@
     "front-end",
     "editor"
   ],
-  "build": {
-    "appId": "org.electron.codepad",
-    "asar": "true",
-    "files": [
-      "**/*"
-    ],
-    "copyright": "©2017 Abhishek Warokar, Jay Shah",
-    "mac": {
-      "category": "public.app-category.productivity"
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "build/icon.ico",
-      "iconUrl": "https://raw.githubusercontent.com/jay9596/codepad/ab-develop/build/icon.ico"
-    },
-    "nsis": {
-      "perMachine": true,
-      "oneClick": true
-    }
-  },
   "license": "MIT",
   "devDependencies": {
     "asar": "^0.13.0",
     "electron": "^1.6.1",
-    "electron-builder": "^15.1.1",
+    "electron-packager": "^8.5.2",
     "standard": "^9.0.0"
   }
 }

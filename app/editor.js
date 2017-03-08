@@ -1,11 +1,18 @@
 const electron = require('electron')
 const clipboard = electron.clipboard
 const path = require('path')
+const shell = electron.shell
 const remote = electron.remote
 const {
   Menu,
   MenuItem
 } = remote
+
+$(document).on('click', 'a[href^="http"]', function(event) {
+  	event.preventDefault();
+    console.log('<a> clicked')
+    shell.openExternal(this.href);
+});
 
 // Global variables
 var scripts = ''

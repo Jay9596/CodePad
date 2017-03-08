@@ -25,12 +25,12 @@ You can run the unpackaged app via command line by following these steps:
 
 ### Dev To-Do List 🌈
 
-- Save the code snippet
-- Resizeable editor
-- Editor themes/appearance settings
-- Import custom libs
-- View output in fullscreen/browser
-- Preprocessor support
+- [ ] Save the code snippet
+- [ ] Resizeable editor
+- [ ] Editor themes/appearance settings
+- [ ] Import custom libs
+- [ ] View output in fullscreen/browser
+- [ ] Preprocessor support
 
 ### Credits 👨
 
