@@ -8,18 +8,12 @@ const {
   MenuItem
 } = remote
 
-$(document).on('click', 'a[href^="http"]', function(event) {
-  	event.preventDefault();
-    console.log('<a> clicked')
-    shell.openExternal(this.href);
-});
-
 // Global variables
 var scripts = ''
 var styles = ''
 var currentEditor = ''
 var editor = []
-var menu, output, html, css, js
+var menu, output, html, css, js, editorLabels
 
 // Functions for AddIns
 const getScr = () => scripts
@@ -28,6 +22,7 @@ const getCurEditor = () => {
   getEditor()
   return currentEditor
 }
+
 function getEditor () {
   if (html.hasFocus()) {
     currentEditor = html
@@ -98,10 +93,18 @@ function initContextMenu () {
 onload = function () {
   initContextMenu()
 
+  var helpMenu = document.getElementById('help-menu')
+  var helpa = helpMenu.getElementsByTagName('a')
+  for (var i = 0; i < helpa.length; i++) {
+    helpa[i].addEventListener('click', function (e) {
+      e.preventDefault()
+      shell.openExternal(this.href)
+    })
+  }
+
   document.getElementById('min-button').addEventListener('click', function (e) {
     const window = remote.getCurrentWindow()
     window.minimize()
-    console.log('Minimize Triggered!')
   })
 
   document.getElementById('max-button').addEventListener('click', function (e) {
@@ -111,8 +114,6 @@ onload = function () {
     } else {
       window.unmaximize()
     }
-    console.log('Maximize Triggered!')
-    console.log(document.getElementById('close-button'))
   })
 
   document.getElementById('close-button').addEventListener('click', function (e) {
@@ -238,7 +239,7 @@ function addScript () {
   var jsMenu = document.getElementById('js-menu')
   var jsButtons = jsMenu.getElementsByTagName('a')
   let jsSpan = jsMenu.querySelectorAll('span')
-  var ScrFlags = [0, 0, 0, 0]
+  var ScrFlags = [0, 0, 0, 0, 0]
   jsButtons[0].addEventListener('click', function (e) {
     var aniStr = "<script src='lib/anime.min.js'></script>"
     if (ScrFlags[0] === 0) {
@@ -281,7 +282,7 @@ function addScript () {
       ScrFlags[2] = 1
       console.log('jQuery added!')
       toggleStatus(2, jsSpan)
-    } else if (ScrFlags[1] !== 1) {
+    } else if (ScrFlags[1] === 0) {
       scripts = scripts.replace(jQStr, '')
       ScrFlags[2] = 0
       console.log('jQuery removed!')
@@ -289,17 +290,31 @@ function addScript () {
     }
   })
   jsButtons[3].addEventListener('click', function (e) {
-    var js3Str = "<script src='lib/three.min.js'></script>"
+    var p5Str = "<script src='lib/p5.min.js'></script>"
     if (ScrFlags[3] === 0) {
-      scripts += js3Str
+      scripts += p5Str
       ScrFlags[3] = 1
-      console.log('Three.js added!')
+      console.log('p5.js added!')
       toggleStatus(3, jsSpan)
     } else {
-      scripts = scripts.replace(js3Str, '')
+      scripts = scripts.replace(p5Str, '')
       ScrFlags[3] = 0
-      console.log('Three.js removed!')
+      console.log('p5.js removed!')
       toggleStatus(3, jsSpan)
+    }
+  })
+  jsButtons[4].addEventListener('click', function (e) {
+    var js3Str = "<script src='lib/three.min.js'></script>"
+    if (ScrFlags[4] === 0) {
+      scripts += js3Str
+      ScrFlags[4] = 1
+      console.log('Three.js added!')
+      toggleStatus(4, jsSpan)
+    } else {
+      scripts = scripts.replace(js3Str, '')
+      ScrFlags[4] = 0
+      console.log('Three.js removed!')
+      toggleStatus(4, jsSpan)
     }
   })
 };
