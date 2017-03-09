@@ -14,6 +14,8 @@ app.on('window-all-closed', () => {
   }
 })
 
+app.setAppUserModelId('CodePad')
+
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
