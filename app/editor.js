@@ -3,7 +3,9 @@ const clipboard = electron.clipboard
 const path = require('path')
 const shell = electron.shell
 const remote = electron.remote
+//const dialog = require('electron').remote
 const {
+  dialog,
   Menu,
   MenuItem
 } = remote
@@ -204,6 +206,7 @@ onload = function () {
     editorLabels[2].classList.add('editor-focus')
   })
 
+  fileMenu()
   addScript()
   addStyle()
   newFile()
@@ -223,7 +226,7 @@ onresize = function () {
 }
 
 function paint () {
-  output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{margin:0;border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
+  output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{margin:10px;border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
   console.log(output.srcdoc)
 }
 
@@ -233,6 +236,12 @@ function toggleStatus (i, span) {
   } else {
     span[i].classList.add('status-active')
   }
+}
+
+function fileMenu()
+{
+  var saveButton = document.getElementById('save');
+  console.warn(saveButton)
 }
 
 function addScript () {
