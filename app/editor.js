@@ -3,7 +3,6 @@ const clipboard = electron.clipboard
 const path = require('path')
 const shell = electron.shell
 const remote = electron.remote
-//const dialog = require('electron').remote
 const {
   dialog,
   Menu,
@@ -28,15 +27,12 @@ const getCurEditor = () => {
 function getEditor () {
   if (html.hasFocus()) {
     currentEditor = html
-    console.warn('html')
   }
   if (css.hasFocus()) {
     currentEditor = css
-    console.warn('css')
   }
   if (js.hasFocus()) {
     currentEditor = js
-    console.warn('js')
   }
 }
 
@@ -241,7 +237,10 @@ function toggleStatus (i, span) {
 function fileMenu()
 {
   var saveButton = document.getElementById('save');
-  console.warn(saveButton)
+  saveButton.addEventListener('click',() => {
+    var path = dialog.showOpenDialog({properties: ['openDirectory']})
+    console.log('path = ' + path)
+  })
 }
 
 function addScript () {
