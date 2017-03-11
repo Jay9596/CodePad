@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/Codepad Blue.png" />
+  <img src="build/icons/128x128.png" />
   <br>
   <b>CodePad</b><br>
   <i>An Offline Front-End Development Playground</i><br><br>
@@ -13,23 +13,24 @@ __CodePad__ instantly previews your code so you don't have to run back and forth
 
 Download CodePad for Windows [here](https://github.com/Jay9596/CodePad/releases/download/v1.0-beta/CodePad.rar). Extract and run CodePad.exe. Coming Soon for Ubuntu and macOS.
 
-### Advanced Installation 🎩
+
+### Run From Source 🎩
 
 You can run the unpackaged app via command line by following these steps:
- 1. Install nodejs
- 2. Install Electron
- 3. Clone this repository
- 4. `cd codepad`
- 5. `electron .` or `npm start`
+ 1. Install nodejs & npm
+ 2. Clone this repository
+ 3. `cd codepad`
+ 4. `npm install`
+ 5. `npm start`
 
 ### Dev To-Do List 🌈
 
-- Save the code snippet
-- Resizeable editor
-- Editor themes/appearance settings
-- Import custom libs
-- View output in fullscreen/browser
-- Preprocessor support
+- [ ] Save the code snippet
+- [ ] Resizeable editor
+- [ ] Editor themes/appearance settings
+- [ ] Import custom libs
+- [ ] View output in fullscreen/browser
+- [ ] Preprocessor support
 
 ### Credits 👨
 

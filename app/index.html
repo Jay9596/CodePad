@@ -2,20 +2,20 @@
 <html>
 
 <head>
-  <title>Codepad</title>
-  <script src="lib/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+  <title>CodePad</title>
+  <script src="js/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
   <script src="editor.js"></script>
-  <script src="cm/lib/codemirror.js"></script>
-  <script src="cm/mode/css/css.js"></script>
-  <script src="cm/mode/xml/xml.js"></script>
-  <script src="cm/mode/javascript/javascript.js"></script>
-  <script src="cm/mode/htmlmixed/htmlmixed.js"></script>
-  <script src="cm/addon/simplescrollbars.js"></script>
+  <script src="js/codemirror.js"></script>
+  <script src="js/css.js"></script>
+  <script src="js/xml.js"></script>
+  <script src="js/javascript.js"></script>
+  <script src="js/htmlmixed.js"></script>
+  <script src="js/simplescrollbars.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/fonts.css">
-  <link rel="stylesheet" href="cm/lib/codemirror.css">
-  <link rel="stylesheet" href="cm/addon/simplescrollbars.css">
-  <link rel="stylesheet" href="cm/theme/base16-ocean-dark.css">
+  <link rel="stylesheet" href="css/codemirror.css">
+  <link rel="stylesheet" href="css/simplescrollbars.css">
+  <link rel="stylesheet" href="css/base16-ocean-dark.css">
 </head>
 
 <body>
@@ -26,7 +26,7 @@
           <a href="#" class="menu-item">File</a>
           <ul class="dropdown-content">
             <li><a href="#" id="new" class="submenu-item" title="Open a new window">New Window<span class="shortcut">Ctrl+N</span></a></li>
-            <li><a href="#" id="save" class="submenu-item disabled" title="Save this snippet - Coming Soon">Save<span class="shortcut">Ctrl+S</span></a></li>
+            <li><a href="#" id="save" class="submenu-item" title="Save this snippet - Coming Soon">Save<span class="shortcut">Ctrl+S</span></a></li>
             <li><a href="#" id="prefs" class="submenu-item disabled" title="Editor settings and themes - Coming Soon">Preferences<span class="shortcut">Ctrl+P</span></a></li>
             <li><a href="#" id="close-window" class="submenu-item" title="Close this window">Close Window<span class="shortcut">Ctrl+W</span></a></li>
           </ul>
@@ -50,15 +50,14 @@
         </li>
         <li class="dropdown">
           <a href="#" class="menu-item">Help</a>
-          <ul class="dropdown-content">
-            <li><a href="#" id="check-updates" class="submenu-item" title="View updates on website">Check for updates..</a></li>
-            <li><a href="#" id="contribute" class="submenu-item" title="View Codepad on GitHub &#9825;">Contribute</a></li>
-            <li><a href="#" id="about" class="submenu-item" title="Go to website - Codepad v0.1.0b">About</a></li>
+          <ul class="dropdown-content" id="help-menu">
+            <li><a href="https://github.com/Jay9596/CodePad/releases" id="check-updates" class="submenu-item" title="View updates on website">Check for updates..</a></li>
+            <li><a href="https://www.github.com/thecodepad/codepad" id="contribute" class="submenu-item" title="View Codepad on GitHub &#9825;">Contribute</a></li>
+            <li><a href="https://thecodepad.github.io" id="about" class="submenu-item" title="Go to website - Codepad v0.1.1b">About</a></li>
           </ul>
-
         </li>
         <li class="dropdown">
-          <a href="#" class="menu-item" style="color: #F2672E;">+CSS</a>
+          <a href="#" class="menu-item" style="color: #F1BE24;">+CSS</a>
           <ul id="css-menu" class="dropdown-content">
             <li><a href="#" class="submenu-item">+Animate.css<span class="status"></span></a></li>
             <li><a href="#" class="submenu-item">+Bootstrap<span class="status"></span></a></li>
@@ -66,16 +65,17 @@
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="menu-item" style="color: #F1BE24;">+JS</a>
+          <a href="#" class="menu-item" style="color: #F2672E;">+JS</a>
           <ul id="js-menu" class="dropdown-content">
             <li><a href="#" class="submenu-item">+anime.js<span class="status"></span></a></li>
             <li><a href="#" class="submenu-item">+Bootstrap<span class="status"></span></a></li>
             <li><a href="#" class="submenu-item">+jQuery<span class="status"></span></a></li>
+            <li><a href="#" class="submenu-item">+p5.js<span class="status"></span></a></li>
             <li><a href="#" class="submenu-item">+three.js<span class="status"></span></a></li>
           </ul>
         </li>
       </ul>
-      <span id="codepad-center" title="Codepad">Codepad &beta;</span>
+      <span id="codepad-center" title="Codepad">CodePad &beta;</span>
       <div id="window-control">
         <div id="min-button" class="buttons" title="Minimize"></div>
         <div id="max-button" class="buttons" title="Maximize"></div>
