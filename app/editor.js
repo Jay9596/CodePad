@@ -8,6 +8,7 @@ const {
   Menu,
   MenuItem
 } = remote
+const fs = require('fs');
 
 // Global variables
 var scripts = ''
@@ -239,7 +240,33 @@ function fileMenu()
   var saveButton = document.getElementById('save');
   saveButton.addEventListener('click',() => {
     var path = dialog.showOpenDialog({properties: ['openDirectory']})
-    console.log('path = ' + path)
+    var htmlString = '<html>\n' + '<head>\n' +'<title> Add Title Here </title>\n' + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + '\n<script src="script.js">'+ '</script>\n' + '</body>\n' + '</html>'
+    //Write HTML
+    fs.writeFile(path+'/index.html',htmlString, (err) => {
+      if(err)
+      {
+        console.error(err);
+      }
+      console.log("success HTML")
+    })
+    //Write CSS
+    fs.writeFile(path+'/style.css',css.getValue(), (err) => {
+      if (err)
+      {
+        console.error(err)
+      }
+      console.log("success CSS")
+    })
+    //Write JS
+    fs.writeFile(path+'/script.js',js.getValue(), (err) => {
+      if (err)
+      {
+        console.error(err)
+      }
+      console.log("success JS")
+    })
+
+    dialog.showMessageBox({message : "Saved to "+path+"\\",buttons: ["OK" ]})
   })
 }
 
