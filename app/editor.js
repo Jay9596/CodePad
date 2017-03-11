@@ -238,7 +238,7 @@ function toggleStatus (i, span) {
 function fileMenu()
 {
   var saveButton = document.getElementById('save');
-  saveButton.addEventListener('click',() => {
+  saveButton.addEventListener('click',function() {
     var path = dialog.showOpenDialog({properties: ['openDirectory']})
     var htmlString = '<html>\n' + '<head>\n' +'<title> Add Title Here </title>\n' + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + '\n<script src="script.js">'+ '</script>\n' + '</body>\n' + '</html>'
     //Write HTML
@@ -282,28 +282,16 @@ function addScript () {
       ScrFlags[0] = 1
       console.log('Anime added!')
       toggleStatus(0, jsSpan)
-<<<<<<< HEAD:editor.js
-    }
-    else
-    {
-      scripts = scripts.replace(aniStr,'') 
-=======
     } else {
       scripts = scripts.replace(aniStr, '')
->>>>>>> testing:app/editor.js
       ScrFlags[0] = 0
       console.log('Anime removed!')
       toggleStatus(0, jsSpan)
     }
   })
   jsButtons[1].addEventListener('click', function (e) {
-<<<<<<< HEAD:editor.js
-     var jQStr = "<script src='lib/jquery-3.1.1.min.js'>"
-     var bootjsStr = "</script><script src='lib/bootstrap.min.js'></script>"
-=======
     var jQStr = "<script src='lib/jquery-3.1.1.min.js'>"
     var bootjsStr = "</script><script src='lib/bootstrap.min.js'></script>"
->>>>>>> testing:app/editor.js
     if (ScrFlags[2] === 0) {
       toggleStatus(2, jsSpan)
       scripts += jQStr
@@ -315,15 +303,8 @@ function addScript () {
       ScrFlags[1] = 1
       console.log('Bootstrap added!')
       toggleStatus(1, jsSpan)
-<<<<<<< HEAD:editor.js
-    }
-    else
-    {
-      scripts = scripts.replace(bootjsStr,'') 
-=======
     } else {
       scripts = scripts.replace(bootjsStr, '')
->>>>>>> testing:app/editor.js
       ScrFlags[1] = 0
       console.log('Bootstrap removed!')
       toggleStatus(1, jsSpan)
@@ -336,30 +317,17 @@ function addScript () {
       ScrFlags[2] = 1
       console.log('jQuery added!')
       toggleStatus(2, jsSpan)
-<<<<<<< HEAD:editor.js
-    }
-    else if(ScrFlags[1] !== 1)
-    {
-      scripts = scripts.replace(jQStr,'') 
-=======
     } else if (ScrFlags[1] === 0) {
       scripts = scripts.replace(jQStr, '')
->>>>>>> testing:app/editor.js
       ScrFlags[2] = 0
       console.log('jQuery removed!')
       toggleStatus(2, jsSpan)
     }
   })
   jsButtons[3].addEventListener('click', function (e) {
-<<<<<<< HEAD:editor.js
-    var js3Str = "<script src='lib/three.min.js'></script>"
-    if (ScrFlags[3] === 0) {
-      scripts += js3Str
-=======
     var p5Str = "<script src='lib/p5.min.js'></script>"
     if (ScrFlags[3] === 0) {
       scripts += p5Str
->>>>>>> testing:app/editor.js
       ScrFlags[3] = 1
       console.log('p5.js added!')
       toggleStatus(3, jsSpan)
@@ -376,23 +344,12 @@ function addScript () {
       scripts += js3Str
       ScrFlags[4] = 1
       console.log('Three.js added!')
-<<<<<<< HEAD:editor.js
-      toggleStatus(3, jsSpan)
-    }
-    else
-    {
-      scripts = scripts.replace(js3Str,'')
-      ScrFlags[3] = 0
-      console.log('Three.js removed!')
-      toggleStatus(3, jsSpan)
-=======
       toggleStatus(4, jsSpan)
     } else {
       scripts = scripts.replace(js3Str, '')
       ScrFlags[4] = 0
       console.log('Three.js removed!')
       toggleStatus(4, jsSpan)
->>>>>>> testing:app/editor.js
     }
   })
 };
@@ -403,26 +360,15 @@ function addStyle () {
   let cssSpan = cssMenu.querySelectorAll('span')
   var StyFlags = [0, 0, 0]
   cssButtons[0].addEventListener('click', function (e) {
-<<<<<<< HEAD:editor.js
-     var aniStr = "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"
-=======
     var aniStr = "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"
->>>>>>> testing:app/editor.js
     if (StyFlags[0] === 0) {
       aniStr = "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"
       styles += aniStr
       StyFlags[0] = 1
       console.log('Animate added!')
       toggleStatus(0, cssSpan)
-<<<<<<< HEAD:editor.js
-    }
-    else
-    {
-      styles = styles.replace(aniStr,'')
-=======
     } else {
       styles = styles.replace(aniStr, '')
->>>>>>> testing:app/editor.js
       StyFlags[0] = 0
       console.log('Animate removed!')
       toggleStatus(0, cssSpan)
@@ -430,25 +376,13 @@ function addStyle () {
   })
   cssButtons[1].addEventListener('click', function (e) {
     var bootStr = "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>"
-<<<<<<< HEAD:editor.js
-    
-=======
-
->>>>>>> testing:app/editor.js
     if (StyFlags[1] === 0) {
       styles += bootStr
       StyFlags[1] = 1
       console.log('Bootstrap added!')
       toggleStatus(1, cssSpan)
-<<<<<<< HEAD:editor.js
-    }
-    else
-    {
-      styles = styles.replace(bootStr,'')
-=======
     } else {
       styles = styles.replace(bootStr, '')
->>>>>>> testing:app/editor.js
       StyFlags[1] = 0
       console.log('Bootstrap removed!')
       toggleStatus(1, cssSpan)
@@ -461,15 +395,8 @@ function addStyle () {
       StyFlags[2] = 1
       console.log('Font Awesome added!')
       toggleStatus(2, cssSpan)
-<<<<<<< HEAD:editor.js
-    }
-    else
-    {
-      styles = styles.replace(faStr,'');
-=======
     } else {
       styles = styles.replace(faStr, '')
->>>>>>> testing:app/editor.js
       StyFlags[2] = 0
       console.log('Font Awesome removed!')
       toggleStatus(2, cssSpan)
