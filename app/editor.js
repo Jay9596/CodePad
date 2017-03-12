@@ -16,9 +16,10 @@ var styles = ''
 var currentEditor = ''
 var editor = []
 var menu, output, html, css, js, editorLabels
+var saveFlag = false;
+var savePath = ''
 var ScrFlags = [0, 0, 0, 0, 0]
 var StyFlags = [0, 0, 0]
-
 
 var jsLib = [
   ['anime.min.js', "<script src='lib/anime.min.js'></script>"],
@@ -55,13 +56,15 @@ function getJsLibs () {
   return jsHtml
 }
 
-// Functions for AddIns
+// Functions for Features
 const getScr = () => scripts
 const getSty = () => styles
 const getCurEditor = () => {
   getEditor()
   return currentEditor
 }
+const getSavePath = () => savePath
+const setSavePath = (path) => {savePath = path }
 
 function getEditor () {
   if (html.hasFocus()) {
@@ -106,27 +109,18 @@ function initContextMenu () {
   menu = new Menu()
   menu.append(new MenuItem({
     label: 'Copy',
-    click: function () {
-      var editor = getCurEditor()
-      var text = editor.getSelection()
-      clipboard.writeText(text)
-    }
+    role:'copy'
+    //click: copy
   }))
   menu.append(new MenuItem({
     label: 'Cut',
-    click: function () {
-      var editor = getCurEditor()
-      var text = editor.getSelection()
-      clipboard.writeText(text)
-      editor.replaceSelection('')
-    }
+    role:'cut'
+    //click: cut
   }))
   menu.append(new MenuItem({
     label: 'Paste',
-    click: function () {
-      var editor = getCurEditor()
-      editor.replaceSelection(clipboard.readText())
-    }
+    role:'paste'
+    //click: paste
   }))
 
   window.addEventListener('contextmenu', function (ev) {
@@ -134,6 +128,24 @@ function initContextMenu () {
     menu.popup(remote.getCurrentWindow(), ev.x, ev.y)
   }, false)
 }
+
+/*
+function cut() {
+      var editor = getCurEditor()
+      var text = editor.getSelection()
+      clipboard.writeText(text)
+      editor.replaceSelection('')
+}
+function copy() {
+     var editor = getCurEditor()
+      var text = editor.getSelection()
+      clipboard.writeText(text)
+}
+function paste() {
+      var editor = getCurEditor()
+      editor.replaceSelection(clipboard.readText())
+}
+*/
 
 // Main Functions for Electron
 onload = function () {
@@ -251,6 +263,8 @@ onload = function () {
   })
 
   fileMenu()
+  //editMenu()
+  viewMenu()
   addScript()
   addStyle()
   shortcuts()
@@ -283,40 +297,46 @@ function toggleStatus (i, span) {
   }
 }
 
+
 function fileMenu () {
   var saveButton = document.getElementById('save')
   saveButton.addEventListener('click', saveFunction)
+  var saveAsButton = document.getElementById('save_as')
+  saveAsButton.addEventListener('click',saveAsFunction)
 }
 
-function saveFunction () {
-  var path = dialog.showOpenDialog({
-    properties: ['openDirectory']
-  })
-  if (path === undefined) return
-  var htmlString = '<html>\n' + '<head>\n' + '<title> Add Title Here </title>\n' + getCssLibs() + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + getJsLibs() + '\n<script src="script.js">' + '</script>\n' + '</body>\n' + '</html>'
-  // Write HTML
-  fs.writeFile(path + '/index.html', htmlString, (err) => {
-    if (err) {
-      console.error(err)
-    }
-    console.log('success HTML')
-  })
-  // Write CSS
-  fs.writeFile(path + '/style.css', css.getValue(), (err) => {
-    if (err) {
-      console.error(err)
-    }
-    console.log('success CSS')
-  })
-  // Write JS
-  fs.writeFile(path + '/script.js', js.getValue(), (err) => {
-    if (err) {
-      console.error(err)
-    }
-    console.log('success JS')
-  })
-
-  // TODO: No error checking is done here, fix it
+function saveFunction()
+{
+  if(saveFlag === true)
+  {
+    var path = getSavePath()
+    console.log("save path:  "+ path)
+    var htmlString = '<html>\n' + '<head>\n' +'<title> Add Title Here </title>\n' + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + '\n<script src="script.js">'+ '</script>\n' + '</body>\n' + '</html>'
+    //Write HTML
+    fs.writeFile(path+'\\index.html',htmlString, (err) => {
+      if(err)
+      {
+        console.error(err);
+      }
+      console.log("success HTML")
+    })
+    //Write CSS
+    fs.writeFile(path+'\\style.css',css.getValue(), (err) => {
+      if (err)
+      {
+        console.error(err)
+      }
+      console.log("success CSS")
+    })
+    //Write JS
+    fs.writeFile(path+'\\script.js',js.getValue(), (err) => {
+      if (err)
+      {
+        console.error(err)
+      }
+      console.log("success JS")
+    })
+// TODO: No error checking is done here, fix it
   for (var i = 0; i < ScrFlags.length; i++) {
     if (ScrFlags[i] === 1) {
       fs.createReadStream('lib/' + jsLib[i][0]).pipe(fs.createWriteStream(path + '/' + jsLib[i][0]))
@@ -332,6 +352,41 @@ function saveFunction () {
   dialog.showMessageBox({
     message: 'Saved to ' + path + '\\',
     buttons: ['OK']
+
+  })
+}
+  else
+  {
+    saveAsFunction();
+  }
+}
+
+function saveAsFunction()
+{
+    var path = dialog.showOpenDialog({properties: ['openDirectory']})
+    if (path === undefined) return
+    else
+    {
+        saveFlag = true;
+        setSavePath(path)
+        saveFunction()
+    }
+}
+
+/*
+function editMenu()
+{
+  document.getElementById('cut').addEventListener('click',cut)
+  document.getElementById('copy').addEventListener('click',copy)
+  document.getElementById('paste').addEventListener('click',paste)
+}
+*/
+
+function viewMenu()
+{
+  var devTools = document.getElementById('dev')
+  devTools.addEventListener('click',() => {
+    remote.getCurrentWindow().toggleDevTools()
   })
 }
 
@@ -466,11 +521,12 @@ function addStyle () {
   })
 };
 
-function shortcuts () {
-  window.addEventListener('keydown', (e) => {
-    console.log(e)
-    if (e.ctrlKey && e.key === 'Tab') {
-      console.warn('Ctrl + Tab')
+function shortcuts()
+{
+  var keys = {}
+  window.addEventListener('keydown',(e) => {
+    if(e.ctrlKey && e.key === "Tab")
+    {
       var selectedEditor = getCurEditor()
       toggleEditors(selectedEditor)
     }
