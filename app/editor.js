@@ -16,6 +16,8 @@ var styles = ''
 var currentEditor = ''
 var editor = []
 var menu, output, html, css, js, editorLabels
+var saveFlag = false;
+var savePath = ''
 
 // Functions for AddIns
 const getScr = () => scripts
@@ -24,6 +26,8 @@ const getCurEditor = () => {
   getEditor()
   return currentEditor
 }
+const getSavePath = () => savePath
+const setSavePath = (path) => {savePath = path }
 
 function getEditor () {
   if (html.hasFocus()) {
@@ -217,6 +221,7 @@ onload = function () {
   })
 
   fileMenu()
+  viewMenu()
   addScript()
   addStyle()
   shortcuts()
@@ -251,17 +256,21 @@ function toggleStatus (i, span) {
 
 function fileMenu()
 {
-  var saveButton = document.getElementById('save');
+  var saveButton = document.getElementById('save')
   saveButton.addEventListener('click', saveFunction)
+  var saveAsButton = document.getElementById('save_as')
+  saveAsButton.addEventListener('click',saveAsFunction)
 }
 
 function saveFunction()
 {
-    var path = dialog.showOpenDialog({properties: ['openDirectory']})
-    if (path === undefined) return
+  if(saveFlag === true)
+  {
+    var path = getSavePath()
+    console.log("save path:  "+ path)
     var htmlString = '<html>\n' + '<head>\n' +'<title> Add Title Here </title>\n' + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + '\n<script src="script.js">'+ '</script>\n' + '</body>\n' + '</html>'
     //Write HTML
-    fs.writeFile(path+'/index.html',htmlString, (err) => {
+    fs.writeFile(path+'\\index.html',htmlString, (err) => {
       if(err)
       {
         console.error(err);
@@ -269,7 +278,7 @@ function saveFunction()
       console.log("success HTML")
     })
     //Write CSS
-    fs.writeFile(path+'/style.css',css.getValue(), (err) => {
+    fs.writeFile(path+'\\style.css',css.getValue(), (err) => {
       if (err)
       {
         console.error(err)
@@ -277,7 +286,7 @@ function saveFunction()
       console.log("success CSS")
     })
     //Write JS
-    fs.writeFile(path+'/script.js',js.getValue(), (err) => {
+    fs.writeFile(path+'\\script.js',js.getValue(), (err) => {
       if (err)
       {
         console.error(err)
@@ -286,6 +295,30 @@ function saveFunction()
     })
 
     dialog.showMessageBox({message : "Saved to "+path+"\\",buttons: ["OK" ]})
+  }
+  else
+  {
+    saveAsFunction();
+  }
+}
+
+function saveAsFunction()
+{
+    var path = dialog.showOpenDialog({properties: ['openDirectory']})
+    if (path === undefined) return
+    else
+    {
+        saveFlag = true;
+        setSavePath(path)
+        saveFunction()
+    }
+}
+function viewMenu()
+{
+  var devTools = document.getElementById('dev')
+  devTools.addEventListener('click',() => {
+    remote.getCurrentWindow().toggleDevTools()
+  })
 }
 
 function addScript () {
@@ -426,10 +459,8 @@ function shortcuts()
 {
   var keys = {}
   window.addEventListener('keydown',(e) => {
-    console.log(e);
     if(e.ctrlKey && e.key === "Tab")
     {
-      console.warn("Ctrl + Tab")
       var selectedEditor = getCurEditor()
       toggleEditors(selectedEditor)
     }
