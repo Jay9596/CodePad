@@ -4,9 +4,11 @@ const path = require('path')
 const shell = electron.shell
 const remote = electron.remote
 const {
+  dialog,
   Menu,
   MenuItem
 } = remote
+const fs = require('fs');
 
 // Global variables
 var scripts = ''
@@ -26,16 +28,29 @@ const getCurEditor = () => {
 function getEditor () {
   if (html.hasFocus()) {
     currentEditor = html
-    console.warn('html')
   }
   if (css.hasFocus()) {
     currentEditor = css
-    console.warn('css')
   }
   if (js.hasFocus()) {
     currentEditor = js
-    console.warn('js')
   }
+}
+
+function toggleEditors(editorI)
+{
+    if(editorI === html)
+    {
+      css.focus()
+    }
+    if(editorI === css)
+    {
+      js.focus()
+    }
+    if(editorI === js)
+    {
+      html.focus()
+    }
 }
 
 function newFile () {
@@ -59,7 +74,6 @@ function initContextMenu () {
     label: 'Copy',
     click: function () {
       var editor = getCurEditor()
-      console.info(editor)
       var text = editor.getSelection()
       clipboard.writeText(text)
     }
@@ -68,7 +82,6 @@ function initContextMenu () {
     label: 'Cut',
     click: function () {
       var editor = getCurEditor()
-      console.info(editor)
       var text = editor.getSelection()
       clipboard.writeText(text)
       editor.replaceSelection('')
@@ -78,7 +91,6 @@ function initContextMenu () {
     label: 'Paste',
     click: function () {
       var editor = getCurEditor()
-      console.info(editor)
       editor.replaceSelection(clipboard.readText())
     }
   }))
@@ -204,8 +216,10 @@ onload = function () {
     editorLabels[2].classList.add('editor-focus')
   })
 
+  fileMenu()
   addScript()
   addStyle()
+  shortcuts()
   newFile()
   onresize()
 }
@@ -223,7 +237,7 @@ onresize = function () {
 }
 
 function paint () {
-  output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{margin:0;border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
+  output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{margin:10px;border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
   console.log(output.srcdoc)
 }
 
@@ -233,6 +247,45 @@ function toggleStatus (i, span) {
   } else {
     span[i].classList.add('status-active')
   }
+}
+
+function fileMenu()
+{
+  var saveButton = document.getElementById('save');
+  saveButton.addEventListener('click', saveFunction)
+}
+
+function saveFunction()
+{
+    var path = dialog.showOpenDialog({properties: ['openDirectory']})
+    if (path === undefined) return
+    var htmlString = '<html>\n' + '<head>\n' +'<title> Add Title Here </title>\n' + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + '\n<script src="script.js">'+ '</script>\n' + '</body>\n' + '</html>'
+    //Write HTML
+    fs.writeFile(path+'/index.html',htmlString, (err) => {
+      if(err)
+      {
+        console.error(err);
+      }
+      console.log("success HTML")
+    })
+    //Write CSS
+    fs.writeFile(path+'/style.css',css.getValue(), (err) => {
+      if (err)
+      {
+        console.error(err)
+      }
+      console.log("success CSS")
+    })
+    //Write JS
+    fs.writeFile(path+'/script.js',js.getValue(), (err) => {
+      if (err)
+      {
+        console.error(err)
+      }
+      console.log("success JS")
+    })
+
+    dialog.showMessageBox({message : "Saved to "+path+"\\",buttons: ["OK" ]})
 }
 
 function addScript () {
@@ -341,7 +394,6 @@ function addStyle () {
   })
   cssButtons[1].addEventListener('click', function (e) {
     var bootStr = "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>"
-
     if (StyFlags[1] === 0) {
       styles += bootStr
       StyFlags[1] = 1
@@ -369,3 +421,32 @@ function addStyle () {
     }
   })
 };
+
+function shortcuts()
+{
+  var keys = {}
+  window.addEventListener('keydown',(e) => {
+    console.log(e);
+    if(e.ctrlKey && e.key === "Tab")
+    {
+      console.warn("Ctrl + Tab")
+      var selectedEditor = getCurEditor()
+      toggleEditors(selectedEditor)
+    }
+    if(e.key === "F12"){
+      remote.getCurrentWindow().toggleDevTools();
+    }
+    if(e.ctrlKey && e.key === "s")
+    {
+      saveFunction()
+    }
+    if(e.ctrlKey && e.key === "n")
+    {
+      handleNewButton()
+    }
+    if(e.ctrlKey && e.key === "w")
+    {
+      remote.getCurrentWindow().close();
+    }
+  })
+}
