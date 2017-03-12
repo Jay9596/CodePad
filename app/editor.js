@@ -37,6 +37,22 @@ function getEditor () {
   }
 }
 
+function toggleEditors(editorI)
+{
+    if(editorI === html)
+    {
+      css.focus()
+    }
+    if(editorI === css)
+    {
+      js.focus()
+    }
+    if(editorI === js)
+    {
+      html.focus()
+    }
+}
+
 function newFile () {
   fileEntry = null
   hasWriteAccess = false
@@ -58,7 +74,6 @@ function initContextMenu () {
     label: 'Copy',
     click: function () {
       var editor = getCurEditor()
-      console.info(editor)
       var text = editor.getSelection()
       clipboard.writeText(text)
     }
@@ -67,7 +82,6 @@ function initContextMenu () {
     label: 'Cut',
     click: function () {
       var editor = getCurEditor()
-      console.info(editor)
       var text = editor.getSelection()
       clipboard.writeText(text)
       editor.replaceSelection('')
@@ -77,7 +91,6 @@ function initContextMenu () {
     label: 'Paste',
     click: function () {
       var editor = getCurEditor()
-      console.info(editor)
       editor.replaceSelection(clipboard.readText())
     }
   }))
@@ -206,6 +219,7 @@ onload = function () {
   fileMenu()
   addScript()
   addStyle()
+  shortcuts()
   newFile()
   onresize()
 }
@@ -238,8 +252,13 @@ function toggleStatus (i, span) {
 function fileMenu()
 {
   var saveButton = document.getElementById('save');
-  saveButton.addEventListener('click',function() {
+  saveButton.addEventListener('click', saveFunction)
+}
+
+function saveFunction()
+{
     var path = dialog.showOpenDialog({properties: ['openDirectory']})
+    if (path === undefined) return
     var htmlString = '<html>\n' + '<head>\n' +'<title> Add Title Here </title>\n' + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + '\n<script src="script.js">'+ '</script>\n' + '</body>\n' + '</html>'
     //Write HTML
     fs.writeFile(path+'/index.html',htmlString, (err) => {
@@ -267,7 +286,6 @@ function fileMenu()
     })
 
     dialog.showMessageBox({message : "Saved to "+path+"\\",buttons: ["OK" ]})
-  })
 }
 
 function addScript () {
@@ -403,3 +421,32 @@ function addStyle () {
     }
   })
 };
+
+function shortcuts()
+{
+  var keys = {}
+  window.addEventListener('keydown',(e) => {
+    console.log(e);
+    if(e.ctrlKey && e.key === "Tab")
+    {
+      console.warn("Ctrl + Tab")
+      var selectedEditor = getCurEditor()
+      toggleEditors(selectedEditor)
+    }
+    if(e.key === "F12"){
+      remote.getCurrentWindow().toggleDevTools();
+    }
+    if(e.ctrlKey && e.key === "s")
+    {
+      saveFunction()
+    }
+    if(e.ctrlKey && e.key === "n")
+    {
+      handleNewButton()
+    }
+    if(e.ctrlKey && e.key === "w")
+    {
+      remote.getCurrentWindow().close();
+    }
+  })
+}
