@@ -1,5 +1,4 @@
 const electron = require('electron')
-const clipboard = electron.clipboard
 const path = require('path')
 const shell = electron.shell
 const remote = electron.remote
@@ -10,34 +9,34 @@ const {
 } = remote
 const fs = require('fs')
 
-// Global variables
 var scripts = ''
 var styles = ''
 var currentEditor = ''
 var editor = []
 var menu, output, html, css, js, editorLabels
-var saveFlag = false;
+var saveFlag = false
 var savePath = ''
-var ScrFlags = [0, 0, 0, 0, 0]
-var StyFlags = [0, 0, 0]
+var styFlags = [0, 0, 0]
+var scrFlags = [0, 0, 0, 0, 0]
 
-var jsLib = [
-  ['anime.min.js', "<script src='lib/anime.min.js'></script>"],
-  ['bootstrap.min.js', "<script src='lib/bootstrap.min.js'></script>"],
-  ['jquery-3.1.1.min.js', "<script src='lib/jquery-3.1.1.min.js'></script>"],
-  ['p5.min.js', "<script src='lib/p5.min.js'></script>"],
-  ['three.min.js', "<script src='lib/three.min.js'></script>"]
-]
 var cssLib = [
   ['animate.css', "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"],
   ['bootstrap.min.css', "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>"],
   ['font-awesome.min.css', "<link rel='stylesheet' type='text/css' href='lib/font-awesome.min.css'>"]
 ]
 
+var jsLib = [
+  ['jquery-3.1.1.min.js', "<script src='lib/jquery-3.1.1.min.js'></script>"],
+  ['anime.min.js', "<script src='lib/anime.min.js'></script>"],
+  ['bootstrap.min.js', "<script src='lib/bootstrap.min.js'></script>"],
+  ['p5.min.js', "<script src='lib/p5.min.js'></script>"],
+  ['three.min.js', "<script src='lib/three.min.js'></script>"]
+]
+
 function getCssLibs () {
   var cssHtml = ''
   for (var i = 0; i < cssLib.length; i++) {
-    if (StyFlags[i] === 1) {
+    if (styFlags[i] === 1) {
       cssHtml += cssLib[i][1].replace('lib/', '')
     }
   }
@@ -48,7 +47,7 @@ function getCssLibs () {
 function getJsLibs () {
   var jsHtml = ''
   for (var i = 0; i < jsLib.length; i++) {
-    if (ScrFlags[i] === 1) {
+    if (scrFlags[i] === 1) {
       jsHtml += jsLib[i][1].replace('lib/', '')
     }
   }
@@ -56,15 +55,16 @@ function getJsLibs () {
   return jsHtml
 }
 
-// Functions for Features
 const getScr = () => scripts
 const getSty = () => styles
-const getCurEditor = () => {
+const getCurrenEditor = () => {
   getEditor()
   return currentEditor
 }
 const getSavePath = () => savePath
-const setSavePath = (path) => {savePath = path }
+const setSavePath = (path) => {
+  savePath = path
+}
 
 function getEditor () {
   if (html.hasFocus()) {
@@ -90,6 +90,12 @@ function toggleEditors (editorI) {
   }
 }
 
+function removeFocus (editor) {
+  for (var i = 0; i < editor.length; i++) {
+    editor[i].classList.remove('editor-focus')
+  }
+}
+
 function newFile () {
   fileEntry = null
   hasWriteAccess = false
@@ -109,18 +115,18 @@ function initContextMenu () {
   menu = new Menu()
   menu.append(new MenuItem({
     label: 'Copy',
-    role:'copy'
-    //click: copy
+    role: 'copy'
+    // click: copy
   }))
   menu.append(new MenuItem({
     label: 'Cut',
-    role:'cut'
-    //click: cut
+    role: 'cut'
+    // click: cut
   }))
   menu.append(new MenuItem({
     label: 'Paste',
-    role:'paste'
-    //click: paste
+    role: 'paste'
+    // click: paste
   }))
 
   window.addEventListener('contextmenu', function (ev) {
@@ -131,18 +137,18 @@ function initContextMenu () {
 
 /*
 function cut() {
-      var editor = getCurEditor()
+      var editor = getCurrenEditor()
       var text = editor.getSelection()
       clipboard.writeText(text)
       editor.replaceSelection('')
 }
 function copy() {
-     var editor = getCurEditor()
+     var editor = getCurrenEditor()
       var text = editor.getSelection()
       clipboard.writeText(text)
 }
 function paste() {
-      var editor = getCurEditor()
+      var editor = getCurrenEditor()
       editor.replaceSelection(clipboard.readText())
 }
 */
@@ -263,19 +269,13 @@ onload = function () {
   })
 
   fileMenu()
-  //editMenu()
+  // editMenu()
   viewMenu()
   addScript()
   addStyle()
   shortcuts()
   newFile()
   onresize()
-}
-
-function removeFocus (editor) {
-  for (var i = 0; i < editor.length; i++) {
-    editor[i].classList.remove('editor-focus')
-  }
 }
 
 onresize = function () {
@@ -297,80 +297,74 @@ function toggleStatus (i, span) {
   }
 }
 
-
 function fileMenu () {
   var saveButton = document.getElementById('save')
-  saveButton.addEventListener('click', saveFunction)
+  saveButton.addEventListener('click', handleSave)
   var saveAsButton = document.getElementById('save_as')
-  saveAsButton.addEventListener('click',saveAsFunction)
+  saveAsButton.addEventListener('click', handleSaveAs)
 }
 
-function saveFunction()
-{
-  if(saveFlag === true)
-  {
+function handleSave () {
+  if (saveFlag === true) {
     var path = getSavePath()
-    console.log("save path:  "+ path)
-    var htmlString = '<html>\n' + '<head>\n' +'<title> Add Title Here </title>\n' + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + '\n<script src="script.js">'+ '</script>\n' + '</body>\n' + '</html>'
-    //Write HTML
-    fs.writeFile(path+'\\index.html',htmlString, (err) => {
-      if(err)
-      {
-        console.error(err);
-      }
-      console.log("success HTML")
-    })
-    //Write CSS
-    fs.writeFile(path+'\\style.css',css.getValue(), (err) => {
-      if (err)
-      {
+    console.log('save path:  ' + path)
+    var htmlString = '<html>\n' + '<head>\n' + '<title>CodePad Save</title>\n' + getCssLibs() + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + getJsLibs() + '\n<script src="script.js">' + '</script>\n' + '</body>\n' + '</html>'
+    // Write HTML
+    fs.writeFile(path + '\\index.html', htmlString, (err) => {
+      if (err) {
         console.error(err)
       }
-      console.log("success CSS")
+      console.log('success HTML')
     })
-    //Write JS
-    fs.writeFile(path+'\\script.js',js.getValue(), (err) => {
-      if (err)
-      {
+    // Write CSS
+    fs.writeFile(path + '\\style.css', css.getValue(), (err) => {
+      if (err) {
         console.error(err)
       }
-      console.log("success JS")
+      console.log('success CSS')
     })
-// TODO: No error checking is done here, fix it
-  for (var i = 0; i < ScrFlags.length; i++) {
-    if (ScrFlags[i] === 1) {
-      fs.createReadStream('lib/' + jsLib[i][0]).pipe(fs.createWriteStream(path + '/' + jsLib[i][0]))
+    // Write JS
+    fs.writeFile(path + '\\script.js', js.getValue(), (err) => {
+      if (err) {
+        console.error(err)
+      }
+      console.log('success JS')
+    })
+    // TODO: No error checking is done here, fix it
+    for (var j = 0; j < styFlags.length; j++) {
+      if (styFlags[j] === 1) {
+        fs.createReadStream('lib/' + cssLib[j][0]).pipe(fs.createWriteStream(path + '/' + cssLib[j][0]))
+      }
     }
-  }
-
-  for (var j = 0; j < StyFlags.length; j++) {
-    if (StyFlags[j] === 1) {
-      fs.createReadStream('lib/' + cssLib[j][0]).pipe(fs.createWriteStream(path + '/' + cssLib[j][0]))
+    for (var i = 0; i < scrFlags.length; i++) {
+      if (scrFlags[i] === 1) {
+        fs.createReadStream('lib/' + jsLib[i][0]).pipe(fs.createWriteStream(path + '/' + jsLib[i][0]))
+      }
     }
+
+    dialog.showMessageBox({
+      message: 'Saved to ' + path + '\\',
+      buttons: ['OK']
+    })
+  } else {
+    handleSaveAs()
   }
+}
 
-  dialog.showMessageBox({
-    message: 'Saved to ' + path + '\\',
-    buttons: ['OK']
-
+function handleSaveAs () {
+  var path = dialog.showOpenDialog({
+    properties: ['openDirectory']
   })
-}
-  else
-  {
-    saveAsFunction();
+  if (path === undefined) {
+    dialog.showMessageBox({
+      message: 'Cancelled :(',
+      buttons: ['OK']
+    })
+  } else {
+    saveFlag = true
+    setSavePath(path)
+    handleSave()
   }
-}
-
-function saveAsFunction()
-{
-    var path = dialog.showOpenDialog({properties: ['openDirectory']})
-    if (path === undefined) return
-    else
-    {
-        saveFlag = true;
-        setSavePath(path)
-        saveFunction()
-    }
 }
 
 /*
@@ -382,10 +376,9 @@ function editMenu()
 }
 */
 
-function viewMenu()
-{
+function viewMenu () {
   var devTools = document.getElementById('dev')
-  devTools.addEventListener('click',() => {
+  devTools.addEventListener('click', () => {
     remote.getCurrentWindow().toggleDevTools()
   })
 }
@@ -395,78 +388,78 @@ function addScript () {
   var jsButtons = jsMenu.getElementsByTagName('a')
   let jsSpan = jsMenu.querySelectorAll('span')
   jsButtons[0].addEventListener('click', function (e) {
-    var aniScr = jsLib[0][1]
-    if (ScrFlags[0] === 0) {
-      scripts += aniScr
-      ScrFlags[0] = 1
-      console.log('Anime added!')
+    var jqScr = jsLib[0][1]
+    if (scrFlags[0] === 0) {
+      scripts += jqScr
+      scrFlags[0] = 1
+      console.log('jQuery added!')
       toggleStatus(0, jsSpan)
-    } else {
-      scripts = scripts.replace(aniScr, '')
-      ScrFlags[0] = 0
-      console.log('Anime removed!')
+    } else if (scrFlags[2] === 0) {
+      scripts = scripts.replace(jqScr, '')
+      scrFlags[0] = 0
+      console.log('jQuery removed!')
       toggleStatus(0, jsSpan)
     }
   })
   jsButtons[1].addEventListener('click', function (e) {
-    var jqScr = jsLib[2][1]
-    var boScr = jsLib[1][1]
-    if (ScrFlags[2] === 0) {
-      toggleStatus(2, jsSpan)
-      scripts += jqScr
-      ScrFlags[2] = 1
-      console.log('jQuery added!')
-    }
-    if (ScrFlags[1] === 0) {
-      scripts += boScr
-      ScrFlags[1] = 1
-      console.log('Bootstrap added!')
+    var aniScr = jsLib[1][1]
+    if (scrFlags[1] === 0) {
+      scripts += aniScr
+      scrFlags[1] = 1
+      console.log('Anime added!')
       toggleStatus(1, jsSpan)
     } else {
-      scripts = scripts.replace(boScr, '')
-      ScrFlags[1] = 0
-      console.log('Bootstrap removed!')
+      scripts = scripts.replace(aniScr, '')
+      scrFlags[1] = 0
+      console.log('Anime removed!')
       toggleStatus(1, jsSpan)
     }
   })
   jsButtons[2].addEventListener('click', function (e) {
-    var jqScr = jsLib[2][1]
-    if (ScrFlags[2] === 0) {
+    var jqScr = jsLib[0][1]
+    var boScr = jsLib[2][1]
+    if (scrFlags[0] === 0) {
+      toggleStatus(0, jsSpan)
       scripts += jqScr
-      ScrFlags[2] = 1
+      scrFlags[0] = 1
       console.log('jQuery added!')
+    }
+    if (scrFlags[2] === 0) {
+      scripts += boScr
+      scrFlags[2] = 1
+      console.log('Bootstrap added!')
       toggleStatus(2, jsSpan)
-    } else if (ScrFlags[1] === 0) {
-      scripts = scripts.replace(jqScr, '')
-      ScrFlags[2] = 0
-      console.log('jQuery removed!')
+    } else {
+      scripts = scripts.replace(boScr, '')
+      scrFlags[2] = 0
+      console.log('Bootstrap removed!')
       toggleStatus(2, jsSpan)
     }
   })
   jsButtons[3].addEventListener('click', function (e) {
     var p5Scr = jsLib[3][1]
-    if (ScrFlags[3] === 0) {
+    if (scrFlags[3] === 0) {
       scripts += p5Scr
-      ScrFlags[3] = 1
+      scrFlags[3] = 1
       console.log('p5.js added!')
       toggleStatus(3, jsSpan)
     } else {
       scripts = scripts.replace(p5Scr, '')
-      ScrFlags[3] = 0
+      scrFlags[3] = 0
       console.log('p5.js removed!')
       toggleStatus(3, jsSpan)
     }
   })
   jsButtons[4].addEventListener('click', function (e) {
     var thScr = jsLib[4][1]
-    if (ScrFlags[4] === 0) {
+    if (scrFlags[4] === 0) {
       scripts += thScr
-      ScrFlags[4] = 1
+      scrFlags[4] = 1
       console.log('Three.js added!')
       toggleStatus(4, jsSpan)
     } else {
       scripts = scripts.replace(thScr, '')
-      ScrFlags[4] = 0
+      scrFlags[4] = 0
       console.log('Three.js removed!')
       toggleStatus(4, jsSpan)
     }
@@ -479,62 +472,59 @@ function addStyle () {
   let cssSpan = cssMenu.querySelectorAll('span')
   cssButtons[0].addEventListener('click', function (e) {
     var anSty = cssLib[0][1]
-    if (StyFlags[0] === 0) {
+    if (styFlags[0] === 0) {
       styles += anSty
-      StyFlags[0] = 1
+      styFlags[0] = 1
       console.log('Animate added!')
       toggleStatus(0, cssSpan)
     } else {
       styles = styles.replace(anSty, '')
-      StyFlags[0] = 0
+      styFlags[0] = 0
       console.log('Animate removed!')
       toggleStatus(0, cssSpan)
     }
   })
   cssButtons[1].addEventListener('click', function (e) {
     var boSty = cssLib[1][1]
-    if (StyFlags[1] === 0) {
+    if (styFlags[1] === 0) {
       styles += boSty
-      StyFlags[1] = 1
+      styFlags[1] = 1
       console.log('Bootstrap added!')
       toggleStatus(1, cssSpan)
     } else {
       styles = styles.replace(boSty, '')
-      StyFlags[1] = 0
+      styFlags[1] = 0
       console.log('Bootstrap removed!')
       toggleStatus(1, cssSpan)
     }
   })
   cssButtons[2].addEventListener('click', function (e) {
     var faSty = cssLib[2][1]
-    if (StyFlags[2] === 0) {
+    if (styFlags[2] === 0) {
       styles += faSty
-      StyFlags[2] = 1
+      styFlags[2] = 1
       console.log('Font Awesome added!')
       toggleStatus(2, cssSpan)
     } else {
       styles = styles.replace(faSty, '')
-      StyFlags[2] = 0
+      styFlags[2] = 0
       console.log('Font Awesome removed!')
       toggleStatus(2, cssSpan)
     }
   })
 };
 
-function shortcuts()
-{
+function shortcuts () {
   var keys = {}
-  window.addEventListener('keydown',(e) => {
-    if(e.ctrlKey && e.key === "Tab")
-    {
-      var selectedEditor = getCurEditor()
-      toggleEditors(selectedEditor)
+  window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Tab') {
+      toggleEditors(getCurrenEditor())
     }
     if (e.key === 'F12') {
       remote.getCurrentWindow().toggleDevTools()
     }
     if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
-      saveFunction()
+      handleSave()
     }
     if (e.ctrlKey && (e.key === 'n' || e.key === 'N')) {
       handleNewButton()
