@@ -19,7 +19,7 @@ var menu, output, html, css, js, editorLabels
 var saveFlag = false;
 var savePath = ''
 
-// Functions for AddIns
+// Functions for Features
 const getScr = () => scripts
 const getSty = () => styles
 const getCurEditor = () => {
@@ -76,33 +76,37 @@ function initContextMenu () {
   menu = new Menu()
   menu.append(new MenuItem({
     label: 'Copy',
-    click: function () {
-      var editor = getCurEditor()
-      var text = editor.getSelection()
-      clipboard.writeText(text)
-    }
+    click: copy
   }))
   menu.append(new MenuItem({
     label: 'Cut',
-    click: function () {
-      var editor = getCurEditor()
-      var text = editor.getSelection()
-      clipboard.writeText(text)
-      editor.replaceSelection('')
-    }
+    click: cut
   }))
   menu.append(new MenuItem({
     label: 'Paste',
-    click: function () {
-      var editor = getCurEditor()
-      editor.replaceSelection(clipboard.readText())
-    }
+    click: paste
   }))
 
   window.addEventListener('contextmenu', function (ev) {
     ev.preventDefault()
     menu.popup(remote.getCurrentWindow(), ev.x, ev.y)
   }, false)
+}
+
+function cut() {
+      var editor = getCurEditor()
+      var text = editor.getSelection()
+      clipboard.writeText(text)
+      editor.replaceSelection('')
+}
+function copy() {
+     var editor = getCurEditor()
+      var text = editor.getSelection()
+      clipboard.writeText(text)
+}
+function paste() {
+      var editor = getCurEditor()
+      editor.replaceSelection(clipboard.readText())
 }
 
 // Main Functions for Electron
@@ -221,6 +225,7 @@ onload = function () {
   })
 
   fileMenu()
+  editMenu()
   viewMenu()
   addScript()
   addStyle()
@@ -313,6 +318,14 @@ function saveAsFunction()
         saveFunction()
     }
 }
+
+function editMenu()
+{
+  document.getElementById('cut').addEventListener('click',cut)
+  document.getElementById('copy').addEventListener('click',copy)
+  document.getElementById('paste').addEventListener('click',paste)
+}
+
 function viewMenu()
 {
   var devTools = document.getElementById('dev')
