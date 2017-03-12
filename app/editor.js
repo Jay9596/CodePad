@@ -8,7 +8,7 @@ const {
   Menu,
   MenuItem
 } = remote
-const fs = require('fs');
+const fs = require('fs')
 
 // Global variables
 var scripts = ''
@@ -37,20 +37,16 @@ function getEditor () {
   }
 }
 
-function toggleEditors(editorI)
-{
-    if(editorI === html)
-    {
-      css.focus()
-    }
-    if(editorI === css)
-    {
-      js.focus()
-    }
-    if(editorI === js)
-    {
-      html.focus()
-    }
+function toggleEditors (editorI) {
+  if (editorI === html) {
+    css.focus()
+  }
+  if (editorI === css) {
+    js.focus()
+  }
+  if (editorI === js) {
+    html.focus()
+  }
 }
 
 function newFile () {
@@ -249,43 +245,43 @@ function toggleStatus (i, span) {
   }
 }
 
-function fileMenu()
-{
-  var saveButton = document.getElementById('save');
+function fileMenu () {
+  var saveButton = document.getElementById('save')
   saveButton.addEventListener('click', saveFunction)
 }
 
-function saveFunction()
-{
-    var path = dialog.showOpenDialog({properties: ['openDirectory']})
-    if (path === undefined) return
-    var htmlString = '<html>\n' + '<head>\n' +'<title> Add Title Here </title>\n' + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + '\n<script src="script.js">'+ '</script>\n' + '</body>\n' + '</html>'
-    //Write HTML
-    fs.writeFile(path+'/index.html',htmlString, (err) => {
-      if(err)
-      {
-        console.error(err);
-      }
-      console.log("success HTML")
-    })
-    //Write CSS
-    fs.writeFile(path+'/style.css',css.getValue(), (err) => {
-      if (err)
-      {
-        console.error(err)
-      }
-      console.log("success CSS")
-    })
-    //Write JS
-    fs.writeFile(path+'/script.js',js.getValue(), (err) => {
-      if (err)
-      {
-        console.error(err)
-      }
-      console.log("success JS")
-    })
+function saveFunction () {
+  var path = dialog.showOpenDialog({
+    properties: ['openDirectory']
+  })
+  if (path === undefined) return
+  var htmlString = '<html>\n' + '<head>\n' + '<title> Add Title Here </title>\n' + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + '\n<script src="script.js">' + '</script>\n' + '</body>\n' + '</html>'
+  // Write HTML
+  fs.writeFile(path + '/index.html', htmlString, (err) => {
+    if (err) {
+      console.error(err)
+    }
+    console.log('success HTML')
+  })
+  // Write CSS
+  fs.writeFile(path + '/style.css', css.getValue(), (err) => {
+    if (err) {
+      console.error(err)
+    }
+    console.log('success CSS')
+  })
+  // Write JS
+  fs.writeFile(path + '/script.js', js.getValue(), (err) => {
+    if (err) {
+      console.error(err)
+    }
+    console.log('success JS')
+  })
 
-    dialog.showMessageBox({message : "Saved to "+path+"\\",buttons: ["OK" ]})
+  dialog.showMessageBox({
+    message: 'Saved to ' + path + '\\',
+    buttons: ['OK']
+  })
 }
 
 function addScript () {
@@ -422,31 +418,22 @@ function addStyle () {
   })
 };
 
-function shortcuts()
-{
-  var keys = {}
-  window.addEventListener('keydown',(e) => {
-    console.log(e);
-    if(e.ctrlKey && e.key === "Tab")
-    {
-      console.warn("Ctrl + Tab")
+function shortcuts () {
+  window.addEventListener('keydown', (e) => {
+    console.log(e)
+    if (e.ctrlKey && e.key === 'Tab') {
+      console.warn('Ctrl + Tab')
       var selectedEditor = getCurEditor()
       toggleEditors(selectedEditor)
     }
-    if(e.key === "F12"){
-      remote.getCurrentWindow().toggleDevTools();
+    if (e.key === 'F12') {
+      remote.getCurrentWindow().toggleDevTools()
     }
-    if(e.ctrlKey && e.key === "s")
-    {
+    if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
       saveFunction()
     }
-    if(e.ctrlKey && e.key === "n")
-    {
+    if (e.ctrlKey && (e.key === 'n' || e.key === 'N')) {
       handleNewButton()
-    }
-    if(e.ctrlKey && e.key === "w")
-    {
-      remote.getCurrentWindow().close();
     }
   })
 }
