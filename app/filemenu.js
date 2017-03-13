@@ -6,6 +6,10 @@ module.exports = {
   handleSaveAs
 }
 let saveFlag
+const getSavePath = () => savePath
+const setSavePath = (path) => {
+  savePath = path
+}
 
 function fileMenu () {
   document.getElementById('save').addEventListener('click', handleSave)
@@ -16,6 +20,15 @@ function fileMenu () {
   })
 }
 
+function handleNew (i) {
+  if (false) {
+    newFile()
+    editor[i].setValue('')
+  } else {
+    window.open(path.join('file://', __dirname, '/index.html'))
+  }
+}
+
 function handleSaveAs () {
   var path = dialog.showOpenDialog({
     properties: ['openDirectory']
@@ -24,15 +37,6 @@ function handleSaveAs () {
     saveFlag = true
     setSavePath(path)
     handleSave()
-  }
-}
-
-function handleNew (i) {
-  if (false) {
-    newFile()
-    editor[i].setValue('')
-  } else {
-    window.open(path.join('file://', __dirname, '/index.html'))
   }
 }
 

@@ -19,25 +19,10 @@ const FILE = require('./fileMenu')
 
 var scripts = ''
 var styles = ''
-var currentEditor = ''
+var currentEditor
 var editor = []
 var output, html, css, js, editorLabels
 var saveFlag = false
-var savePath = ''
-var styFlags = [0, 0, 0]
-var scrFlags = [0, 0, 0, 0, 0]
-var cssLib = [
-  ['animate.css', "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"],
-  ['bootstrap.min.css', "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>"],
-  ['font-awesome.min.css', "<link rel='stylesheet' type='text/css' href='lib/font-awesome.min.css'>"]
-]
-var jsLib = [
-  ['jquery-3.1.1.min.js', "<script src='lib/jquery-3.1.1.min.js'></script>"],
-  ['anime.min.js', "<script src='lib/anime.min.js'></script>"],
-  ['bootstrap.min.js', "<script src='lib/bootstrap.min.js'></script>"],
-  ['p5.min.js', "<script src='lib/p5.min.js'></script>"],
-  ['three.min.js', "<script src='lib/three.min.js'></script>"]
-]
 
 // 3. Main Functions for Electron
 onload = function () {
@@ -102,20 +87,9 @@ onload = function () {
     })
   }
 
-  html.on('focus', function (change) {
-    removeFocus(editorLabels)
-    editorLabels[0].classList.add('editor-focus')
-  })
-
-  css.on('focus', function (change) {
-    removeFocus(editorLabels)
-    editorLabels[1].classList.add('editor-focus')
-  })
-
-  js.on('focus', function (change) {
-    removeFocus(editorLabels)
-    editorLabels[2].classList.add('editor-focus')
-  })
+  html.on('focus', changeEditor)
+  css.on('focus', changeEditor)
+  js.on('focus', changeEditor)
 
   FILE.fileMenu()
   VIEW.viewMenu()
@@ -131,24 +105,7 @@ onload = function () {
 const getScr = () => scripts
 const getSty = () => styles
 const getCurrenEditor = () => {
-  getEditor()
   return currentEditor
-}
-const getSavePath = () => savePath
-const setSavePath = (path) => {
-  savePath = path
-}
-
-function getEditor() {
-  if (html.hasFocus()) {
-    currentEditor = html
-  }
-  if (css.hasFocus()) {
-    currentEditor = css
-  }
-  if (js.hasFocus()) {
-    currentEditor = js
-  }
 }
 
 function toggleEditors(editorI) {
@@ -186,4 +143,23 @@ onresize = function () {
 
 function paint() {
   output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
+}
+
+function changeEditor(editor){
+    removeFocus(editorLabels)
+    if(editor == html)
+    {
+      editorLabels[0].classList.add('editor-focus')
+      currentEditor = html
+    }
+    if(editor == css)
+    {
+      editorLabels[1].classList.add('editor-focus')
+      currentEditor = css
+    }
+    if(editor == js)
+    {
+      editorLabels[2].classList.add('editor-focus')
+      currentEditor = js
+    }
 }

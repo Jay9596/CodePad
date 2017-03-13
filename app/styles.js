@@ -3,6 +3,13 @@ module.exports = {
   getCssLibs
 }
 
+var styFlags = [0, 0, 0]
+var cssLib = [
+  ['animate.css', "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"],
+  ['bootstrap.min.css', "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>"],
+  ['font-awesome.min.css', "<link rel='stylesheet' type='text/css' href='lib/font-awesome.min.css'>"]
+]
+
 function getCssLibs () {
   var cssHtml = ''
   for (var i = 0; i < cssLib.length; i++) {

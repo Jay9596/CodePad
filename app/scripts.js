@@ -3,6 +3,15 @@ module.exports = {
   getJsLibs
 }
 
+var scrFlags = [0, 0, 0, 0, 0]
+var jsLib = [
+  ['jquery-3.1.1.min.js', "<script src='lib/jquery-3.1.1.min.js'></script>"],
+  ['anime.min.js', "<script src='lib/anime.min.js'></script>"],
+  ['bootstrap.min.js', "<script src='lib/bootstrap.min.js'></script>"],
+  ['p5.min.js', "<script src='lib/p5.min.js'></script>"],
+  ['three.min.js', "<script src='lib/three.min.js'></script>"]
+]
+
 function getJsLibs () {
   var jsHtml = ''
   for (var i = 0; i < jsLib.length; i++) {
