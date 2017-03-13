@@ -1,13 +1,14 @@
+// 1. Declarations and Node Modules Import
 const electron = require('electron')
 const path = require('path')
 const shell = electron.shell
 const remote = electron.remote
+const fs = require('fs')
 const {
   dialog,
   Menu,
   MenuItem
 } = remote
-const fs = require('fs')
 
 var scripts = ''
 var styles = ''
@@ -19,6 +20,7 @@ var savePath = ''
 var styFlags = [0, 0, 0]
 var scrFlags = [0, 0, 0, 0, 0]
 
+// 2. CSS/JS Libraries
 var cssLib = [
   ['animate.css', "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"],
   ['bootstrap.min.css', "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>"],
@@ -33,162 +35,12 @@ var jsLib = [
   ['three.min.js', "<script src='lib/three.min.js'></script>"]
 ]
 
-function getCssLibs () {
-  var cssHtml = ''
-  for (var i = 0; i < cssLib.length; i++) {
-    if (styFlags[i] === 1) {
-      cssHtml += cssLib[i][1].replace('lib/', '')
-    }
-  }
-  return cssHtml
-}
-
-function getJsLibs () {
-  var jsHtml = ''
-  for (var i = 0; i < jsLib.length; i++) {
-    if (scrFlags[i] === 1) {
-      jsHtml += jsLib[i][1].replace('lib/', '')
-    }
-  }
-  return jsHtml
-}
-
-const getScr = () => scripts
-const getSty = () => styles
-const getCurrenEditor = () => {
-  getEditor()
-  return currentEditor
-}
-const getSavePath = () => savePath
-const setSavePath = (path) => {
-  savePath = path
-}
-
-function getEditor () {
-  if (html.hasFocus()) {
-    currentEditor = html
-  }
-  if (css.hasFocus()) {
-    currentEditor = css
-  }
-  if (js.hasFocus()) {
-    currentEditor = js
-  }
-}
-
-function toggleEditors (editorI) {
-  if (editorI === html) {
-    css.focus()
-  }
-  if (editorI === css) {
-    js.focus()
-  }
-  if (editorI === js) {
-    html.focus()
-  }
-}
-
-function removeFocus (editor) {
-  for (var i = 0; i < editor.length; i++) {
-    editor[i].classList.remove('editor-focus')
-  }
-}
-
-function newFile () {
-  fileEntry = null
-  hasWriteAccess = false
-}
-
-function handleNewButton (i) {
-  if (false) {
-    newFile()
-    editor[i].setValue('')
-  } else {
-    window.open(path.join('file://', __dirname, '/index.html'))
-  }
-}
-
-// Context menu init()
-function initContextMenu () {
-  menu = new Menu()
-  menu.append(new MenuItem({
-    label: 'Copy',
-    role: 'copy'
-    // click: copy
-  }))
-  menu.append(new MenuItem({
-    label: 'Cut',
-    role: 'cut'
-    // click: cut
-  }))
-  menu.append(new MenuItem({
-    label: 'Paste',
-    role: 'paste'
-    // click: paste
-  }))
-
-  window.addEventListener('contextmenu', function (ev) {
-    ev.preventDefault()
-    menu.popup(remote.getCurrentWindow(), ev.x, ev.y)
-  }, false)
-}
-
-/*
-function cut() {
-      var editor = getCurrenEditor()
-      var text = editor.getSelection()
-      clipboard.writeText(text)
-      editor.replaceSelection('')
-}
-function copy() {
-     var editor = getCurrenEditor()
-      var text = editor.getSelection()
-      clipboard.writeText(text)
-}
-function paste() {
-      var editor = getCurrenEditor()
-      editor.replaceSelection(clipboard.readText())
-}
-*/
-
-// Main Functions for Electron
+// 3. Main Functions for Electron
 onload = function () {
+  // Intialize Context Menu
   initContextMenu()
 
-  var helpMenu = document.getElementById('help-menu')
-  var helpa = helpMenu.getElementsByTagName('a')
-  for (var i = 0; i < helpa.length; i++) {
-    helpa[i].addEventListener('click', function (e) {
-      e.preventDefault()
-      shell.openExternal(this.href)
-    })
-  }
-
-  document.getElementById('min-button').addEventListener('click', function (e) {
-    const window = remote.getCurrentWindow()
-    window.minimize()
-  })
-
-  document.getElementById('max-button').addEventListener('click', function (e) {
-    const window = remote.getCurrentWindow()
-    if (!window.isMaximized()) {
-      window.maximize()
-    } else {
-      window.unmaximize()
-    }
-  })
-
-  document.getElementById('close-button').addEventListener('click', function (e) {
-    const window = remote.getCurrentWindow()
-    window.close()
-  })
-
-  document.getElementById('close-window').addEventListener('click', function (e) {
-    const window = remote.getCurrentWindow()
-    window.close()
-  })
-  document.getElementById('new').addEventListener('click', handleNewButton)
-
+  // CodeMirror Initialize Editors
   editor[0] = CodeMirror(
     document.getElementById('html-editor'), {
       mode: {
@@ -233,23 +85,19 @@ onload = function () {
       theme: 'base16-ocean-dark'
     })
 
-  output = document.getElementById('output')
-  editorLabels = document.getElementsByClassName('editor-label')
   html = editor[0]
   css = editor[1]
   js = editor[2]
 
-  html.on('change', function (change) {
-    paint()
-  })
+  // Output refresh and editor focus
+  output = document.getElementById('output')
+  editorLabels = document.getElementsByClassName('editor-label')
 
-  css.on('change', function (change) {
-    paint()
-  })
-
-  js.on('change', function (change) {
-    paint()
-  })
+  for (var k = 0; k < 3; k++) {
+    editor[k].on('change', function (change) {
+      paint()
+    })
+  }
 
   html.on('focus', function (change) {
     removeFocus(editorLabels)
@@ -266,16 +114,165 @@ onload = function () {
     editorLabels[2].classList.add('editor-focus')
   })
 
-  fileMenu()
-  // editMenu()
-  viewMenu()
+  clicks()
   addScript()
   addStyle()
-  shortcuts()
   newFile()
   onresize()
 }
 
+// 4. Function call on click events
+function clicks () {
+  var window = remote.getCurrentWindow()
+
+  // Open links in the 'Help' menu in the default browser
+  var helpMenu = document.getElementById('help-menu')
+  var helpa = helpMenu.getElementsByTagName('a')
+  for (var i = 0; i < helpa.length; i++) {
+    helpa[i].addEventListener('click', function (e) {
+      e.preventDefault()
+      shell.openExternal(this.href)
+    })
+  }
+
+  // Window Control [_][+][x] Buttons
+  document.getElementById('min-button').addEventListener('click', function (e) {
+    window.minimize()
+  })
+  document.getElementById('max-button').addEventListener('click', function (e) {
+    if (!remote.getCurrentWindow().isMaximized()) {
+      window.maximize()
+    } else {
+      window.unmaximize()
+    }
+  })
+  document.getElementById('close-button').addEventListener('click', function (e) {
+    window.close()
+  })
+
+  // 'File' Menu Buttons
+  document.getElementById('new').addEventListener('click', handleNew)
+  document.getElementById('save').addEventListener('click', handleSave)
+  document.getElementById('save-as').addEventListener('click', handleSaveAs)
+  document.getElementById('close-window').addEventListener('click', function (e) {
+    window.close()
+  })
+
+  // 'View' Menu Buttons
+  document.getElementById('dev').addEventListener('click', () => {
+    remote.getCurrentWindow().toggleDevTools()
+  })
+  document.getElementById('full').addEventListener('click', () => {
+    if (remote.getCurrentWindow().isFullScreen() == true) {
+      remote.getCurrentWindow().setFullScreen(false)
+    } else {
+      remote.getCurrentWindow().setFullScreen(true)
+    }
+  })
+
+  // Misc Keyboard Shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Tab') {
+      toggleEditors(getCurrenEditor())
+    }
+    if (e.key === 'F11') {
+      if (remote.getCurrentWindow().isFullScreen() == true) {
+        remote.getCurrentWindow().setFullScreen(false)
+      } else {
+        remote.getCurrentWindow().setFullScreen(true)
+      }
+    }
+    if (e.key === 'F12') {
+      remote.getCurrentWindow().toggleDevTools()
+    }
+    if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+      handleSave()
+    }
+    if (e.ctrlKey && (e.key === 'n' || e.key === 'N')) {
+      handleNew()
+    }
+  })
+}
+
+// 5. Editor Functions
+const getScr = () => scripts
+const getSty = () => styles
+const getCurrenEditor = () => {
+  getEditor()
+  return currentEditor
+}
+const getSavePath = () => savePath
+const setSavePath = (path) => {
+  savePath = path
+}
+
+function getEditor () {
+  if (html.hasFocus()) {
+    currentEditor = html
+  }
+  if (css.hasFocus()) {
+    currentEditor = css
+  }
+  if (js.hasFocus()) {
+    currentEditor = js
+  }
+}
+
+function toggleEditors (editorI) {
+  if (editorI === html) {
+    css.focus()
+  }
+  if (editorI === css) {
+    js.focus()
+  }
+  if (editorI === js) {
+    html.focus()
+  }
+}
+
+function newFile () {
+  fileEntry = null
+  hasWriteAccess = false
+}
+
+function handleNew (i) {
+  if (false) {
+    newFile()
+    editor[i].setValue('')
+  } else {
+    window.open(path.join('file://', __dirname, '/index.html'))
+  }
+}
+
+// Context Menu
+function initContextMenu () {
+  menu = new Menu()
+  menu.append(new MenuItem({
+    label: 'Copy',
+    role: 'copy'
+  }))
+  menu.append(new MenuItem({
+    label: 'Cut',
+    role: 'cut'
+  }))
+  menu.append(new MenuItem({
+    label: 'Paste',
+    role: 'paste'
+  }))
+  window.addEventListener('contextmenu', function (ev) {
+    ev.preventDefault()
+    menu.popup(remote.getCurrentWindow(), ev.x, ev.y)
+  }, false)
+}
+
+// Remove editor-focus class
+function removeFocus (editor) {
+  for (var i = 0; i < editor.length; i++) {
+    editor[i].classList.remove('editor-focus')
+  }
+}
+
+// Refresh on resize
 onresize = function () {
   for (var i = 0; i < 3; i++) {
     editor[i].refresh()
@@ -286,6 +283,7 @@ function paint () {
   output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
 }
 
+// 6. Save the snippet functions
 function toggleStatus (i, span) {
   if (span[i].classList.contains('status-active')) {
     span[i].classList.remove('status-active')
@@ -294,48 +292,66 @@ function toggleStatus (i, span) {
   }
 }
 
-function fileMenu () {
-  var saveButton = document.getElementById('save')
-  saveButton.addEventListener('click', handleSave)
-  var saveAsButton = document.getElementById('save_as')
-  saveAsButton.addEventListener('click', handleSaveAs)
+function getCssLibs () {
+  var cssHtml = ''
+  for (var i = 0; i < cssLib.length; i++) {
+    if (styFlags[i] === 1) {
+      cssHtml += cssLib[i][1].replace('lib/', '')
+    }
+  }
+  return cssHtml
+}
+
+function getJsLibs () {
+  var jsHtml = ''
+  for (var i = 0; i < jsLib.length; i++) {
+    if (scrFlags[i] === 1) {
+      jsHtml += jsLib[i][1].replace('lib/', '')
+    }
+  }
+  return jsHtml
 }
 
 function handleSave () {
   if (saveFlag === true) {
     var path = getSavePath()
-    console.log('save path:  ' + path)
     var htmlString = '<html>\n' + '<head>\n' + '<title>CodePad Save</title>\n' + getCssLibs() + '<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + getJsLibs() + '\n<script src="script.js">' + '</script>\n' + '</body>\n' + '</html>'
-    // Write HTML
     fs.writeFile(path + '\\index.html', htmlString, (err) => {
       if (err) {
         console.error(err)
       }
     })
-    // Write CSS
     fs.writeFile(path + '\\style.css', css.getValue(), (err) => {
       if (err) {
         console.error(err)
       }
     })
-    // Write JS
     fs.writeFile(path + '\\script.js', js.getValue(), (err) => {
       if (err) {
         console.error(err)
       }
     })
-    // TODO: No error checking is done here, fix it
     for (var j = 0; j < styFlags.length; j++) {
       if (styFlags[j] === 1) {
-        fs.createReadStream('lib/' + cssLib[j][0]).pipe(fs.createWriteStream(path + '/' + cssLib[j][0]))
+        fs.createReadStream('resources/app.asar/app/lib/' + cssLib[j][0]).pipe(fs.createWriteStream(path + '/' + cssLib[j][0]))
+        if (j === 1) {
+          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.eot').pipe(fs.createWriteStream(path + '/glyphicons-halflings-regular.eot'))
+          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.ttf').pipe(fs.createWriteStream(path + '/glyphicons-halflings-regular.tff'))
+          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.woff').pipe(fs.createWriteStream(path + '/glyphicons-halflings-regular.woff'))
+          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.woff2').pipe(fs.createWriteStream(path + '/glyphicons-halflings-regular.woff2'))
+        }
+        if (j === 2) {
+          fs.createReadStream('resources/app.asar/app/lib/fontawesome-webfont.ttf').pipe(fs.createWriteStream(path + '/fontawesome-webfont.ttf'))
+          fs.createReadStream('resources/app.asar/app/lib/fontawesome-webfont.woff').pipe(fs.createWriteStream(path + '/fontawesome-webfont.woff'))
+          fs.createReadStream('resources/app.asar/app/lib/fontawesome-webfont.woff2').pipe(fs.createWriteStream(path + '/fontawesome-webfont.woff2'))
+        }
       }
     }
     for (var i = 0; i < scrFlags.length; i++) {
       if (scrFlags[i] === 1) {
-        fs.createReadStream('lib/' + jsLib[i][0]).pipe(fs.createWriteStream(path + '/' + jsLib[i][0]))
+        fs.createReadStream('resources/app.asar/app/lib/' + jsLib[i][0]).pipe(fs.createWriteStream(path + '/' + jsLib[i][0]))
       }
     }
-
     dialog.showMessageBox({
       message: 'Saved to ' + path + '\\',
       buttons: ['OK']
@@ -349,32 +365,11 @@ function handleSaveAs () {
   var path = dialog.showOpenDialog({
     properties: ['openDirectory']
   })
-  if (path === undefined) {
-    dialog.showMessageBox({
-      message: 'Cancelled :(',
-      buttons: ['OK']
-    })
-  } else {
+  if (path !== undefined) {
     saveFlag = true
     setSavePath(path)
     handleSave()
   }
-}
-
-/*
-function editMenu()
-{
-  document.getElementById('cut').addEventListener('click',cut)
-  document.getElementById('copy').addEventListener('click',copy)
-  document.getElementById('paste').addEventListener('click',paste)
-}
-*/
-
-function viewMenu () {
-  var devTools = document.getElementById('dev')
-  devTools.addEventListener('click', () => {
-    remote.getCurrentWindow().toggleDevTools()
-  })
 }
 
 function addScript () {
@@ -490,21 +485,3 @@ function addStyle () {
     }
   })
 };
-
-function shortcuts () {
-  var keys = {}
-  window.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.key === 'Tab') {
-      toggleEditors(getCurrenEditor())
-    }
-    if (e.key === 'F12') {
-      remote.getCurrentWindow().toggleDevTools()
-    }
-    if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
-      handleSave()
-    }
-    if (e.ctrlKey && (e.key === 'n' || e.key === 'N')) {
-      handleNewButton()
-    }
-  })
-}
