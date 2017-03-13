@@ -10,13 +10,13 @@ body {
 
 /*Menubar styles begin here*/
 
-.menu-bar {
+#menu-bar {
   -webkit-app-region: drag;
   background-color: #101216;
   height: 32px;
 }
 
-.menu-bar a::selection {
+#menu-bar a::selection {
   background: transparent;
 }
 
@@ -191,7 +191,7 @@ li.dropdown {
 
 /* editor: The container holding HTML/CSS/JS editors */
 
-.editor {
+#editor {
   display: flex;
   left: 0;
   top: 0;
@@ -242,7 +242,7 @@ li.dropdown {
 
 /* result-viewport: The container holding iframe element */
 
-.result-viewport {
+#result-viewport {
   height: calc(100% - 384px);
   border: 0;
   margin: 0;

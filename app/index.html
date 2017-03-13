@@ -3,7 +3,7 @@
 
 <head>
   <title>CodePad</title>
-  <script src="js/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+  <script src="js/jquery-3.1.1.min.js" onload="window.$ = window.jQuery = module.exports"></script>
   <script src="editor.js"></script>
   <script src="js/codemirror.js"></script>
   <script src="js/css.js"></script>
@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <div class="menu-bar">
+  <div id="menu-bar">
     <nav id="menu-items">
       <ul>
         <li class="dropdown">
@@ -86,7 +86,7 @@
       </div>
     </nav>
   </div>
-  <div class="editor">
+  <div id="editor">
     <div id="html-editor" class="editor-item">
       <div class="editor-label">HTML</div>
     </div>
@@ -97,7 +97,7 @@
       <div class="editor-label">JS</div>
     </div>
   </div>
-  <div class="result-viewport">
+  <div id="result-viewport">
     <iframe id="output"></iframe>
   </div>
 </body>
