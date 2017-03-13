@@ -40,7 +40,6 @@ function getCssLibs () {
       cssHtml += cssLib[i][1].replace('lib/', '')
     }
   }
-  console.log(cssHtml)
   return cssHtml
 }
 
@@ -51,7 +50,6 @@ function getJsLibs () {
       jsHtml += jsLib[i][1].replace('lib/', '')
     }
   }
-  console.log(jsHtml)
   return jsHtml
 }
 
@@ -285,8 +283,7 @@ onresize = function () {
 }
 
 function paint () {
-  output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{margin:10px;border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
-  console.log(output.srcdoc)
+  output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
 }
 
 function toggleStatus (i, span) {
@@ -314,21 +311,18 @@ function handleSave () {
       if (err) {
         console.error(err)
       }
-      console.log('success HTML')
     })
     // Write CSS
     fs.writeFile(path + '\\style.css', css.getValue(), (err) => {
       if (err) {
         console.error(err)
       }
-      console.log('success CSS')
     })
     // Write JS
     fs.writeFile(path + '\\script.js', js.getValue(), (err) => {
       if (err) {
         console.error(err)
       }
-      console.log('success JS')
     })
     // TODO: No error checking is done here, fix it
     for (var j = 0; j < styFlags.length; j++) {
@@ -392,12 +386,10 @@ function addScript () {
     if (scrFlags[0] === 0) {
       scripts += jqScr
       scrFlags[0] = 1
-      console.log('jQuery added!')
       toggleStatus(0, jsSpan)
     } else if (scrFlags[2] === 0) {
       scripts = scripts.replace(jqScr, '')
       scrFlags[0] = 0
-      console.log('jQuery removed!')
       toggleStatus(0, jsSpan)
     }
   })
@@ -406,12 +398,10 @@ function addScript () {
     if (scrFlags[1] === 0) {
       scripts += aniScr
       scrFlags[1] = 1
-      console.log('Anime added!')
       toggleStatus(1, jsSpan)
     } else {
       scripts = scripts.replace(aniScr, '')
       scrFlags[1] = 0
-      console.log('Anime removed!')
       toggleStatus(1, jsSpan)
     }
   })
@@ -422,17 +412,14 @@ function addScript () {
       toggleStatus(0, jsSpan)
       scripts += jqScr
       scrFlags[0] = 1
-      console.log('jQuery added!')
     }
     if (scrFlags[2] === 0) {
       scripts += boScr
       scrFlags[2] = 1
-      console.log('Bootstrap added!')
       toggleStatus(2, jsSpan)
     } else {
       scripts = scripts.replace(boScr, '')
       scrFlags[2] = 0
-      console.log('Bootstrap removed!')
       toggleStatus(2, jsSpan)
     }
   })
@@ -441,12 +428,10 @@ function addScript () {
     if (scrFlags[3] === 0) {
       scripts += p5Scr
       scrFlags[3] = 1
-      console.log('p5.js added!')
       toggleStatus(3, jsSpan)
     } else {
       scripts = scripts.replace(p5Scr, '')
       scrFlags[3] = 0
-      console.log('p5.js removed!')
       toggleStatus(3, jsSpan)
     }
   })
@@ -455,12 +440,10 @@ function addScript () {
     if (scrFlags[4] === 0) {
       scripts += thScr
       scrFlags[4] = 1
-      console.log('Three.js added!')
       toggleStatus(4, jsSpan)
     } else {
       scripts = scripts.replace(thScr, '')
       scrFlags[4] = 0
-      console.log('Three.js removed!')
       toggleStatus(4, jsSpan)
     }
   })
@@ -475,12 +458,10 @@ function addStyle () {
     if (styFlags[0] === 0) {
       styles += anSty
       styFlags[0] = 1
-      console.log('Animate added!')
       toggleStatus(0, cssSpan)
     } else {
       styles = styles.replace(anSty, '')
       styFlags[0] = 0
-      console.log('Animate removed!')
       toggleStatus(0, cssSpan)
     }
   })
@@ -489,12 +470,10 @@ function addStyle () {
     if (styFlags[1] === 0) {
       styles += boSty
       styFlags[1] = 1
-      console.log('Bootstrap added!')
       toggleStatus(1, cssSpan)
     } else {
       styles = styles.replace(boSty, '')
       styFlags[1] = 0
-      console.log('Bootstrap removed!')
       toggleStatus(1, cssSpan)
     }
   })
@@ -503,12 +482,10 @@ function addStyle () {
     if (styFlags[2] === 0) {
       styles += faSty
       styFlags[2] = 1
-      console.log('Font Awesome added!')
       toggleStatus(2, cssSpan)
     } else {
       styles = styles.replace(faSty, '')
       styFlags[2] = 0
-      console.log('Font Awesome removed!')
       toggleStatus(2, cssSpan)
     }
   })
