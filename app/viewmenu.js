@@ -8,10 +8,10 @@ function viewMenu () {
     remote.getCurrentWindow().toggleDevTools()
   })
   document.getElementById('full').addEventListener('click', () => {
-    if (remote.getCurrentWindow().isFullScreen() == true) {
-      remote.getCurrentWindow().setFullScreen(false)
+     if (!remote.getCurrentWindow().isMaximized()) {
+      remote.getCurrentWindow().maximize()
     } else {
-      remote.getCurrentWindow().setFullScreen(true)
+     remote.getCurrentWindow().unmaximize()
     }
   })
 }

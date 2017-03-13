@@ -8,11 +8,11 @@ function shortcuts () {
       toggleEditors(getCurrenEditor())
     }
     if (e.key === 'F11') {
-      if (remote.getCurrentWindow().isFullScreen() == true) {
-        remote.getCurrentWindow().setFullScreen(false)
-      } else {
-        remote.getCurrentWindow().setFullScreen(true)
-      }
+      if (!remote.getCurrentWindow().isMaximized()) {
+      remote.getCurrentWindow().maximize()
+    } else {
+     remote.getCurrentWindow().unmaximize()
+    }
     }
     if (e.key === 'F12') {
       remote.getCurrentWindow().toggleDevTools()
