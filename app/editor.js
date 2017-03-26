@@ -124,7 +124,7 @@ const getCurrenEditor = () => {
   return currentEditor
 }
 
-function toggleEditors(editorI) {
+function toggleEditors (editorI) {
   if (editorI === html) {
     css.focus()
   }
@@ -136,13 +136,13 @@ function toggleEditors(editorI) {
   }
 }
 
-function removeFocus(editor) {
+function removeFocus (editor) {
   for (var i = 0; i < editor.length; i++) {
     editor[i].classList.remove('editor-focus')
   }
 }
 // 6. Save the snippet functions
-function toggleStatus(i, span) {
+function toggleStatus (i, span) {
   if (span[i].classList.contains('status-active')) {
     span[i].classList.remove('status-active')
   } else {
@@ -157,25 +157,22 @@ onresize = function () {
   }
 }
 
-function paint() {
+function paint () {
   output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
 }
 
-function changeEditor(editor){
-    removeFocus(editorLabels)
-    if(editor == html)
-    {
-      editorLabels[0].classList.add('editor-focus')
-      currentEditor = html
-    }
-    if(editor == css)
-    {
-      editorLabels[1].classList.add('editor-focus')
-      currentEditor = css
-    }
-    if(editor == js)
-    {
-      editorLabels[2].classList.add('editor-focus')
-      currentEditor = js
-    }
+function changeEditor (editor) {
+  removeFocus(editorLabels)
+  if (editor === html) {
+    editorLabels[0].classList.add('editor-focus')
+    currentEditor = html
+  }
+  if (editor === css) {
+    editorLabels[1].classList.add('editor-focus')
+    currentEditor = css
+  }
+  if (editor === js) {
+    editorLabels[2].classList.add('editor-focus')
+    currentEditor = js
+  }
 }

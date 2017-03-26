@@ -9,10 +9,10 @@ function shortcuts () {
     }
     if (e.key === 'F11') {
       if (!remote.getCurrentWindow().isMaximized()) {
-      remote.getCurrentWindow().maximize()
-    } else {
-     remote.getCurrentWindow().unmaximize()
-    }
+        remote.getCurrentWindow().maximize()
+      } else {
+        remote.getCurrentWindow().unmaximize()
+      }
     }
     if (e.key === 'F12') {
       remote.getCurrentWindow().toggleDevTools()

@@ -12,7 +12,7 @@ function windowClicks () {
     if (!remote.getCurrentWindow().isMaximized()) {
       remote.getCurrentWindow().maximize()
     } else {
-     remote.getCurrentWindow().unmaximize()
+      remote.getCurrentWindow().unmaximize()
     }
   })
 
