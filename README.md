@@ -31,7 +31,7 @@ You can run the app via command line by following these steps:
 
 ```
 $ git clone https://github.com/thecodepad/codepad.git
-$ cd CodePad
+$ cd codepad
 $ npm install
 $ npm start
 ```
