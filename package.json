@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "codepad",
   "version": "0.1.1",
   "description": "An offline front-end development playground",
@@ -7,7 +7,8 @@
   "scripts": {
     "start": "electron ./app/",
     "build:win32": "electron-packager . CodePad --app-bundle-id=codepad --overwrite --asar=true --platform=win32 --arch=ia32 --icon=build/icon.ico --prune=true --out=dist --version-string.ProductName=CodePad --version-string.FileDescription=CodePad",
-    "build:win64": "electron-packager . CodePad --app-bundle-id=codepad --overwrite --asar=true --platform=win32 --arch=x64 --icon=build/icon.ico --prune=true --out=dist --version-string.ProductName=CodePad --version-string.FileDescription=CodePad"
+    "build:win64": "electron-packager . CodePad --app-bundle-id=codepad --overwrite --asar=true --platform=win32 --arch=x64 --icon=build/icon.ico --prune=true --out=dist --version-string.ProductName=CodePad --version-string.FileDescription=CodePad",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,8 @@
     "asar": "^0.13.0",
     "electron": "^1.6.1",
     "electron-packager": "^8.5.2",
+    "mocha": "^3.2.0",
+    "spectron": "^3.6.0",
     "standard": "^9.0.0"
   }
 }
