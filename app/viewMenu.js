@@ -1,6 +1,7 @@
 module.exports = {
   viewMenu
 }
+const THEME = require('./appearance')
 
 // 'View' Menu Buttons
 function viewMenu () {
@@ -13,5 +14,10 @@ function viewMenu () {
     } else {
       remote.getCurrentWindow().unmaximize()
     }
+  })
+  var status = document.getElementById('theme').querySelectorAll('span')
+  toggleStatus(0,status)
+  document.getElementById('theme').addEventListener('click', () => {
+    THEME.changeTheme()
   })
 }
