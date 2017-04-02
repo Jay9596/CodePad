@@ -1,0 +1,29 @@
+﻿/*myBlueTheme
+CodeMirror theme file created with CodeMirror-Themes
+https://github.com/mkaminsky11/codemirror-themes*/
+.cm-s-myBlueTheme.CodeMirror{background:rgba(0,0,0,1) !important;}
+.cm-s-myBlueTheme.CodeMirror{color:rgba(255,255,255,1) !important;}
+.cm-s-myBlueTheme div.CodeMirror-selected{background:rgba(0,0,0,1) !important;}
+.cm-s-myBlueTheme .CodeMirror-gutters{background:rgba(0,0,0,1) !important;}
+.cm-s-myBlueTheme .CodeMirror-guttermarker{color:rgba(255,255,255,1) !important;}
+.cm-s-myBlueTheme .CodeMirror-guttermarker-subtle{color:rgba(62,112,135,1) !important;}
+.cm-s-myBlueTheme .CodeMirror-linenumber{color:rgba(255,255,255,1) !important;}
+.cm-s-myBlueTheme .CodeMirror-cursor{border-color:rgba(0,0,0,1) !important;}
+.cm-s-myBlueTheme span.cm-comment{color:rgba(153,153,153,1) !important;}
+.cm-s-myBlueTheme span.cm-atom{color:rgba(244,194,11,1) !important;}
+.cm-s-myBlueTheme span.cm-number{color:rgba(130,198,224,1) !important;}
+.cm-s-myBlueTheme span.cm-property{color:rgba(255,255,255,1) !important;}
+.cm-s-myBlueTheme span.cm-attribute{color:rgba(130,198,224,1) !important;}
+.cm-s-myBlueTheme span.cm-keyword{color:rgba(255,0,255,1) !important;}
+.cm-s-myBlueTheme span.cm-string{color:rgba(240,128,71,1) !important;}
+.cm-s-myBlueTheme span.cm-string-2{color:rgba(255,255,255,1) !important;}
+.cm-s-myBlueTheme span.cm-variable{color:rgba(255,255,255,1) !important;}
+.cm-s-myBlueTheme span.cm-variable-2{color:rgba(123,216,39,1) !important;}
+.cm-s-myBlueTheme span.cm-def{color:rgba(255,255,255,1) !important;}
+.cm-s-myBlueTheme span.cm-bracket{color:rgba(255,0,255,1) !important;}
+.cm-s-myBlueTheme span.cm-tag{color:rgba(123,216,39,1) !important;}
+.cm-s-myBlueTheme span.cm-link{color:rgba(244,194,11,1) !important;}
+.cm-s-myBlueTheme span.cm-error{background:rgba(0,0,0,1) !important;}
+.cm-s-myBlueTheme span.cm-error{color:rgba(175,32,24,1) !important;}
+.cm-s-myBlueTheme .CodeMirror-activeline-background{color:rgba(255,255,255,1) !important;}
+.cm-s-myBlueTheme .CodeMirror-matchingbracket{color:rgba(255,0,255,1) !important;}
