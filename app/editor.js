@@ -18,7 +18,7 @@ const CSSMenu = require('./styles');
 const FILE = require('./file-menu');
 
 const editor = [];
-let output, html, css, js, editorLabels, styles, scripts, currentEditor;
+let output, html, css, js, editorLabels, styles='', scripts='', currentEditor;
 const saveFlag = false;
 const styFlags = [0, 0, 0];
 const scrFlags = [0, 0, 0, 0, 0];
