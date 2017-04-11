@@ -11,7 +11,7 @@ global.before(() => {
   chai.should()
   chai.use(chaiAsPromised)
 })
-describe('CodePad Testing:', function () {
+describe('##CODEPAD TEST##', function () {
   this.timeout(12000)
 
   beforeEach(() => {
@@ -23,86 +23,71 @@ describe('CodePad Testing:', function () {
       return app.stop()
     }
   })
-  /*
-    it('Window Tests:', () => {
-      app.start().then(() => {
-        return app.browserWindow.isVisible()
-      }).then(isVisible => {
-        assert.equal(isVisible, true)
-      }).then(() => {
-        return app.client.getTitle()
-      }).then(title => {
-        assert.equal(title, 'CodePad')
-      }).catch(err => {
-        console.log('Test Failed:', err.message)
-      })
-    })
-  */
   describe('Window Tests:', () => {
-    it('Opens a window', () => {
+    it('Opens', () => {
       return app.client.waitUntilWindowLoaded()
         .getWindowCount().should.eventually.equal(1)
     })
-    it('Test the title', () => {
+    it('Title', () => {
       return app.client.waitUntilWindowLoaded()
         .getTitle().should.eventually.equal('CodePad')
     })
-    it('Test window visibility', () => {
-      app.browserWindow.isVisible().then((visible) => {
-        console.log('Is window Visible? : ' + visible)
-      })
+    it('Visibility', () => {
+      return app.browserWindow.isVisible()
     })
   })
-  describe('Test window control', () => {
-    it('Tests min Button exists', () => {
+  describe('Test Window Controls:', () => {
+    it('Min Button', () => {
       return app.client.getAttribute('#min-button', 'title').then((btn) => {
         assert.equal(btn, 'Minimize')
       })
     })
-    it('Test max Button exists', () => {
+    it('Max Button', () => {
       return app.client.getAttribute('#max-button', 'title').then((btn) => {
         assert.equal(btn, 'Maximize')
       })
     })
-    it('Test close Button exists', () => {
+    it('Close Button', () => {
       return app.client.getAttribute('#close-button', 'title').then((btn) => {
         assert.equal(btn, 'Close')
       })
     })
   })
-  describe('Test Menu', () => {
-    it('Test JS menu', () => {
+  describe('Test Menu:', () => {
+    it('JS Menu', () => {
       return app.client.getText('*=JS').then((e) => {
         assert.equal(e, '+JS')
       })
     })
-    it('Test CSS menu', () => {
+    it('CSS Menu', () => {
       return app.client.getText('*=CSS').then((e) => {
         assert.equal(e, '+CSS')
       })
     })
-    it('Test new Button', () => {
+    it('New Button', () => {
       app.client.click('#new').then(() => {
         return app.client.waitUntilWindowLoaded()
           .getWindowCount().should.eventually.equal(2)
       })
     })
-    it('Test contribute link', () => {
+    it('Contribute Button', () => {
       return app.client.getAttribute('#contribute', 'href').then((link) => {
         link.should.equal('https://www.github.com/thecodepad/codepad')
       })
     })
-    it('Test update link', () => {
+    it('Update Button', () => {
       return app.client.getAttribute('#check-updates', 'href').then((link) => {
         link.should.equal('https://github.com/Jay9596/CodePad/releases')
       })
     })
-    it('Test about link', () => {
+    it('About Button', () => {
       return app.client.getAttribute('#about', 'href').then((link) => {
         link.should.equal('https://thecodepad.github.io/')
       })
     })
-    it('Test output window', () => {
+  })
+  describe('Test Output:', () => {
+    it('Output Frame', () => {
       app.client.getTagName('#output').then((output) => {
         output.should.be.equal.to('iframe')
       })
