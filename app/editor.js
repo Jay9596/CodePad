@@ -1,14 +1,7 @@
 // 1. Declarations and Node Modules Import
 const electron = require('electron');
 const path = require('path');
-const shell = electron.shell;
-const remote = electron.remote;
 const fs = require('fs');
-const {
-	dialog,
-	Menu,
-	MenuItem
-} = remote;
 const VIEW = require('./view-menu');
 const HELP = require('./help-menu');
 const SHORTCUT = require('./shortcuts');
@@ -17,18 +10,19 @@ const JSMenu = require('./scripts');
 const CSSMenu = require('./styles');
 const FILE = require('./file-menu');
 
+const shell = electron.shell;
+const remote = electron.remote;
+const {
+	dialog,
+	Menu,
+	MenuItem
+} = remote;
 const editor = [];
-let output, html, css, js, editorLabels, styles='', scripts='', currentEditor;
-const saveFlag = false;
-const styFlags = [0, 0, 0];
-const scrFlags = [0, 0, 0, 0, 0];
-
 const cssLib = [
 	['animate.css', '<link rel=\'stylesheet\' type=\'text/css\' href=\'lib/animate.css\'>'],
 	['bootstrap.min.css', '<link rel=\'stylesheet\' type=\'text/css\' href=\'lib/bootstrap.min.css\'>'],
 	['font-awesome.min.css', '<link rel=\'stylesheet\' type=\'text/css\' href=\'lib/font-awesome.min.css\'>']
 ];
-
 const jsLib = [
 	['jquery-3.1.1.min.js', '<script src=\'lib/jquery-3.1.1.min.js\'></script>'],
 	['anime.min.js', '<script src=\'lib/anime.min.js\'></script>'],
@@ -36,6 +30,13 @@ const jsLib = [
 	['p5.min.js', '<script src=\'lib/p5.min.js\'></script>'],
 	['three.min.js', '<script src=\'lib/three.min.js\'></script>']
 ];
+
+let output, html, css, js, editorLabels, currentEditor, editors;
+let styles = '',
+	scripts = '',
+	saveFlag = false,
+	styFlags = [0, 0, 0],
+	scrFlags = [0, 0, 0, 0, 0];
 
 // 3. Main Functions for Electron
 onload = function () {
@@ -90,7 +91,8 @@ onload = function () {
 	css = editor[1];
 	js = editor[2];
 
-	// Output refresh and editor focus
+	// Output refresh, editor focus, and global elements
+	editors = document.getElementById('editor');
 	output = document.getElementById('output');
 	editorLabels = document.getElementsByClassName('editor-label');
 

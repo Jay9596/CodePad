@@ -6,7 +6,7 @@
 	color: black;
 	font-size: 14px;
 	line-height: 24px;
-	font-family: 'Source Code Pro', 'Roboto Mono', 'Courier New', 'Courier', monospace;
+	font-family: 'Consolas', 'Source Code Pro', 'Roboto Mono', 'Courier New', 'Courier', monospace;
 	font-weight: 400;
 }
 
@@ -60,7 +60,7 @@
 /* CURSOR */
 
 .CodeMirror-cursor {
-	border-left: 1px solid black;
+	border-left: 2px solid black;
 	border-right: none;
 	width: 0;
 }
