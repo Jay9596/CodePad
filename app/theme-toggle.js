@@ -13,7 +13,7 @@ function changeTheme() {
 		currentTheme = 'base16-tomorrow-light';
 		for (let i = 0; i < editor.length; i++) {
 			editor[i].setOption('theme', 'base16-tomorrow-light');
-			editorBorder[i].style.borderRight = '4px solid #E0E0E0';
+			editorBorder[i].style.borderRight = '4px solid #000';
 			editorLabels[i].style.color = '#646468';
 			editorLabels[i].style.backgroundColor = '#D8D8D8';
 		}
