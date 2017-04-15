@@ -105,9 +105,10 @@
   </div>
   <script>
     let isDown = false;
-    let startY;
+    let startY, i;
     const editorsBottom = document.querySelector('.editor-border-bottom');
     const editorOb = document.getElementsByClassName('CodeMirror')
+    const outputView = document.getElementById('result-viewport');
     editorsBottom.addEventListener('mousedown', (e) => {
       e.preventDefault();
       isDown = true;
@@ -126,9 +127,10 @@
       if (!isDown) return;
       e.preventDefault();
       const displacement = (e.pageY - editorsBottom.offsetTop - startY);
-      for (var i = 0; i < 3; i++)
+      for (i = 0; i < 3; i++)
         editorOb[i].style.height = editorOb[i].offsetHeight + displacement + 'px';
       editors.style.height = editors.offsetHeight + displacement + 'px';
+      outputView.style.height = outputView.offsetHeight - displacement + 'px';
       console.log(startY + " " + displacement);
     });
   </script>

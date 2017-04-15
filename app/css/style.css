@@ -195,14 +195,16 @@ li.dropdown {
   display: flex;
   height: calc(50% - 32px);
   left: 0;
+  min-height: 108px;
   top: 0;
   width: 100%;
   /*border-bottom: 2px solid #121418;*/
 }
 
 .editor-item {
-  border-right: 2px solid #121418;
+  border-right: 4px solid #121418; 
   height: 100%;
+  min-height: 108px;
   min-width: 33.28%;
   width: auto;
 }

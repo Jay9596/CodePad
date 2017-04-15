@@ -24,10 +24,10 @@
     "asar": "^0.13.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "electron": "^1.6.1",
-    "electron-packager": "^8.5.2",
+    "electron": "^1.6.2",
+    "electron-packager": "^8.6.0",
     "mocha": "^3.2.0",
-    "spectron": "^3.6.0",
+    "spectron": "^3.6.1",
     "xo": "^0.18.1"
   }
 }

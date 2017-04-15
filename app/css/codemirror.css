@@ -6,6 +6,7 @@
 	color: black;
 	font-size: 14px;
 	line-height: 24px;
+	min-height: 72px;
 	font-family: 'Consolas', 'Source Code Pro', 'Roboto Mono', 'Courier New', 'Courier', monospace;
 	font-weight: 400;
 }
