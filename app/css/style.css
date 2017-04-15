@@ -243,14 +243,11 @@ li.dropdown {
 /* result-viewport: The container holding iframe element */
 
 #result-viewport {
-  height: calc(100% - 384px);
-  border: 0;
-  margin: 0;
   background: white;
+  border: 0;
+  height: calc(100% - 390px);
+  margin: 0;
   width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1;
 }
 
 
