@@ -2,7 +2,7 @@
 
 .CodeMirror {
 	/* Set height, width, borders, and global font properties here */
-	height: 320px;
+	height: calc(100% - 36px);
 	color: black;
 	font-size: 14px;
 	line-height: 24px;

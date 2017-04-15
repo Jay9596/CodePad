@@ -99,9 +99,39 @@
       <div class="editor-label">JS</div>
     </div>
   </div>
+  <div class="editor-border-bottom"></div>
   <div id="result-viewport">
     <iframe id="output"></iframe>
   </div>
+  <script>
+    let isDown = false;
+    let startY;
+    const editorsBottom = document.querySelector('.editor-border-bottom');
+    const editorOb = document.getElementsByClassName('CodeMirror')
+    editorsBottom.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isDown = true;
+      startY = e.pageY - editorsBottom.offsetTop;
+    });
+
+    editorsBottom.addEventListener('mouseleave', () => {
+      isDown = false;
+    });
+
+    editorsBottom.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+
+    editorsBottom.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const displacement = (e.pageY - editorsBottom.offsetTop - startY);
+      for (var i = 0; i < 3; i++)
+        editorOb[i].style.height = editorOb[i].offsetHeight + displacement + 'px';
+      editors.style.height = editors.offsetHeight + displacement + 'px';
+      console.log(startY + " " + displacement);
+    });
+  </script>
 </body>
 
 </html>

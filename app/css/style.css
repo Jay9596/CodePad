@@ -193,15 +193,16 @@ li.dropdown {
 
 #editor {
   display: flex;
+  height: calc(50% - 32px);
   left: 0;
   top: 0;
   width: 100%;
-  border-bottom: 2px solid #121418;
+  /*border-bottom: 2px solid #121418;*/
 }
 
 .editor-item {
   border-right: 2px solid #121418;
-  height: 50%;
+  height: 100%;
   min-width: 33.28%;
   width: auto;
 }
@@ -239,8 +240,22 @@ li.dropdown {
   cursor: text;
 }
 
+.editor-border-bottom {
+  display: block;
+  background-color: #121418;
+  height: 6px;
+  width: 100%;
+}
+
+.editor-border-bottom:hover {
+  cursor: row-resize;
+}
+
 
 /* result-viewport: The container holding iframe element */
+
+
+/*TODO: FIX ME! */
 
 #result-viewport {
   background: white;
