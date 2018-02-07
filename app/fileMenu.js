@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   fileMenu,
   newFile,
@@ -7,8 +9,8 @@ module.exports = {
 }
 let saveFlag
 const getSavePath = () => savePath
-const setSavePath = (path) => {
-  savePath = path
+const setSavePath = (filePath) => {
+  savePath = filePath
 }
 
 function fileMenu () {
@@ -30,37 +32,37 @@ function handleNew (i) {
 }
 
 function handleSaveAs () {
-  var path = dialog.showOpenDialog({
+  var filePath = dialog.showOpenDialog({
     properties: ['openDirectory']
   })
-  if (path !== undefined) {
+  if (filePath !== undefined) {
     saveFlag = true
-    setSavePath(path)
+    setSavePath(filePath)
     handleSave()
   }
 }
 
 function handleSave () {
   if (saveFlag === true) {
-    var path = getSavePath()
-    // console.log('save path:  ' + path)
+    var filePath = getSavePath()
+    // console.log('save path:  ' + filePath)
     var htmlString = '<html>\n' + '<head>\n' + '<title>CodePad Save</title>\n' + CSSMenu.getCssLibs() + '\n<link type="text/css" rel="stylesheet" href="style.css"/>\n' + '</head>\n' + '<body>\n' + html.getValue() + JSMenu.getJsLibs() + '\n<script src="script.js">' + '</script>\n' + '</body>\n' + '</html>'
     // Write HTML
-    fs.writeFile(path + '\\index.html', htmlString, (err) => {
+    fs.writeFile(path.join(filePath + '/index.html'), htmlString, (err) => {
       if (err) {
         console.error(err)
       }
       // console.log('success HTML')
     })
     // Write CSS
-    fs.writeFile(path + '\\style.css', css.getValue(), (err) => {
+    fs.writeFile(path.join(filePath + '/style.css'), css.getValue(), (err) => {
       if (err) {
         console.error(err)
       }
       // console.log('success CSS')
     })
     // Write JS
-    fs.writeFile(path + '\\script.js', js.getValue(), (err) => {
+    fs.writeFile(path.join(filePath + '/script.js'), js.getValue(), (err) => {
       if (err) {
         console.error(err)
       }
@@ -68,27 +70,27 @@ function handleSave () {
     })
     for (var j = 0; j < styFlags.length; j++) {
       if (styFlags[j] === 1) {
-        fs.createReadStream('resources/app.asar/app/lib/' + cssLib[j][0]).pipe(fs.createWriteStream(path + '/' + cssLib[j][0]))
+        fs.createReadStream('resources/app.asar/app/lib/' + cssLib[j][0]).pipe(fs.createWriteStream(path.join(filePath + '/' + cssLib[j][0])))
         if (j === 1) {
-          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.eot').pipe(fs.createWriteStream(path + '/glyphicons-halflings-regular.eot'))
-          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.ttf').pipe(fs.createWriteStream(path + '/glyphicons-halflings-regular.tff'))
-          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.woff').pipe(fs.createWriteStream(path + '/glyphicons-halflings-regular.woff'))
-          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.woff2').pipe(fs.createWriteStream(path + '/glyphicons-halflings-regular.woff2'))
+          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.eot').pipe(fs.createWriteStream(path.join(filePath + '/glyphicons-halflings-regular.eot')))
+          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.ttf').pipe(fs.createWriteStream(path.join(filePath + '/glyphicons-halflings-regular.tff')))
+          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.woff').pipe(fs.createWriteStream(path.join(filePath + '/glyphicons-halflings-regular.woff')))
+          fs.createReadStream('resources/app.asar/app/lib/glyphicons-halflings-regular.woff2').pipe(fs.createWriteStream(path.join(filePath + '/glyphicons-halflings-regular.woff2')))
         }
         if (j === 2) {
-          fs.createReadStream('resources/app.asar/app/lib/fontawesome-webfont.ttf').pipe(fs.createWriteStream(path + '/fontawesome-webfont.ttf'))
-          fs.createReadStream('resources/app.asar/app/lib/fontawesome-webfont.woff').pipe(fs.createWriteStream(path + '/fontawesome-webfont.woff'))
-          fs.createReadStream('resources/app.asar/app/lib/fontawesome-webfont.woff2').pipe(fs.createWriteStream(path + '/fontawesome-webfont.woff2'))
+          fs.createReadStream('resources/app.asar/app/lib/fontawesome-webfont.ttf').pipe(fs.createWriteStream(path.join(filePath + '/fontawesome-webfont.ttf')))
+          fs.createReadStream('resources/app.asar/app/lib/fontawesome-webfont.woff').pipe(fs.createWriteStream(path.join(filePath + '/fontawesome-webfont.woff')))
+          fs.createReadStream('resources/app.asar/app/lib/fontawesome-webfont.woff2').pipe(fs.createWriteStream(path.join(filePath + '/fontawesome-webfont.woff2')))
         }
       }
     }
     for (var i = 0; i < scrFlags.length; i++) {
       if (scrFlags[i] === 1) {
-        fs.createReadStream('resources/app.asar/app/lib/' + jsLib[i][0]).pipe(fs.createWriteStream(path + '/' + jsLib[i][0]))
+        fs.createReadStream('resources/app.asar/app/lib/' + jsLib[i][0]).pipe(fs.createWriteStream(path.join(filePath + '/' + jsLib[i][0])))
       }
     }
     dialog.showMessageBox({
-      message: 'Saved to ' + path + '\\',
+      message: 'Saved to ' + path.join(filePath + '/'),
       buttons: ['OK']
     })
   } else {
