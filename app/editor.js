@@ -26,6 +26,8 @@ var saveFlag = false
 var styFlags = [0, 0, 0]
 var scrFlags = [0, 0, 0, 0, 0]
 
+var socket
+
 var cssLib = [
   ['animate.css', "<link rel='stylesheet' type='text/css' href='lib/animate.css'>"],
   ['bootstrap.min.css', "<link rel='stylesheet' type='text/css' href='lib/bootstrap.min.css'>"],
@@ -115,6 +117,12 @@ onload = function () {
   SHORTCUT.shortcuts()
   FILE.newFile()
   onresize()
+
+  // Sockets
+  socket.on('getData', (e) => {
+    console.log("Get data")
+    console.info("Data: ", e)
+  })
 }
 
 // 5. Editor Functions
@@ -124,7 +132,7 @@ const getCurrenEditor = () => {
   return currentEditor
 }
 
-function toggleEditors (editorI) {
+function toggleEditors(editorI) {
   if (editorI === html) {
     css.focus()
   }
@@ -136,13 +144,13 @@ function toggleEditors (editorI) {
   }
 }
 
-function removeFocus (editor) {
+function removeFocus(editor) {
   for (var i = 0; i < editor.length; i++) {
     editor[i].classList.remove('editor-focus')
   }
 }
 // 6. Save the snippet functions
-function toggleStatus (i, span) {
+function toggleStatus(i, span) {
   if (span[i].classList.contains('status-active')) {
     span[i].classList.remove('status-active')
   } else {
@@ -157,11 +165,12 @@ onresize = function () {
   }
 }
 
-function paint () {
+function paint() {
   output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
+  sendData()
 }
 
-function changeEditor (editor) {
+function changeEditor(editor) {
   removeFocus(editorLabels)
   if (editor === html) {
     editorLabels[0].classList.add('editor-focus')
@@ -176,3 +185,25 @@ function changeEditor (editor) {
     currentEditor = js
   }
 }
+
+function sendData() {
+  socket = VIEW.getConnection()
+  if (socket != "") {
+    socket.emit('send', {
+      html: html.getValue(),
+      css: css.getValue(),
+      js: js.getValue(),
+    })
+
+    // startListen(socket)
+  }
+}
+
+socket.on('getData', (e) => {
+  console.log("Get data")
+  console.info("Data: ", e)
+  // html.setValue(e.html)
+  // css.setValue(e.css)
+  // js.setValue(e.js)
+})
+

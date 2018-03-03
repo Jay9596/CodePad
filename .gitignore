@@ -6,3 +6,7 @@ Thumbs.db
 /dist
 .vscode
 /lib
+/app
+/dist
+/dll
+/flow-typed
