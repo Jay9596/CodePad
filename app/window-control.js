@@ -27,17 +27,17 @@ function initContextMenu() {
 	menu.append(new MenuItem({
 		label: 'Copy',
 		role: 'copy'
-    // Click: copy
+		// Click: copy
 	}));
 	menu.append(new MenuItem({
 		label: 'Cut',
 		role: 'cut'
-    // Click: cut
+		// Click: cut
 	}));
 	menu.append(new MenuItem({
 		label: 'Paste',
 		role: 'paste'
-    // Click: paste
+		// Click: paste
 	}));
 
 	window.addEventListener('contextmenu', ev => {

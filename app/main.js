@@ -19,7 +19,7 @@ app.setAppUserModelId('CodePad');
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
 app.on('ready', () => {
-  // Create the browser window.
+	// Create the browser window.
 	mainWindow = new BrowserWindow({
 		title: 'CodePad',
 		width: 1024,
@@ -30,14 +30,14 @@ app.on('ready', () => {
 		icon: path.join(__dirname, '../build/CB.ico')
 	});
 
-  // And load the index.html of the app.
+	// And load the index.html of the app.
 	mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
-  // Emitted when the window is closed.
+	// Emitted when the window is closed.
 	mainWindow.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
+		// Dereference the window object, usually you would store windows
+		// in an array if your app supports multi windows, this is the time
+		// when you should delete the corresponding element.
 		mainWindow = null;
 	});
 });

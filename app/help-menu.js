@@ -3,7 +3,7 @@ module.exports = {
 };
 
 function helpMenu() {
-  // Open links in the 'Help' menu in the default browser
+	// Open links in the 'Help' menu in the default browser
 	const helpa = document.getElementById('help-menu').getElementsByTagName('a');
 	for (let i = 0; i < helpa.length; i++) {
 		helpa[i].addEventListener('click', function (e) {

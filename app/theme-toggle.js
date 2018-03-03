@@ -17,7 +17,7 @@ function changeTheme() {
 			editorLabels[i].style.color = '#646468';
 			editorLabels[i].style.backgroundColor = '#D8D8D8';
 		}
-		editorsBottom.style.backgroundColor = "#E0E0E0";
+		editorsBottom.style.backgroundColor = '#E0E0E0';
 	} else {
 		currentTheme = 'base16-ocean-dark';
 		for (let i = 0; i < editor.length; i++) {
@@ -26,6 +26,6 @@ function changeTheme() {
 			editorLabels[i].style.color = '#EAEAEA';
 			editorLabels[i].style.backgroundColor = '#232831';
 		}
-		editorsBottom.style.backgroundColor = "#121418";
+		editorsBottom.style.backgroundColor = '#121418';
 	}
 }
