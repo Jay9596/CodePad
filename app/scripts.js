@@ -60,27 +60,51 @@ function addScript() {
 		}
 	});
 	jsButtons[3].addEventListener('click', e => {
-		const p5Scr = jsLib[3][1];
+		const dScr = jsLib[3][1];
 		if (scrFlags[3] === 0) {
-			scripts += p5Scr;
+			scripts += dScr;
 			scrFlags[3] = 1;
 			toggleStatus(3, jsSpan);
 		} else {
-			scripts = scripts.replace(p5Scr, '');
+			scripts = scripts.replace(dScr, '');
 			scrFlags[3] = 0;
 			toggleStatus(3, jsSpan);
 		}
 	});
 	jsButtons[4].addEventListener('click', e => {
-		const thScr = jsLib[4][1];
+		const momScr = jsLib[4][1];
 		if (scrFlags[4] === 0) {
-			scripts += thScr;
+			scripts += momScr;
 			scrFlags[4] = 1;
 			toggleStatus(4, jsSpan);
 		} else {
-			scripts = scripts.replace(thScr, '');
+			scripts = scripts.replace(momScr, '');
 			scrFlags[4] = 0;
 			toggleStatus(4, jsSpan);
+		}
+	});
+	jsButtons[5].addEventListener('click', e => {
+		const p5Scr = jsLib[5][1];
+		if (scrFlags[5] === 0) {
+			scripts += p5Scr;
+			scrFlags[5] = 1;
+			toggleStatus(5, jsSpan);
+		} else {
+			scripts = scripts.replace(p5Scr, '');
+			scrFlags[5] = 0;
+			toggleStatus(5, jsSpan);
+		}
+	});
+	jsButtons[6].addEventListener('click', e => {
+		const thScr = jsLib[6][1];
+		if (scrFlags[6] === 0) {
+			scripts += thScr;
+			scrFlags[6] = 1;
+			toggleStatus(6, jsSpan);
+		} else {
+			scripts = scripts.replace(thScr, '');
+			scrFlags[6] = 0;
+			toggleStatus(6, jsSpan);
 		}
 	});
 }

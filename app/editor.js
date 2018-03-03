@@ -21,12 +21,16 @@ const editor = [];
 const cssLib = [
 	['animate.css', '<link rel=\'stylesheet\' type=\'text/css\' href=\'lib/animate.css\'>'],
 	['bootstrap.min.css', '<link rel=\'stylesheet\' type=\'text/css\' href=\'lib/bootstrap.min.css\'>'],
+	['bulma.min.css', '<link rel=\'stylesheet\' type=\'text/css\' href=\'lib/bulma.min.css\'>'],
+	['tailwind.min.css', '<link rel=\'stylesheet\' type=\'text/css\' href=\'lib/tailwind.min.css\'>'],
 	['font-awesome.min.css', '<link rel=\'stylesheet\' type=\'text/css\' href=\'lib/font-awesome.min.css\'>']
 ];
 const jsLib = [
 	['jquery-3.1.1.min.js', '<script src=\'lib/jquery-3.1.1.min.js\'></script>'],
 	['anime.min.js', '<script src=\'lib/anime.min.js\'></script>'],
 	['bootstrap.min.js', '<script src=\'lib/bootstrap.min.js\'></script>'],
+	['d3.min.js', '<script src=\'lib/d3.min.js\'></script>'],
+	['moment.min.js', '<script src=\'lib/moment.min.js\'></script>'],
 	['p5.min.js', '<script src=\'lib/p5.min.js\'></script>'],
 	['three.min.js', '<script src=\'lib/three.min.js\'></script>']
 ];

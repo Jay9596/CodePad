@@ -42,15 +42,39 @@ function addStyle() {
 		}
 	});
 	cssButtons[2].addEventListener('click', e => {
-		const faSty = cssLib[2][1];
+		const buSty = cssLib[2][1];
 		if (styFlags[2] === 0) {
-			styles += faSty;
+			styles += buSty;
 			styFlags[2] = 1;
 			toggleStatus(2, cssSpan);
 		} else {
-			styles = styles.replace(faSty, '');
+			styles = styles.replace(buSty, '');
 			styFlags[2] = 0;
 			toggleStatus(2, cssSpan);
+		}
+	});
+	cssButtons[3].addEventListener('click', e => {
+		const tailSty = cssLib[3][1];
+		if (styFlags[3] === 0) {
+			styles += tailSty;
+			styFlags[3] = 1;
+			toggleStatus(3, cssSpan);
+		} else {
+			styles = styles.replace(tailSty, '');
+			styFlags[3] = 0;
+			toggleStatus(3, cssSpan);
+		}
+	});
+	cssButtons[4].addEventListener('click', e => {
+		const faSty = cssLib[4][1];
+		if (styFlags[4] === 0) {
+			styles += faSty;
+			styFlags[4] = 1;
+			toggleStatus(4, cssSpan);
+		} else {
+			styles = styles.replace(faSty, '');
+			styFlags[4] = 0;
+			toggleStatus(4, cssSpan);
 		}
 	});
 }
