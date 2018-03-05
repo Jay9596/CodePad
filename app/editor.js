@@ -16,6 +16,7 @@ const WINDOW = require('./windowControl')
 const JSMenu = require('./scripts')
 const CSSMenu = require('./styles')
 const FILE = require('./fileMenu')
+const TASK = require('./taskMenu')
 
 var scripts = ''
 var styles = ''
@@ -39,6 +40,8 @@ var jsLib = [
   ['p5.min.js', "<script src='lib/p5.min.js'></script>"],
   ['three.min.js', "<script src='lib/three.min.js'></script>"]
 ]
+
+var autoRun = true
 
 // 3. Main Functions for Electron
 onload = function () {
@@ -99,7 +102,9 @@ onload = function () {
 
   for (var k = 0; k < 3; k++) {
     editor[k].on('change', function (change) {
-      paint()
+      if (autoRun) {
+        paint()
+      }
     })
   }
 
@@ -114,6 +119,8 @@ onload = function () {
   CSSMenu.addStyle()
   SHORTCUT.shortcuts()
   FILE.newFile()
+  TASK.taskMenu()
+  TASK.runFunc(paint)
   onresize()
 }
 
@@ -124,7 +131,7 @@ const getCurrenEditor = () => {
   return currentEditor
 }
 
-function toggleEditors (editorI) {
+function toggleEditors(editorI) {
   if (editorI === html) {
     css.focus()
   }
@@ -136,13 +143,13 @@ function toggleEditors (editorI) {
   }
 }
 
-function removeFocus (editor) {
+function removeFocus(editor) {
   for (var i = 0; i < editor.length; i++) {
     editor[i].classList.remove('editor-focus')
   }
 }
 // 6. Save the snippet functions
-function toggleStatus (i, span) {
+function toggleStatus(i, span) {
   if (span[i].classList.contains('status-active')) {
     span[i].classList.remove('status-active')
   } else {
@@ -157,11 +164,11 @@ onresize = function () {
   }
 }
 
-function paint () {
+function paint() {
   output.srcdoc = '<html>' + '<head>' + getSty() + '<style>' + 'body{border:0;padding:0}' + css.getValue() + '</style>' + '</head>' + '<body>' + html.getValue() + getScr() + '<script>' + js.getValue() + '</script>' + '</body>' + '</html>'
 }
 
-function changeEditor (editor) {
+function changeEditor(editor) {
   removeFocus(editorLabels)
   if (editor === html) {
     editorLabels[0].classList.add('editor-focus')
