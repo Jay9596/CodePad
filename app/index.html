@@ -26,11 +26,31 @@
         <li class="dropdown">
           <a href="#" class="menu-item">File</a>
           <ul class="dropdown-content">
-            <li><a href="#" id="new" class="submenu-item" title="Open a new window">New Window<span class="shortcut">Ctrl+N</span></a></li>
-            <li><a href="#" id="save" class="submenu-item" title="Save this snippet">Save<span class="shortcut">Ctrl+S</span></a></li>
-            <li><a href="#" id="save-as" class="submenu-item" title="Save this snippet as">Save As<span class="shortcut"></span></a></li>
-            <li><a href="#" id="prefs" class="submenu-item disabled" title="Editor settings and themes - Coming Soon">Preferences<span class="shortcut">Ctrl+P</span></a></li>
-            <li><a href="#" id="close-window" class="submenu-item" title="Close this window">Close Window<span class="shortcut">Ctrl+W</span></a></li>
+            <li>
+              <a href="#" id="new" class="submenu-item" title="Open a new window">New Window
+                <span class="shortcut">Ctrl+N</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" id="save" class="submenu-item" title="Save this snippet">Save
+                <span class="shortcut">Ctrl+S</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" id="save-as" class="submenu-item" title="Save this snippet as">Save As
+                <span class="shortcut"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" id="prefs" class="submenu-item disabled" title="Editor settings and themes - Coming Soon">Preferences
+                <span class="shortcut">Ctrl+P</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" id="close-window" class="submenu-item" title="Close this window">Close Window
+                <span class="shortcut">Ctrl+W</span>
+              </a>
+            </li>
           </ul>
         </li>
         <!--<li class="dropdown">
@@ -46,41 +66,128 @@
         <li class="dropdown">
           <a href="#" class="menu-item">View</a>
           <ul class="dropdown-content">
-            <li><a href="#" id="theme" class="submenu-item" title="Switch Theme">Dark Side<span class="status"></span></a></li>
-            <li><a href="#" id="run" class="submenu-item disabled" title="Run in default browser - Coming Soon">Run in Browser<span class="shortcut">F5</span></a></li>
-            <li><a href="#" id="full-output" class="submenu-item disabled" title="View output in fullscreen - Coming Soon">Full Screen Output<span class="shortcut">F9</span></a></li>
-            <li><a href="#" id="full" class="submenu-item" title="View CodePad in Fullscreen">Toggle Fullscreen<span class="shortcut">F11</span></a></li>
-            <li><a href="#" id="dev" class="submenu-item" title="View Developer Tools (Inspector, Console, etc.)">Toggle Developers Tools<span class="shortcut">F12</span></a></li>
+            <li>
+              <a href="#" id="theme" class="submenu-item" title="Switch Theme">Dark Side
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" id="run" class="submenu-item disabled" title="Run in default browser - Coming Soon">Run in Browser
+                <span class="shortcut">F5</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" id="full-output" class="submenu-item disabled" title="View output in fullscreen - Coming Soon">Full Screen Output
+                <span class="shortcut">F9</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" id="full" class="submenu-item" title="View CodePad in Fullscreen">Toggle Fullscreen
+                <span class="shortcut">F11</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" id="dev" class="submenu-item" title="View Developer Tools (Inspector, Console, etc.)">Toggle Developers Tools
+                <span class="shortcut">F12</span>
+              </a>
+            </li>
           </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="menu-item">Help</a>
           <ul class="dropdown-content" id="help-menu">
-            <li><a href="https://github.com/Jay9596/CodePad/releases" id="check-updates" class="submenu-item" title="View updates on website">Check for updates..</a></li>
-            <li><a href="https://www.github.com/thecodepad/codepad" id="contribute" class="submenu-item" title="View Codepad on GitHub &#9825;">Contribute</a></li>
-            <li><a href="https://thecodepad.github.io" id="about" class="submenu-item" title="Go to website - Codepad v0.1.1b">About</a></li>
+            <li>
+              <a href="https://github.com/Jay9596/CodePad/releases" id="check-updates" class="submenu-item" title="View updates on website">Check for updates..</a>
+            </li>
+            <li>
+              <a href="https://www.github.com/thecodepad/codepad" id="contribute" class="submenu-item" title="View Codepad on GitHub &#9825;">Contribute</a>
+            </li>
+            <li>
+              <a href="https://thecodepad.github.io" id="about" class="submenu-item" title="Go to website - Codepad v0.1.1b">About</a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="menu-item">Task</a>
+          <ul class="dropdown-content" id="task-menu">
+            <li>
+              <a href="#" id="exec" class="submenu-item" title="Run Code">Run</a>
+            </li>
+            <li>
+              <a href="#" id="auto-run" class="submenu-item" title="Auto run option">Auto Run?
+                <span class="status status-active"></span>
+              </a>
+            </li>
           </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="menu-item" style="color: #F2672E;">+CSS</a>
           <ul id="css-menu" class="dropdown-content">
-            <li><a href="#" class="submenu-item">+Animate.css<span class="status"></span></a></li>
-            <li><a href="#" class="submenu-item">+Bootstrap<span class="status"></span></a></li>
-            <li><a href="#" class="submenu-item">+Bulma<span class="status"></span></a></li>
-            <li><a href="#" class="submenu-item">+Tailwind<span class="status"></span></a></li>            
-            <li><a href="#" class="submenu-item">+Font Awesome<span class="status"></span></a></li>
+            <li>
+              <a href="#" class="submenu-item">+Animate.css
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+Bootstrap
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+Bulma
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+Tailwind
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+Font Awesome
+                <span class="status"></span>
+              </a>
+            </li>
           </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="menu-item" style="color: #F1BE24;">+JS</a>
           <ul id="js-menu" class="dropdown-content">
-            <li><a href="#" class="submenu-item">+jQuery<span class="status"></span></a></li>
-            <li><a href="#" class="submenu-item">+anime.js<span class="status"></span></a></li>
-            <li><a href="#" class="submenu-item">+Bootstrap<span class="status"></span></a></li>
-            <li><a href="#" class="submenu-item">+d3<span class="status"></span></a></li>
-            <li><a href="#" class="submenu-item">+Moment.js<span class="status"></span></a></li>
-            <li><a href="#" class="submenu-item">+p5.js<span class="status"></span></a></li>
-            <li><a href="#" class="submenu-item">+three.js<span class="status"></span></a></li>
+            <li>
+              <a href="#" class="submenu-item">+jQuery
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+anime.js
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+Bootstrap
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+d3
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+Moment.js
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+p5.js
+                <span class="status"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="submenu-item">+three.js
+                <span class="status"></span>
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
