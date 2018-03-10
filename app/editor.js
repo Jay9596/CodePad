@@ -12,6 +12,7 @@ const JSMenu = require("./scripts");
 const CSSMenu = require("./styles");
 const FILE = require("./fileMenu");
 const TASK = require("./taskMenu");
+const socket = require("socket.io-client")("http://localhost:3000");
 
 const editor = [];
 const cssLib = [
@@ -58,6 +59,12 @@ let autoRun = true;
 onload = function() {
   WINDOW.initContextMenu();
   WINDOW.windowClicks();
+
+  socket.on("connect", () => console.log("connected"));
+
+  socket.on("css-change", msg =>
+    console.log("incoming: " + socket.id + " " + msg),
+  );
 
   editor[0] = CodeMirror(document.getElementById("html-editor"), {
     mode: {
@@ -174,6 +181,7 @@ onresize = function() {
 };
 
 function paint() {
+  socket.emit("css-change", css.getValue());
   output.srcdoc =
     "<html>" +
     "<head>" +
