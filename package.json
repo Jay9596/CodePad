@@ -8,6 +8,7 @@
     "start": "electron ./app/",
     "build:win32": "electron-packager . CodePad --app-bundle-id=codepad --overwrite --asar=true --platform=win32 --arch=ia32 --icon=build/icon.ico --prune=true --out=dist --version-string.ProductName=CodePad --version-string.FileDescription=CodePad",
     "build:win64": "electron-packager . CodePad --app-bundle-id=codepad --overwrite --asar=true --platform=win32 --arch=x64 --icon=build/icon.ico --prune=true --out=dist --version-string.ProductName=CodePad --version-string.FileDescription=CodePad",
+    "build:linux": "electron-packager . CodePad --app-bundle-id=codepad --overwrite --asar=true --platform=linux --icon=build/icons/128x128.png --prune=true --out=dist --version-string.ProductName=CodePad --version-string.FileDescription=CodePad",
     "build:mac": "electron-packager . CodePad --platform=darwin --arch=x64 --icon=build/icon.ico --prune=true --out=dist --version-string.ProductName=CodePad --version-string.FileDescription=CodePad",
     "installer:mac": "electron-installer-dmg ./dist/CodePad-darwin-x64/CodePad.app CodePad",
     "test": "mocha"
