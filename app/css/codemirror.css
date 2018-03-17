@@ -2,11 +2,12 @@
 
 .CodeMirror {
 	/* Set height, width, borders, and global font properties here */
-	height: 320px;
+	height: calc(100% - 36px);
 	color: black;
 	font-size: 14px;
 	line-height: 24px;
-	font-family: 'Source Code Pro', 'Roboto Mono', 'Courier New', 'Courier', monospace;
+	min-height: 72px;
+	font-family: 'Consolas', 'Source Code Pro', 'Roboto Mono', 'Courier New', 'Courier', monospace;
 	font-weight: 400;
 }
 
@@ -60,7 +61,7 @@
 /* CURSOR */
 
 .CodeMirror-cursor {
-	border-left: 1px solid black;
+	border-left: 2px solid black;
 	border-right: none;
 	width: 0;
 }

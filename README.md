@@ -3,8 +3,8 @@
   <br>
   <b>CodePad</b><br>
   <i>An Offline Front-End Development Playground</i><br><br>
-  <a href="https://github.com/feross/standard">
-    <img src="https://img.shields.io/badge/code_style-standard-blue.svg?style=flat-square" />
+  <a href="https://github.com/sindresorhus/xo">
+    <img src="https://img.shields.io/badge/code_style-xo-blue.svg?style=flat-square" />
   </a>
   <a href="https://raw.githubusercontent.com/thecodepad/codepad/master/LICENSE"> 
     <img src="https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square" />
