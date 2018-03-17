@@ -3,7 +3,6 @@ module.exports = {
   viewMenu
 }
 const THEME = require('./appearance')
-var counter = 0
 
 // 'View' Menu Buttons
 function viewMenu () {
