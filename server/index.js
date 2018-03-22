@@ -1,26 +1,50 @@
 var app = require("express")();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
-let ids = [];
 
-function myPush(socket, msg) {
-  if (ids.indexOf(socket.id) === -1) {
-    ids.push(socket.id);
-    console.log(ids);
-  }
+let sockets = [];
 
-  io.emit("css-change", msg);
-}
 
-app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
+// app.get("/", function (req, res) {
+//   res.sendFile(__dirname + "/index.html");
+// });
+
+io.on("connection", function (socket) {
+  console.log("user connected");
+  sockets.push(socket)
+
+  socket.on("html_change", (op) => {
+    console.log(op);
+    if (op.origin == '+input' || op.origin == 'paste' || op.origin == '+delete') {
+      sockets.forEach(function (sock) {
+        if (sock != socket)
+          sock.emit('html-change', op);
+      });
+    }
+  });
+
+  socket.on("css_change", (op) => {
+    console.log(op);
+    if (op.origin == '+input' || op.origin == 'paste' || op.origin == '+delete') {
+      sockets.forEach(function (sock) {
+        if (sock != socket)
+          sock.emit('css-change', op);
+      });
+    }
+  });
+
+  socket.on("js_change", (op) => {
+    console.log(op);
+    if (op.origin == '+input' || op.origin == 'paste' || op.origin == '+delete') {
+      sockets.forEach(function (sock) {
+        if (sock != socket)
+          sock.emit('js-change', op);
+      });
+    }
+  });
+
 });
 
-io.on("connection", function(socket) {
-  console.log("a user connected");
-  socket.on("css-change", msg => myPush(socket, msg));
-});
-
-http.listen(3000, function() {
+http.listen(3000, function () {
   console.log("listening on *:3000");
 });

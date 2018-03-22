@@ -6,3 +6,7 @@ Thumbs.db
 /dist
 .vscode
 /lib
+*prod.js*
+dist
+dll
+flow-typed

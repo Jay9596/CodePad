@@ -56,15 +56,26 @@ let styles = "",
 let autoRun = true;
 
 // 3. Main Functions for Electron
-onload = function() {
+onload = function () {
   WINDOW.initContextMenu();
   WINDOW.windowClicks();
 
   socket.on("connect", () => console.log("connected"));
 
-  socket.on("css-change", msg =>
-    console.log("incoming: " + socket.id + " " + msg),
-  );
+  socket.on("html-change", data => {
+    console.log(data);
+    html.replaceRange(data.text, data.from, data.to);
+  })
+
+  socket.on("css-change", data => {
+    console.log(data);
+    css.replaceRange(data.text, data.from, data.to);
+  })
+
+  socket.on("js-change", data => {
+    console.log(data);
+    js.replaceRange(data.text, data.from, data.to);
+  })
 
   editor[0] = CodeMirror(document.getElementById("html-editor"), {
     mode: {
@@ -124,6 +135,21 @@ onload = function() {
     });
   }
 
+  html.on("change", (_, op) => {
+    console.log("html change")
+    socket.emit("html_change", op)
+  });
+
+  css.on("change", (_, op) => {
+    console.log("css change")    
+    socket.emit("css_change", op)
+  });
+
+  js.on("change", (_, op) => {
+    console.log("js change")
+    socket.emit("js_change", op)
+  });
+
   html.on("focus", changeEditor);
   css.on("focus", changeEditor);
   js.on("focus", changeEditor);
@@ -174,14 +200,13 @@ function toggleStatus(i, span) {
 }
 
 // Refresh on resize
-onresize = function() {
+onresize = function () {
   for (let i = 0; i < 3; i++) {
     editor[i].refresh();
   }
 };
 
 function paint() {
-  socket.emit("css-change", css.getValue());
   output.srcdoc =
     "<html>" +
     "<head>" +
