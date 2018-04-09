@@ -1,9 +1,8 @@
 const electron = require("electron");
-const path = require("path");
 const shell = electron.shell;
 const remote = electron.remote;
-const fs = require("fs");
 const { dialog, Menu, MenuItem } = remote;
+
 const VIEW = require("./viewMenu");
 const HELP = require("./helpMenu");
 const SHORTCUT = require("./shortcuts");
