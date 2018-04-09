@@ -4,8 +4,6 @@ module.exports = {
   getUserConnect,
 };
 
-var conn;
-
 function taskMenu() {
   var autoRunButton = document.getElementById("auto-run");
   autoRunButton.addEventListener("click", setAutoRun);
