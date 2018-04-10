@@ -1,9 +1,8 @@
 const electron = require("electron");
-const path = require("path");
 const shell = electron.shell;
 const remote = electron.remote;
-const fs = require("fs");
 const { dialog, Menu, MenuItem } = remote;
+
 const VIEW = require("./viewMenu");
 const HELP = require("./helpMenu");
 const SHORTCUT = require("./shortcuts");
@@ -12,7 +11,7 @@ const JSMenu = require("./scripts");
 const CSSMenu = require("./styles");
 const FILE = require("./fileMenu");
 const TASK = require("./taskMenu");
-const socket = require("socket.io-client")("http://localhost:3000");
+const CONN = require('./connection');
 
 const editor = [];
 const cssLib = [
@@ -54,28 +53,14 @@ let styles = "",
   styFlags = [0, 0, 0, 0, 0],
   scrFlags = [0, 0, 0, 0, 0, 0, 0];
 let autoRun = true;
+let socket;
 
 // 3. Main Functions for Electron
 onload = function () {
   WINDOW.initContextMenu();
   WINDOW.windowClicks();
 
-  socket.on("connect", () => console.log("connected"));
-
-  socket.on("html-change", data => {
-    console.log(data);
-    html.replaceRange(data.text, data.from, data.to);
-  })
-
-  socket.on("css-change", data => {
-    console.log(data);
-    css.replaceRange(data.text, data.from, data.to);
-  })
-
-  socket.on("js-change", data => {
-    console.log(data);
-    js.replaceRange(data.text, data.from, data.to);
-  })
+  socket = CONN.getSocket();
 
   editor[0] = CodeMirror(document.getElementById("html-editor"), {
     mode: {
@@ -136,17 +121,17 @@ onload = function () {
   }
 
   html.on("change", (_, op) => {
-    console.log("html change")
+    // console.log("html change")
     socket.emit("html_change", op)
   });
 
   css.on("change", (_, op) => {
-    console.log("css change")    
+    // console.log("css change")
     socket.emit("css_change", op)
   });
 
   js.on("change", (_, op) => {
-    console.log("js change")
+    // console.log("js change")
     socket.emit("js_change", op)
   });
 
@@ -162,6 +147,7 @@ onload = function () {
   SHORTCUT.shortcuts();
   FILE.newFile();
   TASK.taskMenu();
+  TASK.getUserConnect(userConnect);
   TASK.runFunc(paint);
   onresize();
 };
@@ -240,4 +226,9 @@ function changeEditor(editor) {
     editorLabels[2].classList.add("editor-focus");
     currentEditor = js;
   }
+}
+
+function userConnect(ip) {
+  CONN.reconnect(ip);
+  socket = CONN.getSocket();
 }
