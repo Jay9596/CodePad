@@ -1,3 +1,5 @@
+const EDITOR = require("./editor");
+
 module.exports = {
   fileMenu,
   newFile,
@@ -44,35 +46,36 @@ function handleOpen() {
   if (path !== undefined) {
     saveFlag = true;
     setOpenPath(path);
-    copyData(path);
+    readData(path);
     alert("test");
   }
 }
 
-function copyData(path) {
+function readData(path) {
   fs.readFile(path+"/index.html", 'utf-8', function(err, data) {
     if (err) throw err;
     console.log(data);
+    html.setValue(data);
   });
 
   fs.readFile(path+"/style.css", 'utf-8', function(err, data) {
     if (err) throw err;
     console.log(data);
+    css.setValue(data);
   });
   
   fs.readFile(path+"/index.js", 'utf-8', function(err, data) {
     if (err) throw err;
     console.log(data);
-    
-    // fs.writeFile(savePath, data, function(err) {
-    //   if (err) throw err;
-    //   console.log('completed');
-    // });
+    js.setValue(data);
   });
 }
 
 function writeData() {
-
+  fs.writeFile(savePath, data, function(err) {
+    if (err) throw err;
+    console.log('completed');
+  });
 }
 
 function handleSaveAs() {
