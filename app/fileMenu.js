@@ -1,17 +1,25 @@
 module.exports = {
   fileMenu,
   newFile,
+  handleOpen,
   handleNew,
   handleSave,
   handleSaveAs,
 };
-let saveFlag;
+let saveFlag, openFlag;
 const getSavePath = () => savePath;
 const setSavePath = path => {
   savePath = path;
 };
 
+const getOpenPath = () => openPath;
+const setOpenPath = path => {
+  openPath = path;
+};
+
+
 function fileMenu() {
+  document.getElementById("open").addEventListener("click", handleOpen);
   document.getElementById("save").addEventListener("click", handleSave);
   document.getElementById("save-as").addEventListener("click", handleSaveAs);
   document.getElementById("new").addEventListener("click", handleNew);
@@ -27,6 +35,44 @@ function handleNew(i) {
   } else {
     window.open(path.join("file://", __dirname, "/index.html"));
   }
+}
+
+function handleOpen() {
+  const path = dialog.showOpenDialog({
+    properties: ["openDirectory"],
+  });
+  if (path !== undefined) {
+    saveFlag = true;
+    setOpenPath(path);
+    copyData(path);
+    alert("test");
+  }
+}
+
+function copyData(path) {
+  fs.readFile(path+"/index.html", 'utf-8', function(err, data) {
+    if (err) throw err;
+    console.log(data);
+  });
+
+  fs.readFile(path+"/style.css", 'utf-8', function(err, data) {
+    if (err) throw err;
+    console.log(data);
+  });
+  
+  fs.readFile(path+"/index.js", 'utf-8', function(err, data) {
+    if (err) throw err;
+    console.log(data);
+    
+    // fs.writeFile(savePath, data, function(err) {
+    //   if (err) throw err;
+    //   console.log('completed');
+    // });
+  });
+}
+
+function writeData() {
+
 }
 
 function handleSaveAs() {
