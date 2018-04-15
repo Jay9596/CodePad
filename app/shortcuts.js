@@ -17,6 +17,9 @@ function shortcuts() {
     if (e.key === "F12") {
       remote.getCurrentWindow().toggleDevTools();
     }
+    if (e.key === "F6") {
+      paint();
+    }
     if (e.ctrlKey && (e.key === "s" || e.key === "S")) {
       FILE.handleSave();
     }

@@ -18,7 +18,7 @@ __CodePad__ instantly previews your code so you don't have to run back and forth
 
 ## Screenshot 🖼️
 
-[<img alt='CodePad' src="https://thecodepad.github.io/img/codepad-screenshot.png?raw=true">](https://thecodepad.github.io)
+[<img alt='CodePad' src="https://raw.githubusercontent.com/Jay9596/CodePad/master/CodePad.png">](https://thecodepad.github.io)
 
 
 ## Installation 💻
