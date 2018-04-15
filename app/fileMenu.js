@@ -1,4 +1,5 @@
 const EDITOR = require("./editor");
+const cheerio = require('cheerio');
 
 module.exports = {
   fileMenu,
@@ -47,15 +48,18 @@ function handleOpen() {
     saveFlag = true;
     setOpenPath(path);
     readData(path);
-    alert("test");
   }
 }
 
 function readData(path) {
   fs.readFile(path+"/index.html", 'utf-8', function(err, data) {
     if (err) throw err;
-    console.log(data);
-    html.setValue(data);
+
+    const $ = cheerio.load(data);
+    console.log($('body').html());
+    // console.log(data);
+
+    html.setValue($('body').html());
   });
 
   fs.readFile(path+"/style.css", 'utf-8', function(err, data) {
@@ -68,13 +72,6 @@ function readData(path) {
     if (err) throw err;
     console.log(data);
     js.setValue(data);
-  });
-}
-
-function writeData() {
-  fs.writeFile(savePath, data, function(err) {
-    if (err) throw err;
-    console.log('completed');
   });
 }
 
