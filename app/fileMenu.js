@@ -68,7 +68,7 @@ function readData(path) {
     css.setValue(data);
   });
   
-  fs.readFile(path+"/index.js", 'utf-8', function(err, data) {
+  fs.readFile(path+"/script.js", 'utf-8', function(err, data) {
     if (err) throw err;
     console.log(data);
     js.setValue(data);
