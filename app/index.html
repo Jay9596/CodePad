@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="css/simplescrollbars.css">
   <link rel="stylesheet" href="css/base16-tomorrow-light.css">
   <link rel="stylesheet" href="css/base16-ocean-dark.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vex-js/3.0.0/css/vex.min.css" /> -->
+  <link rel="stylesheet" href="../node_modules/vex-js/dist/css/vex.css" />
+  <link rel="stylesheet" href="../node_modules/vex-js/dist/css/vex-theme-os.css" />
 </head>
 
 <body>
@@ -111,7 +114,7 @@
           <a href="#" class="menu-item">Task</a>
           <ul class="dropdown-content" id="task-menu">
             <li>
-              <a href="#" id="connect" class="submenu-item" title="Connect to IP">Connect</a>
+              <a id="connect" class="submenu-item" title="Connect to IP">Connect</a>
             </li>
             <li>
               <a href="#" id="exec" class="submenu-item" title="Run Code">Run
@@ -250,6 +253,10 @@
       console.log(startY + " " + displacement);
     });
   </script>
+
+<script src="../node_modules/vex-js/dist/js/vex.combined.min.js"></script>
+
+
 </body>
 
 </html>

@@ -21,7 +21,29 @@ function setAutoRun() {
 }
 
 function getUserConnect(callback) {
-  document.getElementById("connect").addEventListener("click", () => { getIP(callback) });
+  document.getElementById("connect").addEventListener("click", () => { showDialog(callback) });
+}
+
+function showDialog(callback) {
+  vex.defaultOptions.className = 'vex-theme-os';
+  vex.dialog.open({
+    message: 'Enter IP to connect to other system.',
+    input: '<input type="text" name="ip"/>',
+    buttons: [
+      $.extend({}, vex.dialog.buttons.YES, {
+        text: 'Connect'
+      }),
+      $.extend({}, vex.dialog.buttons.NO, {
+        text: 'Cancel'
+      })
+    ],
+    callback: function(data) {
+      if (data) {
+        console.log(data);
+        getIP(data);
+      }
+    }
+  });
 }
 
 function getIP(callback) {
