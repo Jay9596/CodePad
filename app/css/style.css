@@ -262,7 +262,7 @@ li.dropdown {
 #result-viewport {
   background: white;
   border: 0;
-  height: calc(100% - 390px);
+  height: calc(50% - 6px);
   margin: 0;
   width: 100%;
 }

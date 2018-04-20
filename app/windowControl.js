@@ -2,7 +2,7 @@ module.exports = {
   windowClicks,
   initContextMenu,
 };
-// Window Control [_][+][x] Buttons
+// Window Control [-][+][x] Buttons
 function windowClicks() {
   document.getElementById("min-button").addEventListener("click", e => {
     remote.getCurrentWindow().minimize();

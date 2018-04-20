@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const path = require('path');
 
 module.exports = {
   fileMenu,
@@ -10,8 +11,8 @@ module.exports = {
 };
 let saveFlag, openFlag;
 const getSavePath = () => savePath;
-const setSavePath = path => {
-  savePath = path;
+const setSavePath = (filepath) => {
+  savePath = filepath;
 };
 
 
@@ -70,19 +71,19 @@ function readData(path) {
 }
 
 function handleSaveAs() {
-  const path = dialog.showOpenDialog({
+  const filepath = dialog.showOpenDialog({
     properties: ["openDirectory"],
   });
-  if (path !== undefined) {
+  if (filepath !== undefined) {
     saveFlag = true;
-    setSavePath(path);
+    setSavePath(filepath);
     handleSave();
   }
 }
 
 function handleSave() {
   if (saveFlag === true) {
-    const path = getSavePath();
+    const filepath = getSavePath();
     const htmlString =
       "<html>\n" +
       "<head>\n" +
@@ -97,17 +98,17 @@ function handleSave() {
       "</script>\n" +
       "</body>\n" +
       "</html>";
-    fs.writeFile(path + "\\index.html", htmlString, err => {
+    fs.writeFile(path.join(filepath + '/index.html'), htmlString, err => {
       if (err) {
         console.error(err);
       }
     });
-    fs.writeFile(path + "\\style.css", css.getValue(), err => {
+    fs.writeFile(path.join(filepath + '/style.css'), css.getValue(), err => {
       if (err) {
         console.error(err);
       }
     });
-    fs.writeFile(path + "\\script.js", js.getValue(), err => {
+    fs.writeFile(path.join(filepath + '/script.js'), js.getValue(), err => {
       if (err) {
         console.error(err);
       }
@@ -116,55 +117,55 @@ function handleSave() {
       if (styFlags[j] === 1) {
         fs
           .createReadStream("resources/app.asar/app/lib/" + cssLib[j][0])
-          .pipe(fs.createWriteStream(path + "/" + cssLib[j][0]));
+          .pipe(fs.createWriteStream(path.join(filepath + "/" + cssLib[j][0])));
         if (j === 1) {
           fs
             .createReadStream(
               "resources/app.asar/app/lib/glyphicons-halflings-regular.eot",
-            )
+          )
             .pipe(
-              fs.createWriteStream(path + "/glyphicons-halflings-regular.eot"),
-            );
+              fs.createWriteStream(path.join(filepath + "/glyphicons-halflings-regular.eot")),
+          );
           fs
             .createReadStream(
               "resources/app.asar/app/lib/glyphicons-halflings-regular.ttf",
-            )
+          )
             .pipe(
-              fs.createWriteStream(path + "/glyphicons-halflings-regular.tff"),
-            );
+              fs.createWriteStream(path.join(filepath + "/glyphicons-halflings-regular.tff")),
+          );
           fs
             .createReadStream(
               "resources/app.asar/app/lib/glyphicons-halflings-regular.woff",
-            )
+          )
             .pipe(
-              fs.createWriteStream(path + "/glyphicons-halflings-regular.woff"),
-            );
+              fs.createWriteStream(path.join(filepath + "/glyphicons-halflings-regular.woff")),
+          );
           fs
             .createReadStream(
               "resources/app.asar/app/lib/glyphicons-halflings-regular.woff2",
-            )
+          )
             .pipe(
               fs.createWriteStream(
-                path + "/glyphicons-halflings-regular.woff2",
+                path.join(filepath + "/glyphicons-halflings-regular.woff2"),
               ),
-            );
+          );
         }
         if (j === 2) {
           fs
             .createReadStream(
               "resources/app.asar/app/lib/fontawesome-webfont.ttf",
-            )
-            .pipe(fs.createWriteStream(path + "/fontawesome-webfont.ttf"));
+          )
+            .pipe(fs.createWriteStream(path.join(filepath + "/fontawesome-webfont.ttf")));
           fs
             .createReadStream(
               "resources/app.asar/app/lib/fontawesome-webfont.woff",
-            )
-            .pipe(fs.createWriteStream(path + "/fontawesome-webfont.woff"));
+          )
+            .pipe(fs.createWriteStream(path.join(filepath + "/fontawesome-webfont.woff")));
           fs
             .createReadStream(
               "resources/app.asar/app/lib/fontawesome-webfont.woff2",
-            )
-            .pipe(fs.createWriteStream(path + "/fontawesome-webfont.woff2"));
+          )
+            .pipe(fs.createWriteStream(path.join(filepath + "/fontawesome-webfont.woff2")));
         }
       }
     }
@@ -172,11 +173,11 @@ function handleSave() {
       if (scrFlags[i] === 1) {
         fs
           .createReadStream("resources/app.asar/app/lib/" + jsLib[i][0])
-          .pipe(fs.createWriteStream(path + "/" + jsLib[i][0]));
+          .pipe(fs.createWriteStream(path.join(filepath + "/" + jsLib[i][0])));
       }
     }
     dialog.showMessageBox({
-      message: "Saved to " + path + "\\",
+      message: "Saved to " + path.join(filepath + '/'),
       buttons: ["OK"],
     });
   } else {
