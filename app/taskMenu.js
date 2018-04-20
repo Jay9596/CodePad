@@ -25,8 +25,22 @@ function getUserConnect(callback) {
 }
 
 function getIP(callback) {
-  console.log("GET IP: 5000");
-  // TODO:
-  // ADD Functionality here  to get a IP string from user and validate.
-  callback("http://localhost:5000");
+  vex.defaultOptions.className = 'vex-theme-os';
+  vex.dialog.open({
+    message: 'Enter IP to connect to other system.',
+    input: '<input type="text" name="ip"/>',
+    buttons: [
+      $.extend({}, vex.dialog.buttons.YES, {
+        text: 'Connect'
+      }),
+      $.extend({}, vex.dialog.buttons.NO, {
+        text: 'Cancel'
+      })
+    ],
+    callback: function (data) {
+      if (data) {
+        callback("http://" + data.ip);
+      }
+    }
+  });
 }
