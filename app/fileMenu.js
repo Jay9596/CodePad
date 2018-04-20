@@ -1,5 +1,7 @@
 const cheerio = require('cheerio');
 const path = require('path');
+const fs = require('fs');
+
 
 module.exports = {
   fileMenu,
@@ -36,36 +38,36 @@ function handleNew(i) {
 }
 
 function handleOpen() {
-  const path = dialog.showOpenDialog({
+  const filepath = dialog.showOpenDialog({
     properties: ["openDirectory"],
   });
-  if (path !== undefined) {
+  if (filepath !== undefined) {
     saveFlag = true;
-    setSavePath(path);
-    readData(path);
+    setSavePath(filepath);
+    readData(filepath);
   }
 }
 
-function readData(path) {
-  fs.readFile(path+"/index.html", 'utf-8', function(err, data) {
+function readData(openPath) {
+  fs.readFile(openPath+"/index.html", 'utf-8', function(err, data) {
     if (err) throw err;
 
     const $ = cheerio.load(data);
-    console.log($('body').html());
+    // console.log($('body').html());
     // console.log(data);
 
     html.setValue($('body').html());
   });
 
-  fs.readFile(path+"/style.css", 'utf-8', function(err, data) {
+  fs.readFile(openPath+"/style.css", 'utf-8', function(err, data) {
     if (err) throw err;
-    console.log(data);
+    // console.log(data);
     css.setValue(data);
   });
   
-  fs.readFile(path+"/script.js", 'utf-8', function(err, data) {
+  fs.readFile(openPath+"/script.js", 'utf-8', function(err, data) {
     if (err) throw err;
-    console.log(data);
+    // console.log(data);
     js.setValue(data);
   });
 }
