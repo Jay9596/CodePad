@@ -1,4 +1,3 @@
-const EDITOR = require("./editor");
 const cheerio = require('cheerio');
 
 module.exports = {
@@ -13,11 +12,6 @@ let saveFlag, openFlag;
 const getSavePath = () => savePath;
 const setSavePath = path => {
   savePath = path;
-};
-
-const getOpenPath = () => openPath;
-const setOpenPath = path => {
-  openPath = path;
 };
 
 
@@ -46,7 +40,7 @@ function handleOpen() {
   });
   if (path !== undefined) {
     saveFlag = true;
-    setOpenPath(path);
+    setSavePath(path);
     readData(path);
   }
 }
