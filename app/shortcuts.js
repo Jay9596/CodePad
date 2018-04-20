@@ -26,5 +26,8 @@ function shortcuts() {
     if (e.ctrlKey && (e.key === "n" || e.key === "N")) {
       FILE.handleNew();
     }
+    if (e.ctrlKey && (e.key === "o" || e.key === "O")) {
+      FILE.handleOpen();
+    }
   });
 }

@@ -1,19 +1,23 @@
+const cheerio = require('cheerio');
 const path = require('path');
 
 module.exports = {
   fileMenu,
   newFile,
+  handleOpen,
   handleNew,
   handleSave,
   handleSaveAs,
 };
-let saveFlag;
+let saveFlag, openFlag;
 const getSavePath = () => savePath;
 const setSavePath = (filepath) => {
   savePath = filepath;
 };
 
+
 function fileMenu() {
+  document.getElementById("open").addEventListener("click", handleOpen);
   document.getElementById("save").addEventListener("click", handleSave);
   document.getElementById("save-as").addEventListener("click", handleSaveAs);
   document.getElementById("new").addEventListener("click", handleNew);
@@ -29,6 +33,41 @@ function handleNew(i) {
   } else {
     window.open(path.join("file://", __dirname, "/index.html"));
   }
+}
+
+function handleOpen() {
+  const path = dialog.showOpenDialog({
+    properties: ["openDirectory"],
+  });
+  if (path !== undefined) {
+    saveFlag = true;
+    setSavePath(path);
+    readData(path);
+  }
+}
+
+function readData(path) {
+  fs.readFile(path+"/index.html", 'utf-8', function(err, data) {
+    if (err) throw err;
+
+    const $ = cheerio.load(data);
+    console.log($('body').html());
+    // console.log(data);
+
+    html.setValue($('body').html());
+  });
+
+  fs.readFile(path+"/style.css", 'utf-8', function(err, data) {
+    if (err) throw err;
+    console.log(data);
+    css.setValue(data);
+  });
+  
+  fs.readFile(path+"/script.js", 'utf-8', function(err, data) {
+    if (err) throw err;
+    console.log(data);
+    js.setValue(data);
+  });
 }
 
 function handleSaveAs() {
