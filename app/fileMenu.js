@@ -53,21 +53,15 @@ function readData(openPath) {
     if (err) throw err;
 
     const $ = cheerio.load(data);
-    // console.log($('body').html());
-    // console.log(data);
-
-    html.setValue($('body').html());
+    html.setValue($('body').html().replace('<script src="script.js"></script>', ''));
   });
 
   fs.readFile(openPath+"/style.css", 'utf-8', function(err, data) {
     if (err) throw err;
-    // console.log(data);
     css.setValue(data);
   });
   
   fs.readFile(openPath+"/script.js", 'utf-8', function(err, data) {
-    if (err) throw err;
-    // console.log(data);
     js.setValue(data);
   });
 }
